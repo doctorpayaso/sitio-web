@@ -1,0 +1,16 @@
+# Cifras de impacto. Se editan desde el panel, nunca aquí.
+fechaDeCorte: 2026-08-01
+aprobadoPor: ''
+voluntariosCertificados: 1200
+voluntariosActivos: 600
+visitasHospitalarias: 4191
+personasBeneficiadas: 299537
+ciudadesConOperacion: 4
+informesPublicados: 11
+rangoDeEdad: '0 – 114'
+notaMetodologica:
+  es: >-
+    Voluntario certificado: persona que completó los seis módulos de formación
+    en cualquier generación desde 2015, esté activa o no. Voluntario activo:
+    persona certificada que participa en visitas de forma periódica a la fecha
+    de corte.

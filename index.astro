@@ -1,0 +1,367 @@
+---
+// =============================================================================
+//  Inicio
+//
+//  Esta página es el PATRÓN. Las otras cinco se construyen igual:
+//   1. importar la página desde lib/contenido
+//   2. resolver el idioma una vez
+//   3. envolver todo texto en t()
+//   4. no escribir NUNCA un texto visible directamente aquí
+//
+//  Si un texto está escrito en este archivo, la Administradora no lo puede
+//  cambiar. Ese es el criterio único para decidir si algo va en el panel.
+// =============================================================================
+
+import Base from '../layouts/Base.astro';
+import Boton from '../components/Boton.astro';
+import { t, idiomaDe, formatearFecha } from '../lib/idioma';
+import {
+  paginas,
+  cifras,
+  proximaGeneracion,
+  testimonioPorId,
+  imagenPublicable,
+} from '../lib/contenido';
+
+const p = paginas.inicio;
+const idioma = idiomaDe(Astro);
+
+const generacion = p.hero?.mostrarProximaGeneracion ? proximaGeneracion() : null;
+const testimonio = testimonioPorId(p.testimonioDestacado);
+
+// Las cifras de la franja las elige la Administradora desde el panel; aquí solo
+// se resuelven contra el registro único de cifras.
+const ETIQUETAS: Record<string, { es: string; en: string }> = {
+  voluntariosCertificados: { es: 'Voluntarios certificados', en: 'Certified volunteers' },
+  voluntariosActivos: { es: 'Voluntarios activos', en: 'Active volunteers' },
+  visitasHospitalarias: { es: 'Visitas a hospitales', en: 'Hospital visits' },
+  personasBeneficiadas: { es: 'Personas beneficiadas', en: 'People reached' },
+  ciudadesConOperacion: { es: 'Ciudades', en: 'Cities' },
+  informesPublicados: { es: 'Informes publicados', en: 'Reports published' },
+  rangoDeEdad: { es: 'Rango de edad', en: 'Age range' },
+};
+
+const franja = (p.franjaDeCifras ?? [])
+  .map((clave: string) => ({
+    valor: (cifras as any)[clave],
+    etiqueta: ETIQUETAS[clave]?.[idioma as 'es'] ?? ETIQUETAS[clave]?.es ?? clave,
+  }))
+  .filter((c: any) => c.valor !== undefined && c.valor !== null && c.valor !== '');
+
+const heroVisible = imagenPublicable(p.hero?.imagen);
+
+/** Resalta la palabra elegida por el equipo dentro del titular. */
+function titularConAcento(titular: string, acento: string) {
+  if (!acento || !titular.includes(acento)) return [titular, '', ''];
+  const i = titular.indexOf(acento);
+  return [titular.slice(0, i), acento, titular.slice(i + acento.length)];
+}
+
+const [antes, acento, despues] = titularConAcento(
+  t(p.hero?.titulo, idioma),
+  t(p.hero?.palabraDestacada, idioma),
+);
+---
+
+<Base seo={p.seo} ruta="emocional">
+  <!-- ===================================================================== -->
+  <!--  Primera pantalla                                                      -->
+  <!-- ===================================================================== -->
+  <section class="hero">
+    <div class="contenedor hero__interior">
+      <div class="hero__texto">
+        {p.hero?.antetitulo && <p class="antetitulo">{t(p.hero.antetitulo, idioma)}</p>}
+
+        <h1>
+          {antes}<em>{acento}</em>{despues}
+        </h1>
+
+        <p class="entrada">{t(p.hero?.entrada, idioma)}</p>
+
+        {
+          generacion && (
+            <p class="hero__generacion">
+              {idioma === 'en' ? 'Next cohort' : 'Próxima generación'}:{' '}
+              <strong>{formatearFecha(generacion.fechaDeInicio, idioma)}</strong>
+              {generacion.cupoLimitado && (
+                <span> · {idioma === 'en' ? 'Limited seats' : 'Cupo limitado'}</span>
+              )}
+            </p>
+          )
+        }
+
+        <div class="hero__acciones">
+          <Boton {...p.hero?.botonPrincipal} variante="principal" />
+          <Boton {...p.hero?.botonSecundario} variante="secundario" />
+        </div>
+      </div>
+
+      {
+        heroVisible && (
+          <div class="hero__imagen">
+            <img
+              src={p.hero.imagen.archivo}
+              alt={t(p.hero.imagen.textoAlternativo, idioma)}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!--  Franja de cifras                                                      -->
+  <!-- ===================================================================== -->
+  {
+    franja.length > 0 && (
+      <section class="franja">
+        <div class="contenedor franja__interior">
+          {franja.map((c: any) => (
+            <div class="franja__dato">
+              <span class="franja__valor">{c.valor}</span>
+              <span class="franja__etiqueta">{c.etiqueta}</span>
+            </div>
+          ))}
+        </div>
+        {cifras.fechaDeCorte && (
+          <p class="franja__corte contenedor">
+            {idioma === 'en' ? 'Figures as of' : 'Cifras al'}{' '}
+            {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
+          </p>
+        )}
+      </section>
+    )
+  }
+
+  <!-- ===================================================================== -->
+  <!--  Las dos rutas                                                         -->
+  <!-- ===================================================================== -->
+  <section class="rutas contenedor">
+    <h2>{t(p.dosRutas?.titulo, idioma)}</h2>
+    <div class="rutas__rejilla">
+      <article class="ruta ruta--emocional">
+        <h3>{t(p.dosRutas?.rutaVoluntariado?.titulo, idioma)}</h3>
+        <p>{t(p.dosRutas?.rutaVoluntariado?.descripcion, idioma)}</p>
+        <Boton {...p.dosRutas?.rutaVoluntariado?.boton} variante="principal" />
+      </article>
+
+      <article class="ruta ruta--institucional" data-ruta="institucional">
+        <h3>{t(p.dosRutas?.rutaInstitucional?.titulo, idioma)}</h3>
+        <p>{t(p.dosRutas?.rutaInstitucional?.descripcion, idioma)}</p>
+        <Boton {...p.dosRutas?.rutaInstitucional?.boton} variante="principal" />
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!--  Testimonio                                                            -->
+  <!-- ===================================================================== -->
+  {
+    testimonio && (
+      <section class="testimonio contenedor">
+        <blockquote>
+          <p>{t(testimonio.cita, idioma)}</p>
+          <footer>
+            <cite>
+              {testimonio.nombre}
+              {testimonio.cargo && <span>, {t(testimonio.cargo, idioma)}</span>}
+              {testimonio.institucion && <span> · {testimonio.institucion}</span>}
+            </cite>
+          </footer>
+        </blockquote>
+      </section>
+    )
+  }
+
+  <!-- ===================================================================== -->
+  <!--  Cierre                                                                -->
+  <!-- ===================================================================== -->
+  <section class="cierre contenedor">
+    <h2>{t(p.cierre?.titulo, idioma)}</h2>
+    <Boton {...p.cierre?.boton} variante="principal" />
+  </section>
+</Base>
+
+<style>
+  .antetitulo {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--coral-d);
+    margin-bottom: 1rem;
+  }
+
+  .hero {
+    padding: clamp(3rem, 8vw, 6rem) 0;
+  }
+
+  .hero__interior {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--coral);
+  }
+
+  .entrada {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--tinta-80);
+    max-width: 46ch;
+  }
+
+  .hero__generacion {
+    display: inline-block;
+    background: var(--crema-2);
+    border-radius: var(--r-s);
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .hero__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.75rem;
+  }
+
+  .hero__imagen img {
+    border-radius: var(--r-l);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  @media (max-width: 860px) {
+    .hero__interior {
+      grid-template-columns: 1fr;
+    }
+    .hero__imagen {
+      order: -1;
+    }
+    .hero__imagen img {
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  .franja {
+    background: var(--crema-2);
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .franja__interior {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .franja__valor {
+    display: block;
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1;
+  }
+
+  .franja__etiqueta {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--tinta-60);
+  }
+
+  .franja__corte {
+    margin-top: 1.75rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--tinta-60);
+  }
+
+  .rutas {
+    padding: clamp(3.5rem, 8vw, 6rem) 0 0;
+  }
+
+  .rutas h2 {
+    font-size: clamp(1.9rem, 4vw, 2.75rem);
+    max-width: 20ch;
+  }
+
+  .rutas__rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .ruta {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border-radius: var(--r-l);
+    background: var(--papel);
+    box-shadow: var(--shadow);
+  }
+
+  .ruta--emocional {
+    border-top: 5px solid var(--coral);
+  }
+
+  .ruta--institucional {
+    border-top: 5px solid var(--teal);
+  }
+
+  .ruta h3 {
+    font-size: 1.5rem;
+  }
+
+  .ruta p {
+    color: var(--tinta-80);
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonio {
+    padding: clamp(3.5rem, 8vw, 6rem) 0 0;
+  }
+
+  .testimonio blockquote {
+    margin: 0;
+    max-width: 34ch;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .testimonio p {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    line-height: 1.25;
+  }
+
+  .testimonio cite {
+    font-style: normal;
+    font-size: 0.95rem;
+    color: var(--tinta-60);
+  }
+
+  .cierre {
+    padding: clamp(3.5rem, 8vw, 6rem) 0 0;
+    text-align: center;
+  }
+
+  .cierre h2 {
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    max-width: 22ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+  }
+</style>

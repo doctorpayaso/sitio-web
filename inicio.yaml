@@ -1,0 +1,71 @@
+seo:
+  titulo:
+    es: Doctor Payaso A.C. — Payasos de hospital certificados en México
+  descripcion:
+    es: >-
+      Llevamos payasos de hospital certificados a pacientes pediátricos en cuatro
+      ciudades de México. Conoce el programa de certificación o alíate con nosotros.
+  imagenAlCompartir: null
+hero:
+  antetitulo:
+    es: Payasos de hospital certificados
+  titulo:
+    es: Hay medicina que no se receta.
+  palabraDestacada:
+    es: no se receta
+  entrada:
+    es: >-
+      Somos payasos de hospital certificados. Acompañamos a pacientes pediátricos
+      en momentos en los que la medicina hace su parte y hace falta alguien que
+      haga la otra.
+  botonPrincipal:
+    texto:
+      es: Quiero certificarme
+    destino: /certificate
+  botonSecundario:
+    texto:
+      es: Ver qué hacemos
+    destino: /clown-care
+  mostrarProximaGeneracion: true
+  imagen:
+    archivo: null
+    textoAlternativo:
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
+franjaDeCifras:
+  - voluntariosCertificados
+  - visitasHospitalarias
+  - personasBeneficiadas
+  - ciudadesConOperacion
+dosRutas:
+  titulo:
+    es: Hay dos formas de estar en esto.
+  rutaVoluntariado:
+    titulo:
+      es: Quiero ser voluntario
+    descripcion:
+      es: >-
+        No buscamos payasos. Buscamos personas dispuestas a formarse en serio.
+    boton:
+      texto:
+        es: Conocer la certificación
+      destino: /certificate
+  rutaInstitucional:
+    titulo:
+      es: Represento a una institución
+    descripcion:
+      es: >-
+        Hospitales, empresas y universidades que quieren documentar su impacto social.
+    boton:
+      texto:
+        es: Ver modelos de alianza
+      destino: /alianzas
+testimonioDestacado: null
+cierre:
+  titulo:
+    es: La próxima generación abre pronto.
+  boton:
+    texto:
+      es: Quiero mi lugar
+    destino: /certificate

@@ -1,0 +1,173 @@
+---
+// Pie de página. Lee todo de "Ajustes generales" en el panel: ningún dato de
+// contacto está escrito en el código.
+import { t, idiomaDe, formatearFecha } from '../lib/idioma';
+import { configuracion, cifras } from '../lib/contenido';
+
+const idioma = idiomaDe(Astro);
+const anio = new Date().getFullYear();
+const redes = Object.entries(configuracion.redes ?? {}).filter(([, url]) => Boolean(url));
+---
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie__rejilla">
+      <div>
+        <img src="/logo.svg" alt="Doctor Payaso A.C." width="180" height="48" class="pie__logo" />
+        <p class="pie__eslogan">{t(configuracion.eslogan, idioma)}</p>
+      </div>
+
+      <nav aria-label="Enlaces del pie">
+        <h2 class="pie__titulo">{idioma === 'en' ? 'The organization' : 'La organización'}</h2>
+        <ul>
+          <li><a href="/clown-care">{idioma === 'en' ? 'What we do' : 'Qué hacemos'}</a></li>
+          <li><a href="/impacto">{idioma === 'en' ? 'Impact' : 'Impacto y transparencia'}</a></li>
+          <li><a href="/alianzas">{idioma === 'en' ? 'Partnerships' : 'Alianzas'}</a></li>
+          <li><a href="/contacto">{idioma === 'en' ? 'Contact' : 'Contacto'}</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="pie__titulo">{idioma === 'en' ? 'Get in touch' : 'Contacto'}</h2>
+        <ul>
+          {configuracion.contacto?.correo && (
+            <li><a href={`mailto:${configuracion.contacto.correo}`}>{configuracion.contacto.correo}</a></li>
+          )}
+          {configuracion.contacto?.telefono && (
+            <li><a href={`tel:${configuracion.contacto.telefono}`}>{configuracion.contacto.telefono}</a></li>
+          )}
+        </ul>
+
+        {redes.length > 0 && (
+          <ul class="pie__redes">
+            {redes.map(([nombre, url]) => (
+              <li>
+                <a href={url as string} target="_blank" rel="noopener noreferrer">
+                  {nombre}
+                  <span class="solo-lectores">(se abre en una ventana nueva)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+
+    <div class="pie__legal">
+      <p>
+        &copy; {anio} Doctor Payaso A.C.
+        {configuracion.donataria?.numeroAutorizacion && (
+          <> · {idioma === 'en' ? 'Authorized donee' : 'Donataria autorizada'} {configuracion.donataria.numeroAutorizacion}</>
+        )}
+      </p>
+      <p>
+        {configuracion.avisoDePrivacidad && (
+          <a href={configuracion.avisoDePrivacidad}>
+            {idioma === 'en' ? 'Privacy notice' : 'Aviso de privacidad'}
+          </a>
+        )}
+      </p>
+      {
+        cifras.fechaDeCorte && (
+          <p class="pie__corte">
+            {idioma === 'en' ? 'Figures as of' : 'Cifras al'}{' '}
+            {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pie {
+    background: var(--tinta);
+    color: var(--crema);
+    padding: 4rem 0 2rem;
+    margin-top: 6rem;
+  }
+
+  .pie__rejilla {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  @media (max-width: 760px) {
+    .pie__rejilla {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .pie__logo {
+    height: 44px;
+    width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .pie__eslogan {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    opacity: 0.85;
+  }
+
+  .pie__titulo {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    opacity: 0.55;
+    margin-bottom: 1rem;
+  }
+
+  .pie ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .pie a {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  .pie a:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pie__redes {
+    margin-top: 1.5rem;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 1rem;
+    text-transform: capitalize;
+    font-size: 0.9rem;
+  }
+
+  .pie__legal {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 247, 240, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+
+  .pie__legal p {
+    margin: 0;
+  }
+
+  .pie__corte {
+    margin-left: auto !important;
+  }
+</style>

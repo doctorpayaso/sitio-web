@@ -1,0 +1,186 @@
+/* =============================================================================
+   Doctor Payaso A.C. — Sistema de diseño
+   Extraído del prototipo aprobado por Dirección en agosto de 2026.
+
+   REGLA: ningún componente escribe un color literal. Todos los colores salen de
+   estas variables. Cambiar un token aquí cambia el sitio entero de forma
+   coherente; escribir #f46262 dentro de un componente crea una deuda que
+   alguien pagará dentro de dos años sin saber por qué.
+   ============================================================================= */
+
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+:root {
+  /* ---------------------------------------------------------------------------
+     Base cálida — nunca blanco puro
+     El blanco puro (#ffffff) es lo que hace que un sitio se vea a plantilla y
+     a consultorio. La crema es lo que lo hace ver hecho a mano.
+     --------------------------------------------------------------------------- */
+  --crema: #fff7f0;
+  --crema-2: #fbeadc;
+  --papel: #fffdfb;
+
+  /* ---------------------------------------------------------------------------
+     Tinta — teal casi negro derivado del verde institucional
+     Deliberadamente NO es gris corporativo. El texto también comunica marca.
+     --------------------------------------------------------------------------- */
+  --tinta: #132e2a;
+  --tinta-80: rgba(19, 46, 42, 0.8);
+  --tinta-60: rgba(19, 46, 42, 0.62);
+  --tinta-30: rgba(19, 46, 42, 0.28);
+  --tinta-12: rgba(19, 46, 42, 0.12);
+
+  /* ---------------------------------------------------------------------------
+     RUTA EMOCIONAL — voluntariado, donativos, historia
+     Se usa cuando le hablamos a una persona que quiere participar o donar.
+     --------------------------------------------------------------------------- */
+  --coral: #f46262;
+  --coral-d: #d04654;
+  --vino: #9b354f;
+  --mango: #ffa231;
+
+  /* ---------------------------------------------------------------------------
+     RUTA INSTITUCIONAL — alianzas, impacto, transparencia
+     Se usa cuando le hablamos a una empresa, un hospital o una universidad.
+     Las dos rutas nunca se mezclan dentro de un mismo bloque: esa separación
+     cromática ES la arquitectura de la información del sitio.
+     --------------------------------------------------------------------------- */
+  --teal: #2b7268;
+  --menta: #49b6a6;
+  --azul: #4280bf;
+  --cielo: #2ba9dc;
+
+  /* --------------------------------------------------------------------------- */
+  --r-s: 10px;
+  --r-m: 18px;
+  --r-l: 28px;
+  --r-xl: 40px;
+
+  --shadow: 0 1px 2px rgba(19, 46, 42, 0.04), 0 12px 32px -12px rgba(19, 46, 42, 0.16);
+  --shadow-lg: 0 2px 4px rgba(19, 46, 42, 0.05), 0 32px 64px -24px rgba(19, 46, 42, 0.25);
+
+  --maxw: 1180px;
+
+  --display: 'Fraunces Variable', Georgia, serif;
+  --sans: 'Plus Jakarta Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* =============================================================================
+   Reinicio mínimo
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--crema);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+/* =============================================================================
+   Accesibilidad
+   Requisito de la Fase 1: WCAG 2.1 nivel AA.
+   ============================================================================= */
+
+/* Foco visible en todo elemento interactivo. Nunca se quita sin reemplazo. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Enlace para saltar al contenido: primer elemento enfocable de cada página.
+   Es lo que permite a alguien que navega con teclado no recorrer el menú
+   completo en cada página. */
+.saltar-al-contenido {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  background: var(--tinta);
+  color: var(--papel);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--r-s) 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.saltar-al-contenido:focus {
+  left: 0;
+}
+
+/* Texto visible solo para lectores de pantalla. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =============================================================================
+   Contenedor
+   ============================================================================= */
+
+.contenedor {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}

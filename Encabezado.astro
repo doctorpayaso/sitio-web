@@ -1,0 +1,202 @@
+---
+// Navegación principal. Menú accesible por teclado, sin dependencias externas.
+import { idiomaDe } from '../lib/idioma';
+
+const idioma = idiomaDe(Astro);
+const aqui = Astro.url.pathname;
+
+const enlaces = [
+  { texto: { es: 'Qué hacemos', en: 'What we do' }, destino: '/clown-care' },
+  { texto: { es: 'Certifícate', en: 'Get certified' }, destino: '/certificate' },
+  { texto: { es: 'Alianzas', en: 'Partnerships' }, destino: '/alianzas' },
+  { texto: { es: 'Impacto', en: 'Impact' }, destino: '/impacto' },
+];
+
+const activo = (destino: string) => aqui === destino || aqui.startsWith(destino + '/');
+---
+
+<header class="encabezado">
+  <div class="contenedor encabezado__interior">
+    <a href="/" class="encabezado__marca">
+      <img src="/logo.svg" alt="Doctor Payaso A.C." width="180" height="48" />
+    </a>
+
+    <button
+      class="encabezado__alternar"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+      data-menu-boton
+    >
+      <span class="solo-lectores">Abrir el menú</span>
+      <span class="encabezado__barras" aria-hidden="true"></span>
+    </button>
+
+    <nav id="menu-principal" class="encabezado__nav" data-menu aria-label="Navegación principal">
+      <ul>
+        {
+          enlaces.map((e) => (
+            <li>
+              <a href={e.destino} aria-current={activo(e.destino) ? 'page' : undefined}>
+                {e.texto[idioma as 'es'] ?? e.texto.es}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href="/dona" class="encabezado__donar">
+            {idioma === 'en' ? 'Donate' : 'Donar'}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const boton = document.querySelector<HTMLButtonElement>('[data-menu-boton]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  boton?.addEventListener('click', () => {
+    const abierto = boton.getAttribute('aria-expanded') === 'true';
+    boton.setAttribute('aria-expanded', String(!abierto));
+    menu?.classList.toggle('abierto', !abierto);
+  });
+
+  // Cerrar con Escape: navegar con teclado y quedar atrapado en un menú abierto
+  // es una de las fallas de accesibilidad más comunes y más fáciles de evitar.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && boton?.getAttribute('aria-expanded') === 'true') {
+      boton.setAttribute('aria-expanded', 'false');
+      menu?.classList.remove('abierto');
+      boton.focus();
+    }
+  });
+</script>
+
+<style>
+  .encabezado {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--crema) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--tinta-12);
+  }
+
+  .encabezado__interior {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 72px;
+  }
+
+  .encabezado__marca img {
+    height: 40px;
+    width: auto;
+  }
+
+  .encabezado__nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .encabezado__nav a {
+    font-weight: 500;
+    font-size: 0.975rem;
+    text-decoration: none;
+    color: var(--tinta-80);
+    padding: 0.5rem 0;
+  }
+
+  .encabezado__nav a:hover,
+  .encabezado__nav a[aria-current='page'] {
+    color: var(--tinta);
+  }
+
+  .encabezado__donar {
+    background: var(--coral);
+    color: var(--papel) !important;
+    padding: 0.65rem 1.35rem !important;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .encabezado__alternar {
+    display: none;
+    background: none;
+    border: 0;
+    padding: 0.75rem;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .encabezado__barras,
+  .encabezado__barras::before,
+  .encabezado__barras::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--tinta);
+    border-radius: 2px;
+  }
+
+  .encabezado__barras::before,
+  .encabezado__barras::after {
+    content: '';
+    position: relative;
+  }
+  .encabezado__barras::before {
+    top: -7px;
+  }
+  .encabezado__barras::after {
+    top: 5px;
+  }
+
+  @media (max-width: 860px) {
+    .encabezado__alternar {
+      display: block;
+    }
+
+    .encabezado__nav {
+      position: absolute;
+      inset: 72px 0 auto;
+      background: var(--crema);
+      border-bottom: 1px solid var(--tinta-12);
+      display: none;
+      padding: 1rem 0 1.5rem;
+    }
+
+    .encabezado__nav.abierto {
+      display: block;
+    }
+
+    .encabezado__nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+    }
+
+    .encabezado__nav li {
+      border-bottom: 1px solid var(--tinta-12);
+    }
+
+    .encabezado__nav a {
+      display: block;
+      padding: 1rem 0;
+      font-size: 1.075rem;
+    }
+
+    .encabezado__donar {
+      display: inline-block !important;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+// =============================================================================
+//  Doctor Payaso A.C. — Plantilla base
+//  Toda página del sitio pasa por aquí. Es el único lugar donde se define el
+//  <head>, para que ninguna página pueda salir sin título, sin descripción o
+//  sin enlace de salto al contenido.
+// =============================================================================
+
+import '../styles/tokens.css';
+import Encabezado from '../components/Encabezado.astro';
+import PieDePagina from '../components/PieDePagina.astro';
+import { t, idiomaDe, CODIGO_COMPLETO } from '../lib/idioma';
+import { configuracion, cifras } from '../lib/contenido';
+import type { TextoLocalizado } from '../lib/idioma';
+
+interface Props {
+  seo?: {
+    titulo?: TextoLocalizado;
+    descripcion?: TextoLocalizado;
+    imagenAlCompartir?: string | null;
+  };
+  /** Marca la página como institucional para invertir la paleta. */
+  ruta?: 'emocional' | 'institucional';
+}
+
+const { seo = {}, ruta = 'emocional' } = Astro.props;
+const idioma = idiomaDe(Astro);
+
+const titulo = t(seo.titulo, idioma) || 'Doctor Payaso A.C.';
+const descripcion = t(seo.descripcion, idioma);
+const urlCanonica = new URL(Astro.url.pathname, Astro.site);
+const imagenSocial = seo.imagenAlCompartir
+  ? new URL(seo.imagenAlCompartir, Astro.site).toString()
+  : undefined;
+
+// -----------------------------------------------------------------------------
+//  Datos estructurados
+// -----------------------------------------------------------------------------
+//  Esto es lo que permite que un asistente de IA responda "Doctor Payaso opera
+//  en cuatro ciudades de México y tiene 1,200 voluntarios certificados" citando
+//  la fuente, en lugar de inventarlo o ignorar a la organización.
+//
+//  Un modelo de lenguaje no lee bien un PDF. Lee muy bien esto.
+// -----------------------------------------------------------------------------
+const datosEstructurados = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: 'Doctor Payaso A.C.',
+  alternateName: 'Doctor Payaso',
+  url: 'https://doctorpayaso.com',
+  slogan: t(configuracion.eslogan, idioma),
+  description: descripcion,
+  email: configuracion.contacto?.correo,
+  telephone: configuracion.contacto?.telefono,
+  areaServed: { '@type': 'Country', name: 'México' },
+  sameAs: Object.values(configuracion.redes ?? {}).filter(Boolean),
+  ...(cifras.voluntariosCertificados && {
+    member: {
+      '@type': 'QuantitativeValue',
+      value: cifras.voluntariosCertificados,
+      description: 'Voluntarios certificados',
+    },
+  }),
+};
+---
+
+<!doctype html>
+<html lang={CODIGO_COMPLETO[idioma] ?? 'es-MX'} data-ruta={ruta}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{titulo}</title>
+    {descripcion && <meta name="description" content={descripcion} />}
+    <link rel="canonical" href={urlCanonica} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={titulo} />
+    {descripcion && <meta property="og:description" content={descripcion} />}
+    <meta property="og:url" content={urlCanonica} />
+    <meta property="og:locale" content={CODIGO_COMPLETO[idioma] ?? 'es_MX'} />
+    {imagenSocial && <meta property="og:image" content={imagenSocial} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(datosEstructurados)}
+    />
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <!-- Primer elemento enfocable de la página: requisito de accesibilidad. -->
+    <a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
+
+    <Encabezado />
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <PieDePagina />
+  </body>
+</html>
