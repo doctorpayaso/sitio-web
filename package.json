@@ -28,7 +28,9 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.10",
     "@rollup/plugin-yaml": "5.0.0",
+    "typescript": "6.0.3",
     "wrangler": "4.126.0"
   }
 }

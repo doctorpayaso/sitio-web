@@ -14,7 +14,7 @@
 
 import Base from '../layouts/Base.astro';
 import Boton from '../components/Boton.astro';
-import { t, idiomaDe, formatearFecha } from '../lib/idioma';
+import { t, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
 import {
   paginas,
   cifras,
@@ -120,14 +120,14 @@ const [antes, acento, despues] = titularConAcento(
         <div class="contenedor franja__interior">
           {franja.map((c: any) => (
             <div class="franja__dato">
-              <span class="franja__valor">{c.valor}</span>
+              <span class="franja__valor">{formatearNumero(c.valor, idioma)}</span>
               <span class="franja__etiqueta">{c.etiqueta}</span>
             </div>
           ))}
         </div>
         {cifras.fechaDeCorte && (
           <p class="franja__corte contenedor">
-            {idioma === 'en' ? 'Figures as of' : 'Cifras al'}{' '}
+            {idioma === 'en' ? 'Figures as of' : 'Cifras a'}{' '}
             {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
           </p>
         )}

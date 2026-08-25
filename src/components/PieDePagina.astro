@@ -70,7 +70,7 @@ const redes = Object.entries(configuracion.redes ?? {}).filter(([, url]) => Bool
       {
         cifras.fechaDeCorte && (
           <p class="pie__corte">
-            {idioma === 'en' ? 'Figures as of' : 'Cifras al'}{' '}
+            {idioma === 'en' ? 'Figures as of' : 'Cifras a'}{' '}
             {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
           </p>
         )

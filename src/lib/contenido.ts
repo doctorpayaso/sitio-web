@@ -9,6 +9,7 @@
 //  y la olvidara. Concentrada aquí, se aplica sola.
 // =============================================================================
 
+import { aTextoDeFecha } from './idioma';
 import type { TextoLocalizado } from './idioma';
 
 // -----------------------------------------------------------------------------
@@ -90,8 +91,15 @@ export const generaciones = () => {
   const hoy = new Date().toISOString().slice(0, 10);
   return todasLasGeneraciones
     .filter((g) => g.publicar)
-    .filter((g) => g.estado === 'continua' || !g.fechaDeInicio || g.fechaDeInicio >= hoy)
-    .sort((a, b) => (a.fechaDeInicio ?? '9999').localeCompare(b.fechaDeInicio ?? '9999'));
+    .filter((g) => {
+      const inicio = aTextoDeFecha(g.fechaDeInicio);
+      return g.estado === 'continua' || !inicio || inicio >= hoy;
+    })
+    .sort((a, b) =>
+      (aTextoDeFecha(a.fechaDeInicio) || '9999').localeCompare(
+        aTextoDeFecha(b.fechaDeInicio) || '9999',
+      ),
+    );
 };
 
 /** La próxima generación con inscripciones abiertas, si existe. */
@@ -119,7 +127,10 @@ export const aliados = () => {
   const hoy = new Date().toISOString().slice(0, 10);
   return todosLosAliados
     .filter((a) => a.publicar && a.autorizacionDeUsoDelLogotipo)
-    .filter((a) => !a.vigenciaDeLaAutorizacion || a.vigenciaDeLaAutorizacion >= hoy)
+    .filter((a) => {
+      const vence = aTextoDeFecha(a.vigenciaDeLaAutorizacion);
+      return !vence || vence >= hoy;
+    })
     .sort(porOrden);
 };
 
