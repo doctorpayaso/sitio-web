@@ -17,7 +17,7 @@
 // =============================================================================
 
 import Base from '../layouts/Base.astro';
-import { t, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
+import { t, tr, enriquecer, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
 import {
   paginas,
   cifras,
@@ -65,13 +65,19 @@ const franja = (p.franjaDeCifras ?? [])
   }))
   .filter((c: any) => c.valor !== undefined && c.valor !== null && c.valor !== '');
 
-/** Resalta en coral la palabra que el equipo eligió dentro del titular. */
-function partirTitular(titular: string, palabra: string) {
-  if (!palabra || !titular.includes(palabra)) return [titular, '', ''];
-  const i = titular.indexOf(palabra);
-  return [titular.slice(0, i), palabra, titular.slice(i + palabra.length)];
+/**
+ * Arma el titular: respeta los saltos de línea que escribió el equipo y pinta
+ * de coral la palabra elegida. Se construye como HTML porque el titular
+ * necesita etiquetas dentro del texto, no alrededor.
+ */
+function armarTitular(titular: string, palabra: string): string {
+  const html = enriquecer(titular);
+  if (!palabra) return html;
+  const acento = enriquecer(palabra);
+  if (!html.includes(acento)) return html;
+  return html.replace(acento, `<span class="accent">${acento}</span>`);
 }
-const [antes, acento, despues] = partirTitular(
+const titularHtml = armarTitular(
   t(p.hero?.titulo, idioma),
   t(p.hero?.palabraDestacada, idioma),
 );
@@ -94,9 +100,9 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           </span>
         )}
 
-        <h1 class="h-hero">{antes}<span class="accent">{acento}</span>{despues}</h1>
+        <h1 class="h-hero" set:html={titularHtml} />
 
-        <p class="lead">{t(p.hero?.entrada, idioma)}</p>
+        <p class="lead" set:html={tr(p.hero?.entrada, idioma)} />
 
         <div class="hero-cta">
           {t(p.hero?.botonPrincipal?.texto, idioma) && (
@@ -143,7 +149,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
             <div class="n">
               {formatearNumero(p.hero.insignia.numero, idioma)}<span style="color:var(--coral)">+</span>
             </div>
-            <div class="t">{t(p.hero.insignia.etiqueta, idioma)}</div>
+            <div class="t" set:html={tr(p.hero.insignia.etiqueta, idioma)} />
           </div>
         )}
       </div>
@@ -189,8 +195,8 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
         <span class="eyebrow" style="color:var(--teal)">
           <span class="dot" style="background:var(--teal)"></span> {t(p.dosRutas?.antetitulo, idioma)}
         </span>
-        <h2 class="h2" style="margin:14px 0">{t(p.dosRutas?.titulo, idioma)}</h2>
-        <p class="lead">{t(p.dosRutas?.entrada, idioma)}</p>
+        <h2 class="h2" style="margin:14px 0" set:html={tr(p.dosRutas?.titulo, idioma)} />
+        <p class="lead" set:html={tr(p.dosRutas?.entrada, idioma)} />
       </div>
 
       <div class="routes">
@@ -245,8 +251,8 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           <span class="eyebrow" style="color:var(--azul)">
             <span class="dot" style="background:var(--azul)"></span> {t(p.metodo?.antetitulo, idioma)}
           </span>
-          <h2 class="h2" style="margin:14px 0 20px">{t(p.metodo?.titulo, idioma)}</h2>
-          <p class="lead" style="margin-bottom:28px">{t(p.metodo?.entrada, idioma)}</p>
+          <h2 class="h2" style="margin:14px 0 20px" set:html={tr(p.metodo?.titulo, idioma)} />
+          <p class="lead" style="margin-bottom:28px" set:html={tr(p.metodo?.entrada, idioma)} />
 
           {(p.metodo?.pasos ?? []).map((paso: any, i: number) => (
             <div class="method-row">
@@ -271,7 +277,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
         <div class="quote">
           <span class="quote-mark" aria-hidden="true">&rdquo;</span>
           <blockquote>{t(p.citaEditorial.texto, idioma)}</blockquote>
-          <cite>{t(p.citaEditorial.autor, idioma)}</cite>
+          <cite set:html={tr(p.citaEditorial.autor, idioma)} />
         </div>
       </div>
     </section>
@@ -318,8 +324,8 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           <span class="eyebrow" style="color:var(--teal)">
             <span class="dot" style="background:var(--teal)"></span> {t(p.transparencia?.antetitulo, idioma)}
           </span>
-          <h2 class="h2" style="margin:14px 0 12px">{t(p.transparencia?.titulo, idioma)}</h2>
-          <p class="lead">{t(p.transparencia?.entrada, idioma)}</p>
+          <h2 class="h2" style="margin:14px 0 12px" set:html={tr(p.transparencia?.titulo, idioma)} />
+          <p class="lead" set:html={tr(p.transparencia?.entrada, idioma)} />
         </div>
         {t(p.transparencia?.enlace?.texto, idioma) && (
           <a href={p.transparencia.enlace.destino} class="link-arrow" style="color:var(--teal)">
@@ -410,8 +416,8 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
         <span class="confetti" style="width:90px;height:90px;background:var(--azul);left:16%;bottom:8%"></span>
 
         <div style="position:relative">
-          <h2 class="h1">{t(p.cierre?.titulo, idioma)}</h2>
-          <p>{t(p.cierre?.descripcion, idioma)}</p>
+          <h2 class="h1" set:html={tr(p.cierre?.titulo, idioma)} />
+          <p set:html={tr(p.cierre?.descripcion, idioma)} />
           {t(p.cierre?.firma, idioma) && (
             <p style="font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--mango);margin-top:22px">
               {t(p.cierre.firma, idioma)}

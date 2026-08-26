@@ -11,12 +11,14 @@ hero:
   antetitulo:
     es: Clown care certificado · CDMX · Monterrey · Veracruz · Toluca
   titulo:
-    es: Hay medicina que no se receta.
+    es: |-
+      Hay medicina
+      que no se receta.
   palabraDestacada:
     es: receta
   entrada:
     es: >-
-      Somos Doctor Payaso A.C. Formamos voluntarios certificados que acompañan a
+      Somos **Doctor Payaso A.C.** Formamos voluntarios certificados que acompañan a
       pacientes hospitalizados —de 0 a 114 años— con las herramientas del arte
       clown, la psicología y la risoterapia. No entretenemos: intervenimos.
   botonPrincipal:
@@ -33,7 +35,9 @@ hero:
   insignia:
     numero: 945
     etiqueta:
-      es: Voluntarios certificados
+      es: |-
+        Voluntarios
+        certificados
   imagen:
     archivo: null
     textoAlternativo:
@@ -51,7 +55,9 @@ dosRutas:
   antetitulo:
     es: Dos formas de entrar
   titulo:
-    es: Puedes ponerte la nariz. O puedes hacer que mil personas se la pongan.
+    es: |-
+      Puedes ponerte la nariz. O puedes
+      hacer que mil personas se la pongan.
   entrada:
     es: Elige tu camino. Cada uno tiene su propio proceso, sus tiempos y su equipo dedicado.
   rutaPersonas:
@@ -93,7 +99,9 @@ metodo:
   antetitulo:
     es: Nuestro método
   titulo:
-    es: El clown care no es animación. Es una intervención.
+    es: |-
+      El clown care no es animación.
+      Es una intervención.
   entrada:
     es: >-
       El niño hospitalizado pierde el control de casi todo: su cuerpo, su rutina,
@@ -133,7 +141,9 @@ citaEditorial:
       La atención a los niños enfermos va más allá de la medicina y la
       tecnología. Veo a los payasos como sanadores.
   autor:
-    es: Dr. John M. Driscoll Jr. — Children's Hospital, Nueva York
+    es: |-
+      Dr. John M. Driscoll Jr.
+      Children's Hospital, Nueva York
 
 visitasVirtuales:
   titulo:

@@ -6,7 +6,12 @@
    variables. Cambiar un token aquí cambia el sitio entero de forma coherente.
    ============================================================================= */
 
-@import '@fontsource-variable/fraunces';
+/* IMPORTANTE: 'full' y no el índice por defecto.
+   Fraunces es una tipografía variable con cuatro ejes: grosor, tamaño óptico
+   (opsz), redondez (SOFT) y excentricidad (WONK). El archivo por defecto solo
+   trae el grosor, y sin los otros tres la letra pierde justo el carácter que
+   la hace verse hecha a mano en vez de genérica. */
+@import '@fontsource-variable/fraunces/full.css';
 @import '@fontsource-variable/plus-jakarta-sans';
 
 :root {
@@ -73,7 +78,9 @@ h1, h2, h3, h4 {
   font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.02em;
-  font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  /* opsz alto = trazo de titular, con más contraste entre gruesos y finos.
+     SOFT redondea los remates. WONK activa las formas excéntricas. */
+  font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 144;
 }
 .h-hero { font-size: clamp(2.6rem, 6.4vw, 5.2rem); line-height: 0.98; letter-spacing: -0.035em; }
 .h1 { font-size: clamp(2.2rem, 4.8vw, 3.9rem); }

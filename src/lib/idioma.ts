@@ -98,3 +98,31 @@ export function formatearNumero(valor: unknown, idioma: string = IDIOMA_POR_DEFE
   if (typeof valor !== 'number') return String(valor);
   return new Intl.NumberFormat(CODIGO_COMPLETO[idioma] ?? 'es-MX').format(valor);
 }
+
+/**
+ * Convierte el marcado sencillo que escribe el equipo en HTML seguro.
+ *
+ *   **negritas**  →  <strong>negritas</strong>
+ *   salto de línea →  <br>
+ *
+ * Primero escapa todo el HTML y solo después inserta las etiquetas permitidas.
+ * Ese orden importa: es lo que impide que alguien —por error o a propósito—
+ * inyecte código a través del panel de edición. El contenido del panel es
+ * confiable, pero un control que depende de la confianza no es un control.
+ */
+export function enriquecer(texto: string): string {
+  if (!texto) return '';
+  const escapado = texto
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+  return escapado
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+/** Atajo: resuelve el idioma y aplica el marcado sencillo en un solo paso. */
+export function tr(campo: TextoLocalizado, idioma: string = IDIOMA_POR_DEFECTO): string {
+  return enriquecer(t(campo, idioma));
+}
