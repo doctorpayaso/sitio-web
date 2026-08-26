@@ -52,6 +52,21 @@ export default defineConfig({
   // ---------------------------------------------------------------------------
   output: 'static',
 
+  // ---------------------------------------------------------------------------
+  //  Sesiones desactivadas
+  // ---------------------------------------------------------------------------
+  //  El adaptador de Cloudflare activa sesiones por defecto y exige un almacén
+  //  KV llamado SESSION. Sin él, el despliegue falla.
+  //
+  //  Este sitio no las necesita: no hay usuarios que inicien sesión. El panel de
+  //  edición se autentica contra GitHub con sus propias cookies, no con sesiones
+  //  de Astro.
+  //
+  //  Menos recursos contratados es menos superficie que mantener y menos cosas
+  //  que alguien tenga que entender dentro de dos años.
+  // ---------------------------------------------------------------------------
+  session: false,
+
   adapter: cloudflare({
     imageService: 'compile',
     // 'compile' optimiza las imágenes al compilar en vez de en cada visita.
