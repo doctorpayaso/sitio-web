@@ -1,0 +1,14 @@
+nombre: Virtual
+estado: Nacional
+tipo: virtual
+descripcion:
+  es: 'Certificación 100% en línea, con práctica coordinada en tu ciudad.'
+imagen:
+  archivo: null
+  textoAlternativo:
+    es: ''
+  muestraPersonasIdentificables: false
+  folioConsentimiento: ''
+correoDeContacto: ''
+activa: true
+orden: 5

@@ -170,6 +170,22 @@ const boton = (label: string) =>
     { label },
   );
 
+/** Tarjeta de las dos rutas de entrada de la portada. */
+const rutaDeEntrada = (label: string) =>
+  fields.object(
+    {
+      etiqueta: texto('Etiqueta superior'),
+      titulo: texto('Título'),
+      descripcion: parrafo('Descripción'),
+      puntos: fields.array(texto('Punto'), {
+        label: 'Lista de puntos',
+        itemLabel: (props) => props.fields.es?.value || 'Punto',
+      }),
+      boton: boton('Botón'),
+    },
+    { label },
+  );
+
 /** Metadatos de buscador para una página. */
 const seo = () =>
   fields.object(
@@ -213,6 +229,25 @@ const OPCIONES_PAGINA_FAQ = [
   { label: 'Alianzas', value: 'alianzas' },
   { label: 'Donar', value: 'dona' },
   { label: 'Qué es Clown Care', value: 'clown-care' },
+] as const;
+
+const OPCIONES_CIFRAS = [
+  { label: 'Voluntarios certificados', value: 'voluntariosCertificados' },
+  { label: 'Voluntarios activos', value: 'voluntariosActivos' },
+  { label: 'Visitas hospitalarias', value: 'visitasHospitalarias' },
+  { label: 'Personas beneficiadas', value: 'personasBeneficiadas' },
+  { label: 'Ciudades', value: 'ciudadesConOperacion' },
+  { label: 'Informes publicados', value: 'informesPublicados' },
+  { label: 'Rango de edad', value: 'rangoDeEdad' },
+] as const;
+
+const OPCIONES_COLOR = [
+  { label: 'Coral', value: 'coral' },
+  { label: 'Azul', value: 'azul' },
+  { label: 'Menta', value: 'menta' },
+  { label: 'Mango', value: 'mango' },
+  { label: 'Teal', value: 'teal' },
+  { label: 'Vino', value: 'vino' },
 ] as const;
 
 const OPCIONES_METODO_PAGO = [
@@ -396,11 +431,10 @@ export default config({
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', {
-              description: 'Propuesta aprobada: «Hay medicina que no se receta.»',
+              description: 'Aprobado por Dirección: «Hay medicina que no se receta.»',
             }),
             palabraDestacada: texto('Palabra resaltada en coral', {
-              description:
-                'Debe ser una palabra que aparezca en el titular. Se pinta de color.',
+              description: 'Debe aparecer tal cual dentro del titular. Se pinta de coral.',
             }),
             entrada: parrafo('Párrafo de entrada'),
             botonPrincipal: boton('Botón principal'),
@@ -408,81 +442,138 @@ export default config({
             mostrarProximaGeneracion: fields.checkbox({
               label: 'Mostrar la próxima generación',
               defaultValue: true,
-              description:
-                'Se toma automáticamente de la generación abierta más cercana.',
+              description: 'Se toma sola de la generación abierta más cercana.',
             }),
-            imagen: imagen('Fotografía principal', 'hero'),
+            firma: texto('Firma bajo los botones'),
+            insignia: fields.object(
+              {
+                numero: fields.integer({ label: 'Número' }),
+                etiqueta: texto('Etiqueta'),
+              },
+              { label: 'Insignia flotante sobre la foto' },
+            ),
+            imagen: imagen('Fotografía principal', 'hero', {
+              description: 'Vertical, proporción 4:5. Voluntario y paciente, mirada a mirada.',
+            }),
           },
           { label: 'Primera pantalla' },
         ),
 
         franjaDeCifras: fields.multiselect({
-          label: 'Cifras que se muestran en la franja',
-          options: [
-            { label: 'Voluntarios certificados', value: 'voluntariosCertificados' },
-            { label: 'Voluntarios activos', value: 'voluntariosActivos' },
-            { label: 'Visitas hospitalarias', value: 'visitasHospitalarias' },
-            { label: 'Personas beneficiadas', value: 'personasBeneficiadas' },
-            { label: 'Ciudades', value: 'ciudadesConOperacion' },
-            { label: 'Informes publicados', value: 'informesPublicados' },
-            { label: 'Rango de edad', value: 'rangoDeEdad' },
-          ],
-          description:
-            'Elige entre tres y cuatro. Los valores salen de «Cifras de impacto».',
+          label: 'Cifras de la franja verde oscuro',
+          options: OPCIONES_CIFRAS,
+          description: 'Elige cuatro. Los valores salen de «Cifras de impacto».',
         }),
 
         dosRutas: fields.object(
           {
-            titulo: texto('Titular del bloque'),
-            rutaVoluntariado: fields.object({
-              titulo: texto('Título'),
-              descripcion: parrafo('Descripción'),
-              boton: boton('Botón'),
-            }),
-            rutaInstitucional: fields.object({
-              titulo: texto('Título'),
-              descripcion: parrafo('Descripción'),
-              boton: boton('Botón'),
-            }),
+            antetitulo: texto('Antetítulo'),
+            titulo: texto('Titular'),
+            entrada: parrafo('Entrada'),
+            rutaPersonas: rutaDeEntrada('Tarjeta coral — para personas'),
+            rutaInstituciones: rutaDeEntrada('Tarjeta azul — para instituciones'),
           },
           { label: 'Las dos rutas' },
         ),
 
-        bloqueClownCare: fields.object(
+        metodo: fields.object(
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular'),
-            cuerpo: parrafo('Cuerpo'),
-            portadaDelVideo: imagen('Portada del video', 'video'),
-            enlaceDelVideo: fields.url({ label: 'Enlace del video' }),
-            boton: boton('Botón'),
+            entrada: parrafo('Entrada'),
+            imagen: imagen('Fotografía cuadrada', 'metodo'),
+            pasos: fields.array(
+              fields.object({
+                titulo: texto('Título del paso'),
+                descripcion: parrafo('Descripción'),
+              }),
+              {
+                label: 'Pasos del método',
+                description: 'Se numeran solos: 01, 02, 03…',
+                itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Paso',
+              },
+            ),
           },
-          { label: 'Bloque: qué es clown care' },
+          { label: 'Nuestro método' },
         ),
 
-        testimonioDestacado: fields.relationship({
-          label: 'Testimonio destacado',
-          collection: 'testimonios',
-          description:
-            'Solo se pueden destacar testimonios con autorización vigente registrada.',
-        }),
+        citaEditorial: fields.object(
+          {
+            texto: parrafo('Cita', {
+              description:
+                'REGLA: se transcribe de la fuente original. Nunca se redacta ni se parafrasea una cita atribuida a una persona real.',
+            }),
+            autor: texto('Autor y procedencia'),
+          },
+          { label: 'Cita editorial' },
+        ),
 
-        bloqueTransparencia: fields.object(
+        visitasVirtuales: fields.object(
+          {
+            titulo: texto('Titular'),
+            descripcion: parrafo('Descripción'),
+            boton: boton('Botón'),
+          },
+          { label: 'Franja de visitas virtuales' },
+        ),
+
+        transparencia: fields.object(
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular'),
-            cuerpo: parrafo('Cuerpo'),
-            boton: boton('Botón'),
+            entrada: parrafo('Entrada'),
+            enlace: boton('Enlace a los informes'),
+            tarjetas: fields.array(
+              fields.object({
+                destacado: texto('Texto grande'),
+                color: fields.select({
+                  label: 'Color del texto grande',
+                  options: OPCIONES_COLOR,
+                  defaultValue: 'coral',
+                }),
+                titulo: texto('Título'),
+                descripcion: parrafo('Descripción'),
+              }),
+              {
+                label: 'Tarjetas',
+                itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Tarjeta',
+              },
+            ),
           },
-          { label: 'Bloque: transparencia' },
+          { label: 'Transparencia' },
+        ),
+
+        testimonio: fields.object(
+          {
+            antetitulo: texto('Antetítulo'),
+            persona: fields.relationship({
+              label: 'Testimonio destacado',
+              collection: 'testimonios',
+              description:
+                'Solo aparece en el sitio si el testimonio tiene autorización vigente registrada.',
+            }),
+            imagen: imagen('Retrato', 'testimonios'),
+          },
+          { label: 'Testimonio' },
+        ),
+
+        aliados: fields.object(
+          { titulo: texto('Texto sobre los logotipos') },
+          {
+            label: 'Aliados',
+            description: 'Los logotipos se administran en la sección «Aliados».',
+          },
         ),
 
         cierre: fields.object(
           {
-            titulo: texto('Titular de cierre'),
-            boton: boton('Botón'),
+            titulo: texto('Titular'),
+            descripcion: parrafo('Descripción'),
+            firma: texto('Firma'),
+            botonPrincipal: boton('Botón principal'),
+            botonSecundario: boton('Botón secundario'),
           },
-          { label: 'Cierre de la página' },
+          { label: 'Cierre en negro' },
         ),
       },
     }),
@@ -785,15 +876,7 @@ export default config({
 
         cifrasQueSeMuestran: fields.multiselect({
           label: 'Cifras que se muestran',
-          options: [
-            { label: 'Voluntarios certificados', value: 'voluntariosCertificados' },
-            { label: 'Voluntarios activos', value: 'voluntariosActivos' },
-            { label: 'Visitas hospitalarias', value: 'visitasHospitalarias' },
-            { label: 'Personas beneficiadas', value: 'personasBeneficiadas' },
-            { label: 'Ciudades', value: 'ciudadesConOperacion' },
-            { label: 'Informes publicados', value: 'informesPublicados' },
-            { label: 'Rango de edad', value: 'rangoDeEdad' },
-          ],
+          options: OPCIONES_CIFRAS,
         }),
 
         informes: fields.object(

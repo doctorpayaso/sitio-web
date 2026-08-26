@@ -3,69 +3,222 @@ seo:
     es: Doctor Payaso A.C. — Payasos de hospital certificados en México
   descripcion:
     es: >-
-      Llevamos payasos de hospital certificados a pacientes pediátricos en cuatro
-      ciudades de México. Conoce el programa de certificación o alíate con nosotros.
+      Formamos voluntarios certificados que acompañan a pacientes hospitalizados
+      en CDMX, Monterrey, Veracruz y Toluca. Certifícate o alía tu institución.
   imagenAlCompartir: null
+
 hero:
   antetitulo:
-    es: Payasos de hospital certificados
+    es: Clown care certificado · CDMX · Monterrey · Veracruz · Toluca
   titulo:
     es: Hay medicina que no se receta.
   palabraDestacada:
-    es: no se receta
+    es: receta
   entrada:
     es: >-
-      Somos payasos de hospital certificados. Acompañamos a pacientes pediátricos
-      en momentos en los que la medicina hace su parte y hace falta alguien que
-      haga la otra.
+      Somos Doctor Payaso A.C. Formamos voluntarios certificados que acompañan a
+      pacientes hospitalizados —de 0 a 114 años— con las herramientas del arte
+      clown, la psicología y la risoterapia. No entretenemos: intervenimos.
   botonPrincipal:
     texto:
-      es: Quiero certificarme
+      es: Quiero certificarme →
     destino: /certificate
   botonSecundario:
     texto:
-      es: Ver qué hacemos
-    destino: /clown-care
+      es: Soy empresa, hospital o universidad
+    destino: /alianzas
   mostrarProximaGeneracion: true
+  firma:
+    es: Sanando con amor y alegría
+  insignia:
+    numero: 945
+    etiqueta:
+      es: Voluntarios certificados
   imagen:
     archivo: null
     textoAlternativo:
       es: ''
     muestraPersonasIdentificables: false
     folioConsentimiento: ''
+
 franjaDeCifras:
-  - voluntariosCertificados
+  - voluntariosActivos
   - visitasHospitalarias
   - personasBeneficiadas
-  - ciudadesConOperacion
+  - rangoDeEdad
+
 dosRutas:
+  antetitulo:
+    es: Dos formas de entrar
   titulo:
-    es: Hay dos formas de estar en esto.
-  rutaVoluntariado:
+    es: Puedes ponerte la nariz. O puedes hacer que mil personas se la pongan.
+  entrada:
+    es: Elige tu camino. Cada uno tiene su propio proceso, sus tiempos y su equipo dedicado.
+  rutaPersonas:
+    etiqueta:
+      es: Para personas
     titulo:
-      es: Quiero ser voluntario
+      es: Conviértete en Doctor Payaso
     descripcion:
       es: >-
-        No buscamos payasos. Buscamos personas dispuestas a formarse en serio.
+        Seis módulos de formación, práctica hospitalaria supervisada y una
+        comunidad que te sostiene. No necesitas experiencia en actuación.
+    puntos:
+      - es: Certificación presencial o 100% virtual
+      - es: Práctica real en hospital, acompañada
+      - es: Acceso a la red nacional de voluntarios
     boton:
       texto:
-        es: Conocer la certificación
+        es: Ver el proceso de certificación →
       destino: /certificate
-  rutaInstitucional:
+  rutaInstituciones:
+    etiqueta:
+      es: Para instituciones
     titulo:
-      es: Represento a una institución
+      es: Alía tu organización
     descripcion:
       es: >-
-        Hospitales, empresas y universidades que quieren documentar su impacto social.
+        Programas de clown care para hospitales, voluntariado corporativo con
+        impacto medible y certificación para estudiantes de ciencias de la salud.
+    puntos:
+      - es: Programa permanente en tu hospital
+      - es: RSE y bienestar emocional para colaboradores
+      - es: Formación curricular en universidades
     boton:
       texto:
-        es: Ver modelos de alianza
+        es: Ver modelos de alianza →
       destino: /alianzas
-testimonioDestacado: null
-cierre:
+
+metodo:
+  antetitulo:
+    es: Nuestro método
   titulo:
-    es: La próxima generación abre pronto.
+    es: El clown care no es animación. Es una intervención.
+  entrada:
+    es: >-
+      El niño hospitalizado pierde el control de casi todo: su cuerpo, su rutina,
+      su intimidad. El clown care invierte esa relación de poder. Por unos
+      minutos, el paciente manda y el adulto obedece.
+  imagen:
+    archivo: null
+    textoAlternativo:
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
+  pasos:
+    - titulo:
+        es: Devolver el control
+      descripcion:
+        es: >-
+          Mediante la inversión de roles, el paciente pasa de objeto de
+          procedimientos a sujeto que decide. Es el mecanismo central de la
+          metodología.
+    - titulo:
+        es: Bajar la carga fisiológica
+      descripcion:
+        es: >-
+          La risa y el juego reducen la percepción de estrés y ansiedad en el
+          paciente, en su familia y también en el personal de salud que comparte
+          el espacio.
+    - titulo:
+        es: Humanizar el entorno clínico
+      descripcion:
+        es: >-
+          La visita no interrumpe el tratamiento: lo acompaña. Cada voluntario
+          opera bajo protocolo hospitalario y coordinación con el área médica.
+
+citaEditorial:
+  texto:
+    es: >-
+      La atención a los niños enfermos va más allá de la medicina y la
+      tecnología. Veo a los payasos como sanadores.
+  autor:
+    es: Dr. John M. Driscoll Jr. — Children's Hospital, Nueva York
+
+visitasVirtuales:
+  titulo:
+    es: Visitas virtuales, gratis, a cualquier parte del mundo
+  descripcion:
+    es: >-
+      Si alguien de tu familia está hospitalizado o en aislamiento, un Doctor
+      Payaso puede visitarlo por videollamada. Sin costo, sin requisitos.
   boton:
     texto:
-      es: Quiero mi lugar
+      es: Agendar visita
+    destino: /contacto
+
+transparencia:
+  antetitulo:
+    es: Transparencia
+  titulo:
+    es: Once años de cuentas públicas
+  entrada:
+    es: >-
+      Publicamos un informe anual desde 2015. Puedes revisar en qué se gastó cada
+      peso antes de darnos el tuyo.
+  enlace:
+    texto:
+      es: Ver todos los informes →
+    destino: /impacto
+  tarjetas:
+    - destacado:
+        es: '2025'
+      color: coral
+      titulo:
+        es: Informe más reciente
+      descripcion:
+        es: Cobertura por sede, horas de voluntariado y estado financiero auditado.
+    - destacado:
+        es: ES/EN
+      color: azul
+      titulo:
+        es: Bilingüe
+      descripcion:
+        es: Cada informe está disponible en español e inglés para aliados internacionales.
+    - destacado:
+        es: PDF
+      color: menta
+      titulo:
+        es: Descarga abierta
+      descripcion:
+        es: Sin registro, sin correo, sin formulario. Documentos públicos.
+    - destacado:
+        es: CFDI
+      color: mango
+      titulo:
+        es: Deducible
+      descripcion:
+        es: Emitimos recibo deducible de impuestos por cada donativo.
+
+testimonio:
+  antetitulo:
+    es: Lo dice el hospital
+  persona: dra-sonia-gutierrez
+  imagen:
+    archivo: null
+    textoAlternativo:
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
+
+aliados:
+  titulo:
+    es: Hospitales, empresas y universidades que confían en nosotros
+
+cierre:
+  titulo:
+    es: La nariz roja es la máscara más pequeña del mundo. Y la que más pesa.
+  descripcion:
+    es: >-
+      Ningún tratamiento incluye la compañía. Nosotros sí. Súmate como
+      voluntario, alía tu institución o dona.
+  firma:
+    es: Sanando con amor y alegría
+  botonPrincipal:
+    texto:
+      es: Quiero certificarme
     destino: /certificate
+  botonSecundario:
+    texto:
+      es: Quiero donar
+    destino: /dona

@@ -1,0 +1,20 @@
+nombre: Dra. Sonia Gutiérrez
+cargo:
+  es: Personal médico
+institucion: Centro Médico Nacional 20 de Noviembre
+cita:
+  es: >-
+    ...reírse hace que a los pacientes se les olvide por lo menos un ratito toda
+    esa angustia, no simplemente son doctores payasos, todos saben cómo abordar
+    un tema, cómo de alguna u otra manera acompañar a las personas. Doctor payaso
+    es amor.
+fuente: Video institucional Doctor Payaso A.C.
+fotografia:
+  archivo: null
+  textoAlternativo:
+    es: ''
+  muestraPersonasIdentificables: false
+  folioConsentimiento: ''
+autorizacionVigente: false
+fechaDeAutorizacion: null
+publicar: false

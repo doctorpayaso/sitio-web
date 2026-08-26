@@ -1,24 +1,29 @@
 ---
 // =============================================================================
-//  Inicio
+//  Inicio — portada
 //
-//  Esta página es el PATRÓN. Las otras cinco se construyen igual:
+//  Portada fiel al prototipo aprobado por Dirección en agosto de 2026.
+//  Nueve secciones: hero, franja de prueba, doble ruta, método, cita editorial,
+//  visitas virtuales, transparencia, testimonio, aliados y cierre.
+//
+//  ESTA PÁGINA ES EL PATRÓN. Las otras cinco se construyen igual:
 //   1. importar la página desde lib/contenido
 //   2. resolver el idioma una vez
 //   3. envolver todo texto en t()
 //   4. no escribir NUNCA un texto visible directamente aquí
 //
 //  Si un texto está escrito en este archivo, la Administradora no lo puede
-//  cambiar. Ese es el criterio único para decidir si algo va en el panel.
+//  cambiar. Ese es el criterio único para decidir qué va en el panel.
 // =============================================================================
 
 import Base from '../layouts/Base.astro';
-import Boton from '../components/Boton.astro';
 import { t, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
 import {
   paginas,
   cifras,
+  aliados,
   proximaGeneracion,
+  sedePorId,
   testimonioPorId,
   imagenPublicable,
 } from '../lib/contenido';
@@ -27,341 +32,405 @@ const p = paginas.inicio;
 const idioma = idiomaDe(Astro);
 
 const generacion = p.hero?.mostrarProximaGeneracion ? proximaGeneracion() : null;
-const testimonio = testimonioPorId(p.testimonioDestacado);
+const sedeGeneracion = sedePorId(generacion?.sede);
+const MODALIDAD: Record<string, { es: string; en: string }> = {
+  presencial: { es: 'presencial', en: 'in person' },
+  virtual: { es: 'virtual', en: 'online' },
+  mixta: { es: 'mixta', en: 'hybrid' },
+};
+const testimonio = testimonioPorId(p.testimonio?.persona);
+const listaAliados = aliados();
 
-// Las cifras de la franja las elige la Administradora desde el panel; aquí solo
-// se resuelven contra el registro único de cifras.
+// --- Franja de prueba --------------------------------------------------------
+// Las cifras las elige la Administradora desde el panel; aquí solo se resuelven
+// contra el registro único de cifras.
 const ETIQUETAS: Record<string, { es: string; en: string }> = {
   voluntariosCertificados: { es: 'Voluntarios certificados', en: 'Certified volunteers' },
-  voluntariosActivos: { es: 'Voluntarios activos', en: 'Active volunteers' },
+  voluntariosActivos: { es: 'Voluntarios certificados activos', en: 'Active certified volunteers' },
   visitasHospitalarias: { es: 'Visitas a hospitales', en: 'Hospital visits' },
   personasBeneficiadas: { es: 'Personas beneficiadas', en: 'People reached' },
-  ciudadesConOperacion: { es: 'Ciudades', en: 'Cities' },
-  informesPublicados: { es: 'Informes publicados', en: 'Reports published' },
-  rangoDeEdad: { es: 'Rango de edad', en: 'Age range' },
+  ciudadesConOperacion: { es: 'Ciudades con operación permanente', en: 'Cities with permanent operations' },
+  informesPublicados: { es: 'Informes anuales publicados', en: 'Annual reports published' },
+  rangoDeEdad: {
+    es: 'Rango de edad de los pacientes que acompañamos',
+    en: 'Age range of the patients we accompany',
+  },
 };
 
 const franja = (p.franjaDeCifras ?? [])
   .map((clave: string) => ({
+    clave,
     valor: (cifras as any)[clave],
     etiqueta: ETIQUETAS[clave]?.[idioma as 'es'] ?? ETIQUETAS[clave]?.es ?? clave,
   }))
   .filter((c: any) => c.valor !== undefined && c.valor !== null && c.valor !== '');
 
-const heroVisible = imagenPublicable(p.hero?.imagen);
-
-/** Resalta la palabra elegida por el equipo dentro del titular. */
-function titularConAcento(titular: string, acento: string) {
-  if (!acento || !titular.includes(acento)) return [titular, '', ''];
-  const i = titular.indexOf(acento);
-  return [titular.slice(0, i), acento, titular.slice(i + acento.length)];
+/** Resalta en coral la palabra que el equipo eligió dentro del titular. */
+function partirTitular(titular: string, palabra: string) {
+  if (!palabra || !titular.includes(palabra)) return [titular, '', ''];
+  const i = titular.indexOf(palabra);
+  return [titular.slice(0, i), palabra, titular.slice(i + palabra.length)];
 }
-
-const [antes, acento, despues] = titularConAcento(
+const [antes, acento, despues] = partirTitular(
   t(p.hero?.titulo, idioma),
   t(p.hero?.palabraDestacada, idioma),
 );
+
+const heroVisible = imagenPublicable(p.hero?.imagen);
+const metodoVisible = imagenPublicable(p.metodo?.imagen);
+const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
 ---
 
 <Base seo={p.seo} ruta="emocional">
   <!-- ===================================================================== -->
-  <!--  Primera pantalla                                                      -->
+  <!--  HERO                                                                  -->
   <!-- ===================================================================== -->
   <section class="hero">
-    <div class="contenedor hero__interior">
-      <div class="hero__texto">
-        {p.hero?.antetitulo && <p class="antetitulo">{t(p.hero.antetitulo, idioma)}</p>}
+    <div class="wrap hero-grid">
+      <div>
+        {p.hero?.antetitulo && (
+          <span class="eyebrow" style="color:var(--coral-d)">
+            <span class="dot"></span> {t(p.hero.antetitulo, idioma)}
+          </span>
+        )}
 
-        <h1>
-          {antes}<em>{acento}</em>{despues}
-        </h1>
+        <h1 class="h-hero">{antes}<span class="accent">{acento}</span>{despues}</h1>
 
-        <p class="entrada">{t(p.hero?.entrada, idioma)}</p>
+        <p class="lead">{t(p.hero?.entrada, idioma)}</p>
 
-        {
-          generacion && (
-            <p class="hero__generacion">
-              {idioma === 'en' ? 'Next cohort' : 'Próxima generación'}:{' '}
-              <strong>{formatearFecha(generacion.fechaDeInicio, idioma)}</strong>
-              {generacion.cupoLimitado && (
-                <span> · {idioma === 'en' ? 'Limited seats' : 'Cupo limitado'}</span>
-              )}
-            </p>
-          )
-        }
-
-        <div class="hero__acciones">
-          <Boton {...p.hero?.botonPrincipal} variante="principal" />
-          <Boton {...p.hero?.botonSecundario} variante="secundario" />
+        <div class="hero-cta">
+          {t(p.hero?.botonPrincipal?.texto, idioma) && (
+            <a href={p.hero.botonPrincipal.destino} class="btn btn-coral">
+              {t(p.hero.botonPrincipal.texto, idioma)}
+            </a>
+          )}
+          {t(p.hero?.botonSecundario?.texto, idioma) && (
+            <a href={p.hero.botonSecundario.destino} class="btn btn-ghost">
+              {t(p.hero.botonSecundario.texto, idioma)}
+            </a>
+          )}
         </div>
+
+        {generacion && (
+          <div class="next-gen">
+            <span class="pulse"></span>
+            {idioma === 'en' ? 'Next cohort' : 'Próxima generación'}{' '}
+            {MODALIDAD[generacion.modalidad]?.[idioma as 'es'] ?? MODALIDAD[generacion.modalidad]?.es}:{' '}
+            <strong>
+              {sedeGeneracion?.nombre ? `${sedeGeneracion.nombre} · ` : ''}
+              {formatearFecha(generacion.fechaDeInicio, idioma)}
+            </strong>
+          </div>
+        )}
+
+        {t(p.hero?.firma, idioma) && <p class="firma">{t(p.hero.firma, idioma)}</p>}
       </div>
 
-      {
-        heroVisible && (
-          <div class="hero__imagen">
+      <div class="hero-photo-wrap">
+        <div class:list={['photo', 'photo-hero', 'duo-coral', 'dots-bg', heroVisible && 'filled']}>
+          {heroVisible && (
             <img
+              class="slot-img"
               src={p.hero.imagen.archivo}
               alt={t(p.hero.imagen.textoAlternativo, idioma)}
               loading="eager"
-              fetchpriority="high"
             />
+          )}
+        </div>
+
+        {p.hero?.insignia?.numero && (
+          <div class="badge-float">
+            <div class="n">
+              {formatearNumero(p.hero.insignia.numero, idioma)}<span style="color:var(--coral)">+</span>
+            </div>
+            <div class="t">{t(p.hero.insignia.etiqueta, idioma)}</div>
           </div>
-        )
-      }
+        )}
+      </div>
     </div>
   </section>
 
   <!-- ===================================================================== -->
-  <!--  Franja de cifras                                                      -->
+  <!--  FRANJA DE PRUEBA                                                      -->
   <!-- ===================================================================== -->
-  {
-    franja.length > 0 && (
-      <section class="franja">
-        <div class="contenedor franja__interior">
+  {franja.length > 0 && (
+    <section class="proof">
+      <div class="wrap">
+        <div class="proof-grid">
           {franja.map((c: any) => (
-            <div class="franja__dato">
-              <span class="franja__valor">{formatearNumero(c.valor, idioma)}</span>
-              <span class="franja__etiqueta">{c.etiqueta}</span>
+            <div class="proof-item">
+              <div class="n">
+                {c.clave === 'rangoDeEdad' ? (
+                  String(c.valor)
+                ) : (
+                  <Fragment>{formatearNumero(c.valor, idioma)}<em>+</em></Fragment>
+                )}
+              </div>
+              <div class="t">{c.etiqueta}</div>
             </div>
           ))}
         </div>
         {cifras.fechaDeCorte && (
-          <p class="franja__corte contenedor">
+          <p class="proof-corte">
             {idioma === 'en' ? 'Figures as of' : 'Cifras a'}{' '}
             {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
           </p>
         )}
-      </section>
-    )
-  }
+      </div>
+    </section>
+  )}
 
   <!-- ===================================================================== -->
-  <!--  Las dos rutas                                                         -->
+  <!--  DOBLE RUTA                                                            -->
   <!-- ===================================================================== -->
-  <section class="rutas contenedor">
-    <h2>{t(p.dosRutas?.titulo, idioma)}</h2>
-    <div class="rutas__rejilla">
-      <article class="ruta ruta--emocional">
-        <h3>{t(p.dosRutas?.rutaVoluntariado?.titulo, idioma)}</h3>
-        <p>{t(p.dosRutas?.rutaVoluntariado?.descripcion, idioma)}</p>
-        <Boton {...p.dosRutas?.rutaVoluntariado?.boton} variante="principal" />
-      </article>
+  <section class="pad">
+    <div class="wrap">
+      <div style="max-width:60ch;margin-bottom:44px">
+        <span class="eyebrow" style="color:var(--teal)">
+          <span class="dot" style="background:var(--teal)"></span> {t(p.dosRutas?.antetitulo, idioma)}
+        </span>
+        <h2 class="h2" style="margin:14px 0">{t(p.dosRutas?.titulo, idioma)}</h2>
+        <p class="lead">{t(p.dosRutas?.entrada, idioma)}</p>
+      </div>
 
-      <article class="ruta ruta--institucional" data-ruta="institucional">
-        <h3>{t(p.dosRutas?.rutaInstitucional?.titulo, idioma)}</h3>
-        <p>{t(p.dosRutas?.rutaInstitucional?.descripcion, idioma)}</p>
-        <Boton {...p.dosRutas?.rutaInstitucional?.boton} variante="principal" />
-      </article>
+      <div class="routes">
+        {[
+          { datos: p.dosRutas?.rutaPersonas, clase: 'route-a' },
+          { datos: p.dosRutas?.rutaInstituciones, clase: 'route-b' },
+        ].map(({ datos, clase }) =>
+          datos ? (
+            <article class:list={['route', clase]}>
+              <span class="ring ring1"></span>
+              <span class="ring ring2"></span>
+              <span class="route-tag">{t(datos.etiqueta, idioma)}</span>
+              <h3>{t(datos.titulo, idioma)}</h3>
+              <p>{t(datos.descripcion, idioma)}</p>
+              <ul>
+                {(datos.puntos ?? []).map((punto: any) => <li>{t(punto, idioma)}</li>)}
+              </ul>
+              <div class="foot">
+                <a href={datos.boton?.destino} class="btn btn-white">{t(datos.boton?.texto, idioma)}</a>
+              </div>
+            </article>
+          ) : null,
+        )}
+      </div>
     </div>
   </section>
 
   <!-- ===================================================================== -->
-  <!--  Testimonio                                                            -->
+  <!--  MÉTODO                                                                -->
   <!-- ===================================================================== -->
-  {
-    testimonio && (
-      <section class="testimonio contenedor">
-        <blockquote>
-          <p>{t(testimonio.cita, idioma)}</p>
-          <footer>
-            <cite>
-              {testimonio.nombre}
-              {testimonio.cargo && <span>, {t(testimonio.cargo, idioma)}</span>}
-              {testimonio.institucion && <span> · {testimonio.institucion}</span>}
-            </cite>
-          </footer>
-        </blockquote>
-      </section>
-    )
-  }
+  <section
+    class="pad"
+    style="background:var(--papel);border-top:1px solid var(--tinta-12);border-bottom:1px solid var(--tinta-12)"
+  >
+    <div class="wrap">
+      <div class="grid g2" style="gap:clamp(32px,5vw,72px);align-items:center">
+        <div
+          class:list={['photo', 'duo-mixto', 'dots-bg', metodoVisible && 'filled']}
+          style="aspect-ratio:1/1;border-radius:var(--r-xl)"
+        >
+          {metodoVisible && (
+            <img
+              class="slot-img"
+              src={p.metodo.imagen.archivo}
+              alt={t(p.metodo.imagen.textoAlternativo, idioma)}
+              loading="lazy"
+            />
+          )}
+        </div>
+
+        <div>
+          <span class="eyebrow" style="color:var(--azul)">
+            <span class="dot" style="background:var(--azul)"></span> {t(p.metodo?.antetitulo, idioma)}
+          </span>
+          <h2 class="h2" style="margin:14px 0 20px">{t(p.metodo?.titulo, idioma)}</h2>
+          <p class="lead" style="margin-bottom:28px">{t(p.metodo?.entrada, idioma)}</p>
+
+          {(p.metodo?.pasos ?? []).map((paso: any, i: number) => (
+            <div class="method-row">
+              <div class="method-n">{String(i + 1).padStart(2, '0')}</div>
+              <div>
+                <h4>{t(paso.titulo, idioma)}</h4>
+                <p>{t(paso.descripcion, idioma)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ===================================================================== -->
-  <!--  Cierre                                                                -->
+  <!--  CITA EDITORIAL                                                        -->
   <!-- ===================================================================== -->
-  <section class="cierre contenedor">
-    <h2>{t(p.cierre?.titulo, idioma)}</h2>
-    <Boton {...p.cierre?.boton} variante="principal" />
+  {t(p.citaEditorial?.texto, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <div class="quote">
+          <span class="quote-mark" aria-hidden="true">&rdquo;</span>
+          <blockquote>{t(p.citaEditorial.texto, idioma)}</blockquote>
+          <cite>{t(p.citaEditorial.autor, idioma)}</cite>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===================================================================== -->
+  <!--  VISITAS VIRTUALES                                                     -->
+  <!-- ===================================================================== -->
+  {t(p.visitasVirtuales?.titulo, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <div
+          class="card split3"
+          style="display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center;padding:34px;background:linear-gradient(135deg,rgba(73,182,166,.14),rgba(255,162,49,.14));border-color:transparent"
+        >
+          <div
+            class="icon-chip"
+            style="background:var(--menta);color:#fff;width:58px;height:58px;border-radius:50%"
+            aria-hidden="true"
+          >
+            💻
+          </div>
+          <div>
+            <h3 class="h3" style="margin-bottom:6px">{t(p.visitasVirtuales.titulo, idioma)}</h3>
+            <p class="muted small">{t(p.visitasVirtuales.descripcion, idioma)}</p>
+          </div>
+          {t(p.visitasVirtuales.boton?.texto, idioma) && (
+            <a href={p.visitasVirtuales.boton.destino} class="btn btn-teal" style="flex:none">
+              {t(p.visitasVirtuales.boton.texto, idioma)}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===================================================================== -->
+  <!--  TRANSPARENCIA                                                         -->
+  <!-- ===================================================================== -->
+  <section class="pad">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+        <div style="max-width:52ch">
+          <span class="eyebrow" style="color:var(--teal)">
+            <span class="dot" style="background:var(--teal)"></span> {t(p.transparencia?.antetitulo, idioma)}
+          </span>
+          <h2 class="h2" style="margin:14px 0 12px">{t(p.transparencia?.titulo, idioma)}</h2>
+          <p class="lead">{t(p.transparencia?.entrada, idioma)}</p>
+        </div>
+        {t(p.transparencia?.enlace?.texto, idioma) && (
+          <a href={p.transparencia.enlace.destino} class="link-arrow" style="color:var(--teal)">
+            {t(p.transparencia.enlace.texto, idioma)}
+          </a>
+        )}
+      </div>
+
+      <div class="grid g4">
+        {(p.transparencia?.tarjetas ?? []).map((tarjeta: any) => (
+          <div class="card">
+            <div class="num" style={tarjeta.color ? `color:var(--${tarjeta.color})` : undefined}>
+              {t(tarjeta.destacado, idioma)}
+            </div>
+            <h4>{t(tarjeta.titulo, idioma)}</h4>
+            <p>{t(tarjeta.descripcion, idioma)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!--  TESTIMONIO                                                            -->
+  <!-- ===================================================================== -->
+  {testimonio && (
+    <section class="pad-s">
+      <div class="wrap grid g2" style="align-items:center;gap:clamp(28px,4vw,56px)">
+        <div
+          class:list={['photo', 'duo-mango', 'dots-bg', testimonioVisible && 'filled']}
+          style="aspect-ratio:4/3;border-radius:var(--r-xl)"
+        >
+          {testimonioVisible && (
+            <img
+              class="slot-img"
+              src={p.testimonio.imagen.archivo}
+              alt={t(p.testimonio.imagen.textoAlternativo, idioma)}
+              loading="lazy"
+            />
+          )}
+        </div>
+
+        <div>
+          <span class="eyebrow" style="color:var(--vino)">
+            <span class="dot" style="background:var(--vino)"></span> {t(p.testimonio?.antetitulo, idioma)}
+          </span>
+          <blockquote style="font-family:var(--display);font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.3;letter-spacing:-.02em;margin:18px 0 22px;color:var(--tinta-60)">
+            {t(testimonio.cita, idioma)}
+          </blockquote>
+          <p class="small" style="font-weight:700">
+            {testimonio.nombre}
+            {testimonio.institucion ? ` · ${testimonio.institucion}` : ''}
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===================================================================== -->
+  <!--  ALIADOS                                                               -->
+  <!-- ===================================================================== -->
+  {listaAliados.length > 0 && (
+    <section class="pad-s">
+      <div class="wrap">
+        <p class="eyebrow muted" style="display:block;text-align:center;margin-bottom:26px">
+          {t(p.aliados?.titulo, idioma)}
+        </p>
+        <div class="logos">
+          {listaAliados.map((a: any) => (
+            <div class="logo-box">
+              {a.logotipo ? <img src={a.logotipo} alt={a.nombre} loading="lazy" /> : a.nombre}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ===================================================================== -->
+  <!--  CIERRE                                                                -->
+  <!-- ===================================================================== -->
+  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,120px)">
+    <div class="wrap">
+      <div class="cta-final">
+        <span class="confetti" style="width:120px;height:120px;background:var(--coral);left:6%;top:14%"></span>
+        <span class="confetti" style="width:70px;height:70px;background:var(--mango);right:9%;top:22%"></span>
+        <span class="confetti" style="width:44px;height:44px;background:var(--menta);right:22%;bottom:16%"></span>
+        <span class="confetti" style="width:90px;height:90px;background:var(--azul);left:16%;bottom:8%"></span>
+
+        <div style="position:relative">
+          <h2 class="h1">{t(p.cierre?.titulo, idioma)}</h2>
+          <p>{t(p.cierre?.descripcion, idioma)}</p>
+          {t(p.cierre?.firma, idioma) && (
+            <p style="font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--mango);margin-top:22px">
+              {t(p.cierre.firma, idioma)}
+            </p>
+          )}
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px">
+            {t(p.cierre?.botonPrincipal?.texto, idioma) && (
+              <a href={p.cierre.botonPrincipal.destino} class="btn btn-coral">
+                {t(p.cierre.botonPrincipal.texto, idioma)}
+              </a>
+            )}
+            {t(p.cierre?.botonSecundario?.texto, idioma) && (
+              <a href={p.cierre.botonSecundario.destino} class="btn btn-ghost-light">
+                {t(p.cierre.botonSecundario.texto, idioma)}
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </Base>
-
-<style>
-  .antetitulo {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.11em;
-    color: var(--coral-d);
-    margin-bottom: 1rem;
-  }
-
-  .hero {
-    padding: clamp(3rem, 8vw, 6rem) 0;
-  }
-
-  .hero__interior {
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--coral);
-  }
-
-  .entrada {
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
-    color: var(--tinta-80);
-    max-width: 46ch;
-  }
-
-  .hero__generacion {
-    display: inline-block;
-    background: var(--crema-2);
-    border-radius: var(--r-s);
-    padding: 0.65rem 1rem;
-    font-size: 0.95rem;
-  }
-
-  .hero__acciones {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.85rem;
-    margin-top: 1.75rem;
-  }
-
-  .hero__imagen img {
-    border-radius: var(--r-l);
-    box-shadow: var(--shadow-lg);
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-  }
-
-  @media (max-width: 860px) {
-    .hero__interior {
-      grid-template-columns: 1fr;
-    }
-    .hero__imagen {
-      order: -1;
-    }
-    .hero__imagen img {
-      aspect-ratio: 3 / 2;
-    }
-  }
-
-  .franja {
-    background: var(--crema-2);
-    padding: 2.5rem 0 1.5rem;
-  }
-
-  .franja__interior {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 2rem;
-    text-align: center;
-  }
-
-  .franja__valor {
-    display: block;
-    font-family: var(--display);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 600;
-    color: var(--teal);
-    line-height: 1;
-  }
-
-  .franja__etiqueta {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--tinta-60);
-  }
-
-  .franja__corte {
-    margin-top: 1.75rem;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--tinta-60);
-  }
-
-  .rutas {
-    padding: clamp(3.5rem, 8vw, 6rem) 0 0;
-  }
-
-  .rutas h2 {
-    font-size: clamp(1.9rem, 4vw, 2.75rem);
-    max-width: 20ch;
-  }
-
-  .rutas__rejilla {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .ruta {
-    padding: clamp(1.75rem, 4vw, 2.5rem);
-    border-radius: var(--r-l);
-    background: var(--papel);
-    box-shadow: var(--shadow);
-  }
-
-  .ruta--emocional {
-    border-top: 5px solid var(--coral);
-  }
-
-  .ruta--institucional {
-    border-top: 5px solid var(--teal);
-  }
-
-  .ruta h3 {
-    font-size: 1.5rem;
-  }
-
-  .ruta p {
-    color: var(--tinta-80);
-    margin-bottom: 1.5rem;
-  }
-
-  .testimonio {
-    padding: clamp(3.5rem, 8vw, 6rem) 0 0;
-  }
-
-  .testimonio blockquote {
-    margin: 0;
-    max-width: 34ch;
-    margin-inline: auto;
-    text-align: center;
-  }
-
-  .testimonio p {
-    font-family: var(--display);
-    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-    line-height: 1.25;
-  }
-
-  .testimonio cite {
-    font-style: normal;
-    font-size: 0.95rem;
-    color: var(--tinta-60);
-  }
-
-  .cierre {
-    padding: clamp(3.5rem, 8vw, 6rem) 0 0;
-    text-align: center;
-  }
-
-  .cierre h2 {
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    max-width: 22ch;
-    margin-inline: auto;
-    margin-bottom: 2rem;
-  }
-</style>

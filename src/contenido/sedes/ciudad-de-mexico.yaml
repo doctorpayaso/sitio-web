@@ -1,0 +1,14 @@
+nombre: Ciudad de México
+estado: Ciudad de México
+tipo: presencial
+descripcion:
+  es: ''
+imagen:
+  archivo: null
+  textoAlternativo:
+    es: ''
+  muestraPersonasIdentificables: false
+  folioConsentimiento: ''
+correoDeContacto: ''
+activa: true
+orden: 1

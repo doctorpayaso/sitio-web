@@ -1,0 +1,10 @@
+identificador: Monterrey enero 2027
+sede: monterrey
+fechaDeInicio: '2027-01-09'
+fechaDeCierreDeInscripciones: null
+modalidad: presencial
+estado: abiertas
+cupoLimitado: true
+notas:
+  es: ''
+publicar: true

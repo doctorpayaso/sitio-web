@@ -1,0 +1,14 @@
+nombre: Toluca
+estado: Estado de México
+tipo: presencial
+descripcion:
+  es: ''
+imagen:
+  archivo: null
+  textoAlternativo:
+    es: ''
+  muestraPersonasIdentificables: false
+  folioConsentimiento: ''
+correoDeContacto: ''
+activa: true
+orden: 4

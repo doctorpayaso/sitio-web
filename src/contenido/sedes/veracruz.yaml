@@ -1,0 +1,14 @@
+nombre: Veracruz
+estado: Veracruz
+tipo: presencial
+descripcion:
+  es: ''
+imagen:
+  archivo: null
+  textoAlternativo:
+    es: ''
+  muestraPersonasIdentificables: false
+  folioConsentimiento: ''
+correoDeContacto: ''
+activa: true
+orden: 3

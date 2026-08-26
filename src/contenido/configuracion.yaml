@@ -1,9 +1,13 @@
 eslogan:
   es: Sanando con amor y alegría
 descriptorLogotipo: FELICIDAD QUE SIRVE
+descripcionBreve:
+  es: >-
+    Humanizamos la experiencia hospitalaria a través del clown care certificado.
+    Doctor Payaso A.C., México.
 contacto:
-  correo: ''
-  telefono: ''
+  correo: mexico@doctorpayaso.com
+  telefono: '+52 55 3899 9466'
   whatsapp: ''
   correoInstitucional: ''
 redes:

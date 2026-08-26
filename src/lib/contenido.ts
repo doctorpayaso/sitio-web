@@ -103,6 +103,20 @@ export const generaciones = () => {
 };
 
 /** La próxima generación con inscripciones abiertas, si existe. */
+/** Sede por su identificador. */
+export const sedePorId = (id: string | null | undefined) =>
+  id ? (todasLasSedes.find((s) => s.nombre === id || slugDe(s.nombre) === id) ?? null) : null;
+
+/** Convierte un nombre en el identificador que usa Keystatic para los archivos. */
+function slugDe(nombre: string): string {
+  return String(nombre)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 export const proximaGeneracion = () =>
   generaciones().find((g) => g.estado === 'abiertas' || g.estado === 'continua') ?? null;
 
