@@ -1,6 +1,11 @@
 ---
 // Navegación principal, portada del prototipo aprobado.
 import { idiomaDe } from '../lib/idioma';
+// Se importa en lugar de apuntar a /logo.svg. Así el compilador lo empaqueta
+// con nombre versionado en /_astro/, la misma ruta por la que salen los estilos.
+// Un archivo suelto en public/ depende de que el hospedaje lo copie tal cual;
+// un archivo importado es parte de la compilación y no se puede perder.
+import logoUrl from '../assets/logo.svg?url';
 
 const idioma = idiomaDe(Astro);
 const aqui = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -20,7 +25,7 @@ const rotulo = (e: Record<string, string>) => e[idioma] ?? e.es;
 <header class="nav">
   <div class="nav-in">
     <a href="/" class="logo" aria-label="Doctor Payaso A.C. — Inicio">
-      <img class="logo-img" src="/logo.svg" alt="Doctor Payaso A.C." width="160" height="40" />
+      <img class="logo-img" src={logoUrl} alt="Doctor Payaso A.C." width="160" height="40" />
     </a>
 
     <nav class="nav-links" id="menu" aria-label="Navegación principal">

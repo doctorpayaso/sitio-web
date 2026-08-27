@@ -3,6 +3,7 @@
 // ningún dato de contacto está escrito en el código.
 import { t, idiomaDe, formatearFecha } from '../lib/idioma';
 import { configuracion, cifras } from '../lib/contenido';
+import logoUrl from '../assets/logo.svg?url';
 
 const idioma = idiomaDe(Astro);
 const anio = new Date().getFullYear();
@@ -31,7 +32,7 @@ const rotulo = (e: Record<string, string>) => e[idioma] ?? e.es;
     <div class="foot-grid">
       <div>
         <a href="/" class="logo" aria-label="Doctor Payaso A.C. — Inicio">
-          <img class="logo-img" src="/logo.svg" alt="Doctor Payaso A.C." width="220" height="56" />
+          <img class="logo-img" src={logoUrl} alt="Doctor Payaso A.C." width="220" height="56" />
         </a>
         <p class="slogan">{t(configuracion.eslogan, idioma)}</p>
         <p class="small" style="max-width:34ch;margin-bottom:20px">
