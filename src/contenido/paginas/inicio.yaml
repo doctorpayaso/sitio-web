@@ -1,12 +1,10 @@
 seo:
   titulo:
-    es: Doctor Payaso A.C. — Payasos de hospital certificados en México
+    es: Doctor Payaso A.C. - Payasos de hospital certificados en Méx
   descripcion:
     es: >-
       Formamos voluntarios certificados que acompañan a pacientes hospitalizados
       en CDMX, Monterrey, Veracruz y Toluca. Certifícate o alía tu institución.
-  imagenAlCompartir: null
-
 hero:
   antetitulo:
     es: Clown care certificado · CDMX · Monterrey · Veracruz · Toluca
@@ -18,9 +16,10 @@ hero:
     es: receta
   entrada:
     es: >-
-      Somos **Doctor Payaso A.C.** Formamos voluntarios certificados que acompañan a
-      pacientes hospitalizados —de 0 a 114 años— con las herramientas del arte
-      clown, la psicología y la risoterapia. No entretenemos: intervenimos.
+      Somos **Doctor Payaso A.C.** Formamos voluntarios certificados que
+      acompañan a pacientes hospitalizados —de 0 a 114 años— con las
+      herramientas del arte clown, la psicología y la risoterapia. No
+      entretenemos: intervenimos.
   botonPrincipal:
     texto:
       es: Quiero certificarme →
@@ -39,18 +38,21 @@ hero:
         Voluntarios
         certificados
   imagen:
-    archivo: null
+    archivo: /src/assets/hero/hero/imagen/archivo.jpg
     textoAlternativo:
-      es: ''
-    muestraPersonasIdentificables: false
-    folioConsentimiento: ''
-
+      es: >-
+        Fotografía de una doctora payasa con bata blanca, lentes amarillos y
+        nariz roja, usando un gorro tejido naranja decorado con figuras
+        coloridas. Se inclina sonriente hacia un niño hospitalizado que está
+        acostado en una cama y sostiene un juguete rojo. Ambos se miran, en un
+        ambiente hospitalario infantil.
+    muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-AAAA-0001
 franjaDeCifras:
   - voluntariosActivos
   - visitasHospitalarias
   - personasBeneficiadas
   - rangoDeEdad
-
 dosRutas:
   antetitulo:
     es: Dos formas de entrar
@@ -59,7 +61,9 @@ dosRutas:
       Puedes ponerte la nariz. O puedes
       hacer que mil personas se la pongan.
   entrada:
-    es: Elige tu camino. Cada uno tiene su propio proceso, sus tiempos y su equipo dedicado.
+    es: >-
+      Elige tu camino. Cada uno tiene su propio proceso, sus tiempos y su equipo
+      dedicado.
   rutaPersonas:
     etiqueta:
       es: Para personas
@@ -85,7 +89,8 @@ dosRutas:
     descripcion:
       es: >-
         Programas de clown care para hospitales, voluntariado corporativo con
-        impacto medible y certificación para estudiantes de ciencias de la salud.
+        impacto medible y certificación para estudiantes de ciencias de la
+        salud.
     puntos:
       - es: Programa permanente en tu hospital
       - es: RSE y bienestar emocional para colaboradores
@@ -94,7 +99,6 @@ dosRutas:
       texto:
         es: Ver modelos de alianza →
       destino: /alianzas
-
 metodo:
   antetitulo:
     es: Nuestro método
@@ -104,15 +108,20 @@ metodo:
       Es una intervención.
   entrada:
     es: >-
-      El niño hospitalizado pierde el control de casi todo: su cuerpo, su rutina,
-      su intimidad. El clown care invierte esa relación de poder. Por unos
-      minutos, el paciente manda y el adulto obedece.
+      El niño hospitalizado pierde el control de casi todo: su cuerpo, su
+      rutina, su intimidad. El clown care invierte esa relación de poder. Por
+      unos minutos, el paciente manda y el adulto obedece.
   imagen:
-    archivo: null
+    archivo: /src/assets/metodo/metodo/imagen/archivo.jpg
     textoAlternativo:
-      es: ''
-    muestraPersonasIdentificables: false
-    folioConsentimiento: ''
+      es: >-
+        Fotografía de un niño hospitalizado sentado en una silla de ruedas,
+        sonriendo mientras interactúa con un doctor payaso que lleva nariz roja,
+        lentes y bata blanca. El niño también lleva una nariz roja y un gorro
+        verde. Ambos se miran y juegan, mientras el doctor sostiene suavemente
+        el pie del niño.
+    muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-AAAA0002
   pasos:
     - titulo:
         es: Devolver el control
@@ -134,7 +143,6 @@ metodo:
         es: >-
           La visita no interrumpe el tratamiento: lo acompaña. Cada voluntario
           opera bajo protocolo hospitalario y coordinación con el área médica.
-
 citaEditorial:
   texto:
     es: >-
@@ -144,7 +152,6 @@ citaEditorial:
     es: |-
       Dr. John M. Driscoll Jr.
       Children's Hospital, Nueva York
-
 visitasVirtuales:
   titulo:
     es: Visitas virtuales, gratis, a cualquier parte del mundo
@@ -156,7 +163,6 @@ visitasVirtuales:
     texto:
       es: Agendar visita
     destino: /contacto
-
 transparencia:
   antetitulo:
     es: Transparencia
@@ -164,8 +170,8 @@ transparencia:
     es: Once años de cuentas públicas
   entrada:
     es: >-
-      Publicamos un informe anual desde 2015. Puedes revisar en qué se gastó cada
-      peso antes de darnos el tuyo.
+      Publicamos un informe anual desde 2015. Puedes revisar en qué se gastó
+      cada peso antes de darnos el tuyo.
   enlace:
     texto:
       es: Ver todos los informes →
@@ -177,14 +183,18 @@ transparencia:
       titulo:
         es: Informe más reciente
       descripcion:
-        es: Cobertura por sede, horas de voluntariado y estado financiero auditado.
+        es: >-
+          Cobertura por sede, horas de voluntariado y estado financiero
+          auditado.
     - destacado:
         es: ES/EN
       color: azul
       titulo:
         es: Bilingüe
       descripcion:
-        es: Cada informe está disponible en español e inglés para aliados internacionales.
+        es: >-
+          Cada informe está disponible en español e inglés para aliados
+          internacionales.
     - destacado:
         es: PDF
       color: menta
@@ -199,22 +209,23 @@ transparencia:
         es: Deducible
       descripcion:
         es: Emitimos recibo deducible de impuestos por cada donativo.
-
 testimonio:
   antetitulo:
     es: Lo dice el hospital
   persona: dra-sonia-gutierrez
   imagen:
-    archivo: null
+    archivo: /src/assets/testimonios/testimonio/imagen/archivo.jpg
     textoAlternativo:
-      es: ''
+      es: >-
+        Fotografía de una mujer con bata blanca, sentada y mirando hacia la
+        cámara, en un consultorio u oficina. Lleva una identificación y
+        distintivos médicos en la bata. Al fondo hay fotografías enmarcadas y
+        objetos decorativos. En la parte inferior aparece una franja con un
+        logotipo y el texto: “Dra. Sonia Gutiérrez - C.M.N. 20 de Noviembre”.
     muestraPersonasIdentificables: false
-    folioConsentimiento: ''
-
 aliados:
   titulo:
     es: Hospitales, empresas y universidades que confían en nosotros
-
 cierre:
   titulo:
     es: La nariz roja es la máscara más pequeña del mundo. Y la que más pesa.
