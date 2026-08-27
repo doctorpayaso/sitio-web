@@ -5,6 +5,7 @@ seo:
     es: >-
       Formamos voluntarios certificados que acompañan a pacientes hospitalizados
       en CDMX, Monterrey, Veracruz y Toluca. Certifícate o alía tu institución.
+  imagenAlCompartir: /src/assets/og/seo/imagenAlCompartir.png
 hero:
   antetitulo:
     es: Clown care certificado · CDMX · Monterrey · Veracruz · Toluca
