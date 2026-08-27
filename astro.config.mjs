@@ -53,6 +53,29 @@ export default defineConfig({
   output: 'static',
 
   // ---------------------------------------------------------------------------
+  //  Adaptador solo al compilar
+  // ---------------------------------------------------------------------------
+  //  El adaptador de Cloudflare arranca `workerd.exe`, un ejecutable propio que
+  //  emula el entorno de producción. Es lo correcto para compilar, pero en un
+  //  equipo con políticas de reducción de superficie de ataque (regla ASR de
+  //  Microsoft Defender) ese binario se bloquea por falta de prevalencia y el
+  //  servidor de desarrollo no arranca: `spawn EPERM`.
+  //
+  //  La salida NO es pedir una excepción en el antivirus. Es no necesitar el
+  //  emulador para desarrollar: al trabajar en local se usa el servidor normal
+  //  de Astro, y el adaptador entra únicamente cuando se compila.
+  //
+  //  Lo que se pierde: en local el sitio no corre sobre el mismo motor que en
+  //  producción. Para editar contenido y usar el panel es indistinto. Lo que se
+  //  gana: no se toca la política de seguridad del equipo.
+  //
+  //  La compilación en Cloudflare no cambia en nada: ahí sí carga el adaptador.
+  // ---------------------------------------------------------------------------
+  adapter: process.argv.includes('dev') ? undefined : cloudflare({
+    imageService: 'compile',
+  }),
+
+  // ---------------------------------------------------------------------------
   //  Sesiones desactivadas
   // ---------------------------------------------------------------------------
   //  El adaptador de Cloudflare activa sesiones por defecto y exige un almacén
@@ -66,12 +89,6 @@ export default defineConfig({
   //  que alguien tenga que entender dentro de dos años.
   // ---------------------------------------------------------------------------
   session: false,
-
-  adapter: cloudflare({
-    imageService: 'compile',
-    // 'compile' optimiza las imágenes al compilar en vez de en cada visita.
-    // Con contenido que cambia poco, evita consumir CPU del plan gratuito.
-  }),
 
   integrations: [
     react(), // requerido por el panel de Keystatic, no por el sitio público
