@@ -1,7 +1,143 @@
-# Página "alianzas". Estructura pendiente de llenado desde el panel.
 seo:
   titulo:
-    es: ''
+    es: Alianzas institucionales — Doctor Payaso A.C.
   descripcion:
-    es: ''
+    es: >-
+      Programas de clown care para hospitales, voluntariado corporativo con
+      impacto medible y certificación para estudiantes de ciencias de la salud.
   imagenAlCompartir: null
+hero:
+  antetitulo:
+    es: Empresas · Hospitales · Universidades
+  titulo:
+    es: |-
+      Impacto social
+      que sí se documenta.
+  palabraDestacada:
+    es: documenta
+  entrada:
+    es: >-
+      Once informes anuales públicos, más de 945 voluntarios certificados y
+      operación en cuatro estados. Si tu institución necesita evidencia antes de
+      firmar, la tenemos desde 2015.
+  botonPrincipal:
+    texto:
+      es: Agendar una reunión
+    destino: '#contacto-institucional'
+  botonSecundario:
+    texto:
+      es: Ver informes anuales
+    destino: /impacto
+  insignia:
+    destacado:
+      es: '2015'
+    etiqueta:
+      es: |-
+        Primer informe
+        anual público
+  imagen:
+    archivo: null
+    textoAlternativo:
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
+modelosDeColaboracion:
+  titulo:
+    es: Tres modelos de colaboración
+  modelos:
+    - icono: 🏢
+      nombre:
+        es: Empresas
+      paraQuien:
+        es: ''
+      descripcion:
+        es: >-
+          Voluntariado corporativo con certificación real para tus
+          colaboradores, programas de bienestar emocional y donativo deducible
+          con reporte de impacto.
+      incluye:
+        - es: Generación cerrada para tu equipo
+        - es: Reporte de impacto para tu informe de RSE
+        - es: Recibo deducible de impuestos
+    - icono: 🏥
+      nombre:
+        es: Hospitales
+      paraQuien:
+        es: ''
+      descripcion:
+        es: >-
+          Programa permanente de clown care en tus áreas de hospitalización, con
+          voluntarios certificados, protocolo sanitario y coordinación con tu
+          equipo clínico.
+      incluye:
+        - es: Sin costo para la institución
+        - es: Voluntarios con capacitación en protocolo
+        - es: Reporte mensual de visitas por piso
+    - icono: 🎓
+      nombre:
+        es: Universidades
+      paraQuien:
+        es: ''
+      descripcion:
+        es: >-
+          Certificación en clown care para estudiantes de medicina, enfermería y
+          psicología. Formación en humanización de la atención dentro del plan de
+          estudios.
+      incluye:
+        - es: Programa adaptado al calendario académico
+        - es: Servicio social y horas curriculares
+        - es: 'Antecedente: 2ª generación en FacMed UNAM'
+citaInstitucional:
+  texto:
+    es: Llevamos el corazón en la punta de la nariz.
+  autor:
+    es: |-
+      Doctor Payaso A.C.
+      Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed Hub
+proceso:
+  antetitulo:
+    es: Cómo trabajamos
+  titulo:
+    es: De la primera llamada al primer pasillo
+  entrada:
+    es: >-
+      Un proceso claro y acotado. La mayoría de las alianzas arranca operación en
+      cuestión de semanas, no de trimestres.
+  pasos:
+    - titulo:
+        es: Diagnóstico
+      descripcion:
+        es: >-
+          Entendemos tu objetivo: RSE, humanización de la atención, formación
+          curricular o bienestar de colaboradores.
+    - titulo:
+        es: Propuesta y convenio
+      descripcion:
+        es: >-
+          Definimos alcance, sedes, número de participantes, indicadores y
+          periodicidad del reporte.
+    - titulo:
+        es: Formación y protocolo
+      descripcion:
+        es: >-
+          Certificamos a los participantes y alineamos el protocolo con las áreas
+          clínicas y de seguridad del paciente.
+    - titulo:
+        es: Operación y medición
+      descripcion:
+        es: >-
+          Arranca el programa. Entregamos reporte de visitas, cobertura y
+          testimonios para tu informe anual.
+contacto:
+  titulo:
+    es: Hablemos
+  entrada:
+    es: >-
+      Escríbenos y te contactamos con el responsable de vinculación
+      institucional. Sin bots, sin cotizador automático.
+  textoDelConsentimiento:
+    es: >-
+      Acepto el tratamiento de mis datos de contacto profesional para dar
+      seguimiento a esta solicitud, conforme a la LFPDPPP.
+  textoDeExito:
+    es: Recibimos tu mensaje. Te contactamos en los próximos días hábiles.

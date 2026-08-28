@@ -1,0 +1,9 @@
+identificador: costo
+pagina: certificate
+pregunta:
+  es: ¿Cuánto cuesta la certificación?
+respuesta:
+  es: >-
+    Monto por confirmar. El costo cubre la formación completa, materiales y el acompañamiento en las prácticas. Contamos con esquema de becas parciales para quienes lo necesiten: se solicita en el mismo formulario de inscripción.
+orden: 1
+publicar: true

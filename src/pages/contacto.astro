@@ -1,0 +1,56 @@
+---
+// Contacto — enlazada desde el pie de página.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe } from '../lib/idioma';
+import { paginas, configuracion, sedes } from '../lib/contenido';
+
+const p = paginas.contacto;
+const idioma = idiomaDe(Astro);
+const c = configuracion.contacto ?? {};
+---
+
+<Base seo={p.seo} ruta="emocional">
+  <section class="pad-s" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="wrap-narrow">
+      <h1 class="h1" style="margin-bottom:18px" set:html={tr(p.titulo, idioma)} />
+      <p class="lead" set:html={tr(p.entrada, idioma)} />
+
+      <div style="margin-top:38px;display:flex;flex-direction:column;gap:14px">
+        {c.correo && <a href={`mailto:${c.correo}`} class="report"><span class="ic" aria-hidden="true">✉</span> {c.correo}</a>}
+        {c.telefono && <a href={`tel:${String(c.telefono).replace(/\s/g, '')}`} class="report"><span class="ic" aria-hidden="true">☎</span> {c.telefono}</a>}
+        {c.whatsapp && (
+          <a href={`https://wa.me/${String(c.whatsapp).replace(/[^0-9]/g, '')}`} class="report" target="_blank" rel="noopener noreferrer">
+            <span class="ic" aria-hidden="true">💬</span> WhatsApp
+          </a>
+        )}
+      </div>
+
+      {(p.bloques ?? []).length > 0 && (
+        <div class="grid g2" style="margin-top:44px">
+          {p.bloques.map((b: any) => (
+            <div class="card">
+              <h4>{t(b.titulo, idioma)}</h4>
+              <p>{t(b.descripcion, idioma)}</p>
+              {b.correo && <a href={`mailto:${b.correo}`} class="link-arrow" style="color:var(--teal);margin-top:12px">{b.correo}</a>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap">
+      <h2 class="h2" style="margin-bottom:26px">{idioma === 'en' ? 'Where we operate' : 'Dónde operamos'}</h2>
+      <div class="grid g4">
+        {sedes().map((s: any) => (
+          <div class="card">
+            <h4>{s.nombre}</h4>
+            <p class="small muted">{s.estado}</p>
+            {t(s.descripcion, idioma) && <p>{t(s.descripcion, idioma)}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

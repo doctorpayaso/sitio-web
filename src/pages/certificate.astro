@@ -1,0 +1,268 @@
+---
+// Certifícate — la página de conversión de la ruta de voluntariado.
+// Es la más importante del sitio: aquí es donde el visitante se vuelve candidato.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe, formatearFecha } from '../lib/idioma';
+import {
+  paginas, configuracion, modulos, generaciones, sedePorId,
+  preguntas, imagenPublicable, rutaDeImagen,
+} from '../lib/contenido';
+
+const p = paginas.certificate;
+const idioma = idiomaDe(Astro);
+const listaModulos = modulos();
+const listaGeneraciones = generaciones();
+const faq = preguntas('certificate');
+const heroVisible = imagenPublicable(p.hero?.imagen);
+
+const [antes, acento] = (() => {
+  const titulo = t(p.hero?.titulo, idioma);
+  const palabra = t(p.hero?.palabraDestacada, idioma);
+  return [titulo, palabra];
+})();
+
+function armarTitular(titular: string, palabra: string): string {
+  const html = titular.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>');
+  if (!palabra || !html.includes(palabra)) return html;
+  return html.replace(palabra, `<span class="accent">${palabra}</span>`);
+}
+const titularHtml = armarTitular(antes, acento);
+
+const ESTADO: Record<string, { es: string; en: string; tag: string; boton: string }> = {
+  abiertas: { es: 'Inscripciones abiertas', en: 'Enrollment open', tag: 'tag-coral', boton: 'btn-coral' },
+  lista_espera: { es: 'Lista de espera', en: 'Waiting list', tag: 'tag-mango', boton: 'btn-ghost' },
+  cerradas: { es: 'Inscripciones cerradas', en: 'Enrollment closed', tag: 'tag-azul', boton: 'btn-ghost' },
+  continua: { es: 'Generación continua', en: 'Rolling admission', tag: 'tag-teal', boton: 'btn-teal' },
+};
+const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
+---
+
+<Base seo={p.seo} ruta="emocional">
+  <!-- HERO -->
+  <section class="hero" style="padding-bottom:clamp(40px,5vw,64px)">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow" style="color:var(--coral-d)">
+          <span class="dot"></span> {t(p.hero?.antetitulo, idioma)}
+        </span>
+        <h1 class="h-hero" style="font-size:clamp(2.3rem,5.2vw,4.2rem);margin:18px 0 20px" set:html={titularHtml} />
+        <p class="lead" set:html={tr(p.hero?.entrada, idioma)} />
+        <div class="hero-cta">
+          {t(p.hero?.botonPrincipal?.texto, idioma) && (
+            <a href={p.hero.botonPrincipal.destino} class="btn btn-coral">{t(p.hero.botonPrincipal.texto, idioma)}</a>
+          )}
+          {t(p.hero?.botonSecundario?.texto, idioma) && (
+            <a href={p.hero.botonSecundario.destino} class="btn btn-ghost">{t(p.hero.botonSecundario.texto, idioma)}</a>
+          )}
+        </div>
+        {t(p.hero?.avisoDeCierre, idioma) && (
+          <div class="next-gen"><span class="pulse"></span> {t(p.hero.avisoDeCierre, idioma)}</div>
+        )}
+      </div>
+      <div class="hero-photo-wrap">
+        <div class:list={['photo', 'photo-hero', 'duo-mango', 'dots-bg', heroVisible && 'filled']}>
+          {heroVisible && (
+            <img class="slot-img" src={rutaDeImagen(p.hero.imagen.archivo)} alt={t(p.hero.imagen.textoAlternativo, idioma)} loading="eager" />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUISITOS -->
+  <section class="pad-s">
+    <div class="wrap">
+      <h2 class="h2" style="margin-bottom:30px" set:html={tr(p.requisitos?.titulo, idioma)} />
+      <div class="grid g4">
+        {(p.requisitos?.lista ?? []).map((r: any) => (
+          <div class="card">
+            <div class="icon-chip" style={`background:var(--${r.color || 'coral'});color:#fff`} aria-hidden="true">{r.icono}</div>
+            <h4>{t(r.titulo, idioma)}</h4>
+            <p>{t(r.descripcion, idioma)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULOS -->
+  <section class="pad" id="modulos">
+    <div class="wrap grid g2" style="gap:clamp(32px,5vw,64px);align-items:start">
+      <div style="position:sticky;top:104px">
+        <span class="eyebrow" style="color:var(--vino)">
+          <span class="dot" style="background:var(--vino)"></span> {t(p.modulosIntro?.antetitulo, idioma)}
+        </span>
+        <h2 class="h2" style="margin:14px 0 18px" set:html={tr(p.modulosIntro?.titulo, idioma)} />
+        <p class="lead" set:html={tr(p.modulosIntro?.entrada, idioma)} />
+        {(p.modulosIntro?.etiquetas ?? []).length > 0 && (
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px">
+            {p.modulosIntro.etiquetas.map((e: any, i: number) => (
+              <span class:list={['tag', ['tag-coral', 'tag-azul', 'tag-teal', 'tag-mango'][i % 4]]}>{t(e, idioma)}</span>
+            ))}
+          </div>
+        )}
+      </div>
+      <div>
+        {listaModulos.map((m: any) => (
+          <div class="mod">
+            <div class="mod-n">{m.numero}</div>
+            <div>
+              <h4>{m.nombre}</h4>
+              <p>{t(m.descripcion, idioma)}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GENERACIONES -->
+  <section class="pad-s" style="background:var(--papel);border-top:1px solid var(--tinta-12);border-bottom:1px solid var(--tinta-12)">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px">
+        <div>
+          <span class="eyebrow" style="color:var(--teal)">
+            <span class="dot" style="background:var(--teal)"></span> {t(p.generaciones?.antetitulo, idioma)}
+          </span>
+          <h2 class="h2" style="margin-top:14px" set:html={tr(p.generaciones?.titulo, idioma)} />
+        </div>
+        <p class="small muted" style="max-width:34ch">{t(p.generaciones?.nota, idioma)}</p>
+      </div>
+
+      {listaGeneraciones.length > 0 ? (
+        <div class="grid g4">
+          {listaGeneraciones.map((g: any, i: number) => {
+            const sede = sedePorId(g.sede);
+            const e = ESTADO[g.estado] ?? ESTADO.lista_espera;
+            return (
+              <article class="sede">
+                <div class:list={['sede-top', DEGRADADOS[i % 4], 'dots-bg']}>
+                  <span class="sede-city">{sede?.nombre ?? g.identificador}</span>
+                </div>
+                <div class="sede-body">
+                  <div class="sede-date">
+                    <span class="dot"></span>
+                    {g.estado === 'continua'
+                      ? (idioma === 'en' ? 'Rolling admission' : 'Generación continua')
+                      : formatearFecha(g.fechaDeInicio, idioma)}
+                  </div>
+                  <div class="sede-meta">
+                    {sede?.estado}
+                    <br />
+                    {e[idioma as 'es'] ?? e.es}
+                  </div>
+                  {t(g.notas, idioma) && <div class="sede-meta">{t(g.notas, idioma)}</div>}
+                  <span class:list={['tag', e.tag]} style="align-self:flex-start">
+                    {g.cupoLimitado ? (idioma === 'en' ? 'Limited seats' : 'Cupo limitado') : (e[idioma as 'es'] ?? e.es)}
+                  </span>
+                  <a href="#solicitud" class:list={['btn', e.boton, 'btn-sm']} style="margin-top:auto">
+                    {g.estado === 'abiertas' || g.estado === 'continua'
+                      ? (idioma === 'en' ? 'Apply' : 'Inscribirme')
+                      : (idioma === 'en' ? 'Notify me' : 'Avísenme')}
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="muted">{idioma === 'en' ? 'Dates coming soon.' : 'Próximas fechas por confirmar.'}</p>
+      )}
+
+      {t(p.programaUniversidades?.titulo, idioma) && (
+        <div class="card split3" style="margin-top:22px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;background:linear-gradient(135deg,rgba(66,128,191,.12),rgba(43,169,220,.12));border-color:transparent">
+          <div class="icon-chip" style="background:var(--azul);color:#fff;width:54px;height:54px;border-radius:50%" aria-hidden="true">🎓</div>
+          <div>
+            <h4 style="font-family:var(--display);font-size:1.2rem;margin-bottom:4px">{t(p.programaUniversidades.titulo, idioma)}</h4>
+            <p class="small muted" set:html={tr(p.programaUniversidades.cuerpo, idioma)} />
+          </div>
+          {t(p.programaUniversidades.boton?.texto, idioma) && (
+            <a href={p.programaUniversidades.boton.destino} class="btn btn-ghost btn-sm" style="flex:none">
+              {t(p.programaUniversidades.boton.texto, idioma)}
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  {faq.length > 0 && (
+    <section class="pad">
+      <div class="wrap-narrow">
+        <h2 class="h2" style="margin-bottom:12px">{idioma === 'en' ? 'Frequently asked' : 'Preguntas que todos hacen'}</h2>
+        {faq.map((q: any, i: number) => (
+          <details class="faq" open={i === 0}>
+            <summary>{t(q.pregunta, idioma)}</summary>
+            <p set:html={tr(q.respuesta, idioma)} />
+          </details>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- SOLICITUD -->
+  <section class="pad-s" id="solicitud" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap grid g2" style="gap:clamp(32px,5vw,56px);align-items:center">
+      <div>
+        <span class="eyebrow" style="color:var(--coral-d)"><span class="dot"></span> {idioma === 'en' ? 'Step 1 of 3' : 'Paso 1 de 3'}</span>
+        <h2 class="h2" style="margin:14px 0 16px" set:html={tr(p.formulario?.titulo, idioma)} />
+        <p class="lead" set:html={tr(p.formulario?.entrada, idioma)} />
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:14px">
+          {(p.formulario?.pasos ?? []).map((paso: any, i: number) => (
+            <div style="display:flex;gap:12px;align-items:center">
+              <span class="dot dot-lg" style={i === 0 ? undefined : 'background:var(--tinta-30)'}></span>
+              <span class:list={['small', i !== 0 && 'muted']}><strong>{i + 1}.</strong> {t(paso, idioma)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- El formulario todavía no envía a ningún lado: la recepción en Supabase
+           es Fase 4. Se muestra deshabilitado para no perder solicitudes en el
+           vacío, con la alternativa por WhatsApp visible. -->
+      <div class="form">
+        <div class="field-row">
+          <div class="field"><label for="n">{idioma === 'en' ? 'Full name' : 'Nombre completo'}</label><input id="n" disabled /></div>
+          <div class="field"><label for="e">{idioma === 'en' ? 'Email' : 'Correo'}</label><input id="e" type="email" disabled /></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="w">WhatsApp</label><input id="w" disabled /></div>
+          <div class="field">
+            <label for="s">{idioma === 'en' ? 'Preferred location' : 'Sede de interés'}</label>
+            <select id="s" disabled>
+              {listaGeneraciones.map((g: any) => {
+                const sede = sedePorId(g.sede);
+                return <option>{sede?.nombre ?? g.identificador}</option>;
+              })}
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="m">{idioma === 'en' ? 'Why do you want to join?' : '¿Por qué quieres ser Doctor Payaso?'}</label>
+          <textarea id="m" rows="3" disabled></textarea>
+        </div>
+        <div class="field-consent">
+          <input type="checkbox" id="c" disabled />
+          <label for="c">
+            {t(p.formulario?.textoDelConsentimiento, idioma)}
+            {configuracion.avisoDePrivacidad && (
+              <> <a href={configuracion.avisoDePrivacidad} style="text-decoration:underline">
+                {idioma === 'en' ? 'Privacy notice' : 'Aviso de privacidad'}
+              </a></>
+            )}
+          </label>
+        </div>
+        <p class="small muted" style="text-align:center">
+          {idioma === 'en' ? 'Form coming soon. Meanwhile, write to us:' : 'Formulario en preparación. Mientras tanto, escríbenos:'}
+        </p>
+        {configuracion.contacto?.whatsapp && (
+          <a href={`https://wa.me/${String(configuracion.contacto.whatsapp).replace(/[^0-9]/g, '')}`}
+             class="btn btn-coral" style="width:100%;margin-top:12px" target="_blank" rel="noopener noreferrer">
+            {t(p.formulario?.textoWhatsApp, idioma) || 'WhatsApp'}
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>

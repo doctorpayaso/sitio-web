@@ -1,0 +1,174 @@
+---
+// Alianzas — la página de conversión de la ruta institucional.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe } from '../lib/idioma';
+import { paginas, configuracion, imagenPublicable, rutaDeImagen } from '../lib/contenido';
+
+const p = paginas.alianzas;
+const idioma = idiomaDe(Astro);
+const heroVisible = imagenPublicable(p.hero?.imagen);
+
+function armarTitular(titular: string, palabra: string): string {
+  const html = titular.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>');
+  if (!palabra || !html.includes(palabra)) return html;
+  return html.replace(palabra, `<span style="color:var(--teal)">${palabra}</span>`);
+}
+const titularHtml = armarTitular(t(p.hero?.titulo, idioma), t(p.hero?.palabraDestacada, idioma));
+const COLORES = ['azul', 'teal', 'coral-d'];
+---
+
+<Base seo={p.seo} ruta="institucional">
+  <section class="hero" style="padding-bottom:clamp(40px,5vw,64px)">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow" style="color:var(--teal)">
+          <span class="dot" style="background:var(--teal)"></span> {t(p.hero?.antetitulo, idioma)}
+        </span>
+        <h1 class="h-hero" style="font-size:clamp(2.3rem,5.2vw,4.2rem);margin:18px 0 20px" set:html={titularHtml} />
+        <p class="lead" set:html={tr(p.hero?.entrada, idioma)} />
+        <div class="hero-cta">
+          {t(p.hero?.botonPrincipal?.texto, idioma) && (
+            <a href={p.hero.botonPrincipal.destino} class="btn btn-teal">{t(p.hero.botonPrincipal.texto, idioma)}</a>
+          )}
+          {t(p.hero?.botonSecundario?.texto, idioma) && (
+            <a href={p.hero.botonSecundario.destino} class="btn btn-ghost">{t(p.hero.botonSecundario.texto, idioma)}</a>
+          )}
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class:list={['photo', 'photo-hero', 'duo-teal', 'dots-bg', heroVisible && 'filled']}>
+          {heroVisible && (
+            <img class="slot-img" src={rutaDeImagen(p.hero.imagen.archivo)} alt={t(p.hero.imagen.textoAlternativo, idioma)} loading="eager" />
+          )}
+        </div>
+        {p.hero?.insignia?.destacado && (
+          <div class="badge-float" style="left:-14px;bottom:44px">
+            <div class="n" style="color:var(--coral)">{t(p.hero.insignia.destacado, idioma)}</div>
+            <div class="t" set:html={tr(p.hero.insignia.etiqueta, idioma)} />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s">
+    <div class="wrap">
+      <h2 class="h2" style="margin-bottom:34px;max-width:22ch" set:html={tr(p.modelosDeColaboracion?.titulo, idioma)} />
+      <div class="grid g3">
+        {(p.modelosDeColaboracion?.modelos ?? []).map((m: any, i: number) => (
+          <article class="card" style="padding:34px">
+            <div class="icon-chip" style={`background:var(--${COLORES[i % 3].replace('-d', '')});color:#fff`} aria-hidden="true">{m.icono}</div>
+            <h4 style="font-size:1.35rem">{t(m.nombre, idioma)}</h4>
+            <p style="margin-bottom:18px">{t(m.descripcion, idioma)}</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:22px">
+              {(m.incluye ?? []).map((x: any) => (
+                <li class="small" style="display:flex;gap:9px">
+                  <span class="dot" style={`background:var(--${COLORES[i % 3]});margin-top:7px`}></span>
+                  {t(x, idioma)}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {t(p.citaInstitucional?.texto, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <div class="quote" style="background:var(--teal);color:#fff">
+          <span class="quote-mark" style="color:#fff;opacity:.16" aria-hidden="true">&rdquo;</span>
+          <blockquote style="color:#fff">{t(p.citaInstitucional.texto, idioma)}</blockquote>
+          <cite style="color:rgba(255,255,255,.75)" set:html={tr(p.citaInstitucional.autor, idioma)} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="pad">
+    <div class="wrap grid g2" style="gap:clamp(32px,5vw,64px)">
+      <div>
+        <span class="eyebrow" style="color:var(--azul)">
+          <span class="dot" style="background:var(--azul)"></span> {t(p.proceso?.antetitulo, idioma)}
+        </span>
+        <h2 class="h2" style="margin:14px 0 18px" set:html={tr(p.proceso?.titulo, idioma)} />
+        <p class="lead" set:html={tr(p.proceso?.entrada, idioma)} />
+      </div>
+      <div>
+        {(p.proceso?.pasos ?? []).map((paso: any, i: number) => (
+          <div class="method-row">
+            <div class="method-n">{String(i + 1).padStart(2, '0')}</div>
+            <div>
+              <h4>{t(paso.titulo, idioma)}</h4>
+              <p>{t(paso.descripcion, idioma)}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s" id="contacto-institucional" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap grid g2" style="gap:clamp(32px,5vw,56px);align-items:center">
+      <div>
+        <h2 class="h2" style="margin-bottom:16px" set:html={tr(p.contacto?.titulo, idioma)} />
+        <p class="lead" set:html={tr(p.contacto?.entrada, idioma)} />
+        <div style="margin-top:30px;display:flex;flex-direction:column;gap:16px">
+          {configuracion.contacto?.correoInstitucional && (
+            <a href={`mailto:${configuracion.contacto.correoInstitucional}`} class="report">
+              <span class="ic" aria-hidden="true">✉</span> {configuracion.contacto.correoInstitucional}
+            </a>
+          )}
+          {configuracion.contacto?.correo && !configuracion.contacto?.correoInstitucional && (
+            <a href={`mailto:${configuracion.contacto.correo}`} class="report">
+              <span class="ic" aria-hidden="true">✉</span> {configuracion.contacto.correo}
+            </a>
+          )}
+          {configuracion.contacto?.telefono && (
+            <a href={`tel:${String(configuracion.contacto.telefono).replace(/\s/g, '')}`} class="report">
+              <span class="ic" aria-hidden="true">☎</span> {configuracion.contacto.telefono}
+            </a>
+          )}
+          <a href="/impacto" class="report"><span class="ic" aria-hidden="true">📄</span>
+            {idioma === 'en' ? 'Annual reports' : 'Informes anuales'}
+          </a>
+        </div>
+      </div>
+
+      <div class="form">
+        <div class="field-row">
+          <div class="field"><label for="in">{idioma === 'en' ? 'Name and role' : 'Nombre y cargo'}</label><input id="in" disabled /></div>
+          <div class="field"><label for="io">{idioma === 'en' ? 'Organization' : 'Institución'}</label><input id="io" disabled /></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="ie">{idioma === 'en' ? 'Work email' : 'Correo institucional'}</label><input id="ie" type="email" disabled /></div>
+          <div class="field">
+            <label for="it">{idioma === 'en' ? 'Type' : 'Tipo de alianza'}</label>
+            <select id="it" disabled>
+              {(p.modelosDeColaboracion?.modelos ?? []).map((m: any) => <option>{t(m.nombre, idioma)}</option>)}
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="im">{idioma === 'en' ? 'Tell us what you need' : 'Cuéntanos qué buscas'}</label>
+          <textarea id="im" rows="4" disabled></textarea>
+        </div>
+        <div class="field-consent">
+          <input type="checkbox" id="ic" disabled />
+          <label for="ic">
+            {t(p.contacto?.textoDelConsentimiento, idioma)}
+            {configuracion.avisoDePrivacidad && (
+              <> <a href={configuracion.avisoDePrivacidad} style="text-decoration:underline">
+                {idioma === 'en' ? 'Privacy notice' : 'Aviso de privacidad'}
+              </a></>
+            )}
+          </label>
+        </div>
+        <p class="small muted" style="text-align:center">
+          {idioma === 'en' ? 'Form coming soon. Meanwhile, write to us by email.' : 'Formulario en preparación. Mientras tanto, escríbenos por correo.'}
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

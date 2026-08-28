@@ -1,7 +1,37 @@
-# Página "contacto". Estructura pendiente de llenado desde el panel.
 seo:
   titulo:
-    es: ''
+    es: Contacto — Doctor Payaso A.C.
   descripcion:
-    es: ''
+    es: >-
+      Escríbenos para certificarte, aliar tu institución, agendar una visita
+      virtual o resolver cualquier duda.
   imagenAlCompartir: null
+titulo:
+  es: Hablemos
+entrada:
+  es: >-
+    Escríbenos por el medio que prefieras. Contestan personas, no un sistema
+    automático.
+bloques:
+  - titulo:
+      es: Quiero certificarme
+    descripcion:
+      es: Dudas sobre el proceso, fechas, costos o becas.
+    correo: ''
+  - titulo:
+      es: Represento a una institución
+    descripcion:
+      es: Hospitales, empresas y universidades que quieren aliarse.
+    correo: ''
+  - titulo:
+      es: Visita virtual
+    descripcion:
+      es: >-
+        Si alguien de tu familia está hospitalizado o en aislamiento, un Doctor
+        Payaso puede visitarlo por videollamada. Sin costo.
+    correo: ''
+  - titulo:
+      es: Prensa y medios
+    descripcion:
+      es: Solicitudes de entrevista y material institucional.
+    correo: ''

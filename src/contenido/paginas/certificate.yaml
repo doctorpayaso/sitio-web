@@ -1,7 +1,139 @@
-# Página "certificate". Estructura pendiente de llenado desde el panel.
 seo:
   titulo:
-    es: ''
+    es: Certifícate en clown care — Doctor Payaso A.C.
   descripcion:
-    es: ''
+    es: >-
+      Seis módulos de formación, práctica hospitalaria acompañada y una
+      comunidad que te sostiene. No necesitas experiencia en actuación.
   imagenAlCompartir: null
+hero:
+  antetitulo:
+    es: Certificación en clown care
+  titulo:
+    es: |-
+      No buscamos payasos.
+      Buscamos personas.
+  palabraDestacada:
+    es: personas
+  entrada:
+    es: >-
+      No necesitas saber actuar, ni hacer malabares, ni ser gracioso. Necesitas
+      estar dispuesto a exponerte, a fallar en público y a que un niño de siete
+      años te mande. El resto te lo enseñamos en seis módulos.
+  botonPrincipal:
+    texto:
+      es: Inscribirme a la próxima generación
+    destino: '#solicitud'
+  botonSecundario:
+    texto:
+      es: Ver los 6 módulos
+    destino: '#modulos'
+  avisoDeCierre:
+    es: ''
+  imagen:
+    archivo: null
+    textoAlternativo:
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
+requisitos:
+  titulo:
+    es: Lo que sí necesitas
+  lista:
+    - icono: 🎂
+      color: coral
+      titulo:
+        es: Ser mayor de 18
+      descripcion:
+        es: >-
+          Requisito indispensable de los hospitales para el acceso a áreas de
+          pacientes.
+    - icono: ❤️
+      color: mango
+      titulo:
+        es: Sensibilidad social
+      descripcion:
+        es: >-
+          Empatía y respeto frente a la vulnerabilidad, el dolor y, a veces, la
+          muerte.
+    - icono: 📅
+      color: azul
+      titulo:
+        es: Compromiso real
+      descripcion:
+        es: >-
+          Asistencia completa al curso y a las prácticas hospitalarias
+          posteriores.
+    - icono: 🗣️
+      color: teal
+      titulo:
+        es: Pasar la entrevista
+      descripcion:
+        es: >-
+          Conversación previa para asegurar alineación de valores y expectativas.
+costo:
+  discriminant: false
+  value:
+    textoProvisional:
+      es: Monto por confirmar. Escríbenos y te lo compartimos.
+becas:
+  discriminant: false
+modulosIntro:
+  antetitulo:
+    es: El programa
+  titulo:
+    es: |-
+      Seis módulos.
+      Uno de ellos eres tú.
+  entrada:
+    es: >-
+      Cada módulo combina taller, trabajo personal y práctica. Al final del
+      recorrido haces tu primera visita hospitalaria acompañado por un
+      coordinador.
+  etiquetas:
+    - es: Arte clown
+    - es: Coaching ontológico
+    - es: Metodología Patch Adams
+    - es: Práctica hospitalaria
+generaciones:
+  antetitulo:
+    es: Calendario
+  titulo:
+    es: Próximas generaciones
+  nota:
+    es: >-
+      Cada sede abre una sola generación al año. Los lugares son limitados por la
+      capacidad de práctica hospitalaria.
+programaUniversidades:
+  titulo:
+    es: Programa especial para estudiantes de ciencias de la salud
+  cuerpo:
+    es: >-
+      En alianza con facultades de medicina. La 2ª generación de Doctoras y
+      Doctores Payaso de la Facultad de Medicina de la UNAM inició en enero de
+      2026.
+  boton:
+    texto:
+      es: Info para universidades
+    destino: /alianzas
+formulario:
+  titulo:
+    es: |-
+      Empieza aquí.
+      Toma dos minutos.
+  entrada:
+    es: >-
+      Recibirás el temario completo, costos y fechas por correo. Después
+      agendamos la entrevista.
+  pasos:
+    - es: Llenas este formulario
+    - es: Entrevista de 20 min por videollamada
+    - es: Confirmas lugar en tu generación
+  textoDelConsentimiento:
+    es: >-
+      Acepto el tratamiento de mis datos personales para ser contactado sobre el
+      proceso de certificación, conforme a la LFPDPPP.
+  textoDeExito:
+    es: Recibimos tu solicitud. Te escribimos en los próximos días hábiles.
+  textoWhatsApp:
+    es: Escríbenos por WhatsApp

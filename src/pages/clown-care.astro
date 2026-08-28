@@ -1,0 +1,87 @@
+---
+// Qué es Clown Care — la página que explica el método.
+// Mismo patrón que index.astro: ningún texto visible se escribe aquí.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe } from '../lib/idioma';
+import { paginas, imagenPublicable, rutaDeImagen } from '../lib/contenido';
+
+const p = paginas.clownCare;
+const idioma = idiomaDe(Astro);
+const videoVisible = imagenPublicable(p.video?.portada);
+---
+
+<Base seo={p.seo} ruta="institucional">
+  <section class="pad-s" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--azul)">
+        <span class="dot" style="background:var(--azul)"></span> {t(p.antetitulo, idioma)}
+      </span>
+      <h1 class="h1" style="margin:16px 0 20px;max-width:16ch" set:html={tr(p.titulo, idioma)} />
+      <p class="lead" style="font-size:1.2rem" set:html={tr(p.entrada, idioma)} />
+    </div>
+  </section>
+
+  {videoVisible && (
+    <section class="pad-s">
+      <div class="wrap">
+        <div class="photo duo-azul dots-bg filled" style="aspect-ratio:21/9;border-radius:var(--r-xl)">
+          <img class="slot-img" src={rutaDeImagen(p.video.portada.archivo)} alt={t(p.video.portada.textoAlternativo, idioma)} loading="lazy" />
+        </div>
+        {t(p.video?.pie, idioma) && <p class="small muted" style="margin-top:14px">{t(p.video.pie, idioma)}</p>}
+      </div>
+    </section>
+  )}
+
+  <section class="pad">
+    <div class="wrap grid g2" style="gap:clamp(32px,5vw,64px)">
+      <div>
+        <h2 class="h2" style="margin-bottom:18px" set:html={tr(p.anatomia?.titulo, idioma)} />
+        <p class="lead" set:html={tr(p.anatomia?.entrada, idioma)} />
+      </div>
+      <div>
+        {(p.anatomia?.pasos ?? []).map((paso: any, i: number) => (
+          <div class="method-row">
+            <div class="method-n">{String(i + 1).padStart(2, '0')}</div>
+            <div>
+              <h4>{t(paso.titulo, idioma)}</h4>
+              <p>{t(paso.descripcion, idioma)}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s">
+    <div class="wrap">
+      <h2 class="h2" style="margin-bottom:32px;max-width:20ch" set:html={tr(p.acompanamos?.titulo, idioma)} />
+      <div class="grid g3">
+        {(p.acompanamos?.grupos ?? []).map((g: any) => (
+          <div class="card">
+            <div class="icon-chip" style={`background:var(--${g.color || 'coral'});color:#fff`} aria-hidden="true">{g.icono}</div>
+            <h4>{t(g.titulo, idioma)}</h4>
+            <p>{t(g.descripcion, idioma)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap">
+      <div class="cta-final" style="background:var(--teal)">
+        <span class="confetti" style="width:110px;height:110px;background:#fff;left:8%;top:16%;opacity:.12"></span>
+        <span class="confetti" style="width:60px;height:60px;background:var(--mango);right:12%;bottom:18%;opacity:.6"></span>
+        <div style="position:relative">
+          <h2 class="h1" style="color:#fff" set:html={tr(p.llamadoHospitales?.titulo, idioma)} />
+          <p style="color:rgba(255,255,255,.8)" set:html={tr(p.llamadoHospitales?.cuerpo, idioma)} />
+          {t(p.llamadoHospitales?.boton?.texto, idioma) && (
+            <div style="margin-top:30px">
+              <a href={p.llamadoHospitales.boton.destino} class="btn btn-white">{t(p.llamadoHospitales.boton.texto, idioma)}</a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

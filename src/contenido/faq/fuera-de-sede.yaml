@@ -1,0 +1,9 @@
+identificador: fuera-de-sede
+pagina: certificate
+pregunta:
+  es: Vivo fuera de las sedes. ¿Puedo participar?
+respuesta:
+  es: >-
+    Sí, mediante la certificación 100% virtual. La parte de práctica se coordina con hospitales de tu ciudad o mediante el programa de visitas virtuales.
+orden: 5
+publicar: true

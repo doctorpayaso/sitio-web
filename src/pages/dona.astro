@@ -1,0 +1,87 @@
+---
+// Donar — la página de conversión económica.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe, formatearNumero } from '../lib/idioma';
+import { paginas, configuracion } from '../lib/contenido';
+
+const p = paginas.dona;
+const idioma = idiomaDe(Astro);
+
+const METODOS: Record<string, string> = {
+  tarjeta: 'Tarjeta', spei: 'SPEI', oxxo: 'OXXO Pay',
+  domiciliacion: 'Domiciliación', paypal: 'PayPal',
+};
+const metodos = p.metodosDePago ?? [];
+---
+
+<Base seo={p.seo} ruta="emocional">
+  <section class="pad-s" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="wrap" style="text-align:center;max-width:760px">
+      <span class="eyebrow" style="color:var(--coral-d)"><span class="dot"></span> {t(p.antetitulo, idioma)}</span>
+      <h1 class="h1" style="margin:16px auto 18px;max-width:16ch" set:html={tr(p.titulo, idioma)} />
+      <p class="lead" style="margin:0 auto" set:html={tr(p.entrada, idioma)} />
+    </div>
+  </section>
+
+  <section class="pad-s">
+    <div class="wrap" style="max-width:940px">
+      <div class="grid g3">
+        {(p.montos ?? []).map((m: any) => (
+          <div class:list={['amount', m.destacado && 'sel']}>
+            {m.destacado && <span class="ribbon">{idioma === 'en' ? 'Most chosen' : 'Más elegido'}</span>}
+            <div class="amt">
+              ${formatearNumero(m.monto, idioma)}<span style="font-size:.9rem;font-weight:600"> MXN</span>
+            </div>
+            <div class="per">
+              {m.periodicidad === 'unico'
+                ? (idioma === 'en' ? 'one time' : 'donativo único')
+                : (idioma === 'en' ? 'per month' : 'al mes')}
+            </div>
+            <p class="does">{t(m.equivalencia, idioma)}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="form" style="margin-top:34px">
+        <div class="grid g2" style="gap:26px;align-items:center">
+          <div>
+            <h3 class="h3" style="margin-bottom:10px">{idioma === 'en' ? 'Payment methods' : 'Formas de pago'}</h3>
+            {metodos.length > 0 ? (
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                {metodos.map((m: string) => (
+                  <span class:list={['tag', m === 'paypal' ? 'tag-mango' : 'tag-teal']}>{METODOS[m] ?? m}</span>
+                ))}
+              </div>
+            ) : (
+              <p class="small muted">{idioma === 'en' ? 'Coming soon.' : 'Por confirmar.'}</p>
+            )}
+          </div>
+          <div>
+            <p class="small muted" style="margin-bottom:16px">
+              {idioma === 'en'
+                ? 'The donation gateway is being set up. Meanwhile, write to us and we will guide you.'
+                : 'La pasarela de donativos está en preparación. Mientras tanto, escríbenos y te orientamos.'}
+            </p>
+            {configuracion.contacto?.correo && (
+              <a href={`mailto:${configuracion.contacto.correo}`} class="btn btn-coral" style="width:100%">
+                {idioma === 'en' ? 'I want to donate' : 'Quiero donar'}
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap grid g3">
+      {(p.garantias ?? []).map((g: any) => (
+        <div class="card">
+          <div class="icon-chip" style={`background:var(--${g.color || 'coral'});color:#fff`} aria-hidden="true">{g.icono}</div>
+          <h4>{t(g.titulo, idioma)}</h4>
+          <p>{t(g.descripcion, idioma)}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

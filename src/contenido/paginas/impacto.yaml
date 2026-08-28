@@ -1,7 +1,45 @@
-# Página "impacto". Estructura pendiente de llenado desde el panel.
 seo:
   titulo:
-    es: ''
+    es: Impacto y transparencia — Doctor Payaso A.C.
   descripcion:
-    es: ''
+    es: >-
+      Publicamos un informe anual desde 2015, en español e inglés, de descarga
+      abierta. Los números antes que las fotos.
   imagenAlCompartir: null
+antetitulo:
+  es: Impacto y transparencia
+titulo:
+  es: Los números antes que las fotos.
+entrada:
+  es: >-
+    Cualquiera puede publicar una foto conmovedora. Nosotros publicamos el
+    informe completo, en español e inglés, todos los años desde 2015.
+cifrasQueSeMuestran:
+  - voluntariosActivos
+  - ciudadesConOperacion
+  - informesPublicados
+  - rangoDeEdad
+informes:
+  titulo:
+    es: Informes anuales
+  entrada:
+    es: Descarga abierta. Sin registro ni formulario de por medio.
+gobernanza:
+  - titulo:
+      es: Donataria autorizada
+    cuerpo:
+      es: >-
+        Estatus, número de autorización y publicación en el DOF. Dato por
+        confirmar con el equipo.
+  - titulo:
+      es: Gobernanza
+    cuerpo:
+      es: >-
+        Consejo directivo, acta constitutiva y estatutos vigentes disponibles
+        para consulta de aliados institucionales.
+  - titulo:
+      es: Cómo medimos
+    cuerpo:
+      es: >-
+        Cada visita se registra por sede, hospital, número de pacientes y
+        duración. Ese registro es la base del informe anual.

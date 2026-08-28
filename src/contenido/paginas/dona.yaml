@@ -1,7 +1,67 @@
-# Página "dona". Estructura pendiente de llenado desde el panel.
 seo:
   titulo:
-    es: ''
+    es: Donar — Doctor Payaso A.C.
   descripcion:
-    es: ''
+    es: >-
+      Tu donativo sostiene la formación de un voluntario, su transporte al
+      hospital y la coordinación de las visitas. Recibo deducible de impuestos.
   imagenAlCompartir: null
+antetitulo:
+  es: Donativos
+titulo:
+  es: Tu donativo no compra narices. Compra tiempo.
+entrada:
+  es: >-
+    Cada peso sostiene la formación de un voluntario, su transporte al hospital y
+    la coordinación de las visitas. Eso es lo que convierte una buena intención
+    en una visita que sí ocurre.
+montos:
+  - monto: 300
+    periodicidad: mensual
+    equivalencia:
+      es: >-
+        Cubre el traslado de un voluntario a sus visitas hospitalarias durante un
+        mes.
+    destacado: false
+  - monto: 1500
+    periodicidad: mensual
+    equivalencia:
+      es: >-
+        Sostiene la operación de clown care en una sede: coordinación, materiales
+        y visitas virtuales.
+    destacado: true
+  - monto: 5000
+    periodicidad: mensual
+    equivalencia:
+      es: >-
+        Financia la beca completa de certificación de un voluntario que no puede
+        pagarla.
+    destacado: false
+metodosDePago: []
+garantias:
+  - icono: 🧾
+    color: coral
+    titulo:
+      es: Deducible de impuestos
+    descripcion:
+      es: >-
+        Emitimos CFDI por donativo. Marca la casilla y te llegará junto con el
+        comprobante.
+  - icono: 📬
+    color: teal
+    titulo:
+      es: Sabrás a dónde fue
+    descripcion:
+      es: >-
+        Los donantes recurrentes reciben el reporte de impacto de su sede antes
+        que el informe público.
+  - icono: 🛑
+    color: azul
+    titulo:
+      es: Cancela cuando quieras
+    descripcion:
+      es: Sin llamadas ni trámites. Un enlace en cada correo, un clic y listo.
+textoDelConsentimiento:
+  es: >-
+    Acepto el tratamiento de mis datos personales para procesar el donativo y
+    emitir el comprobante fiscal, conforme a la LFPDPPP.

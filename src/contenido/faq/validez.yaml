@@ -1,0 +1,9 @@
+identificador: validez
+pagina: certificate
+pregunta:
+  es: ¿La certificación tiene validez o reconocimiento?
+respuesta:
+  es: >-
+    Es una certificación propia de Doctor Payaso A.C., con más de una década de operación y programas en alianza con instituciones como la Facultad de Medicina de la UNAM. Te acredita como voluntario para el acceso a los hospitales con los que operamos.
+orden: 6
+publicar: true

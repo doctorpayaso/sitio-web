@@ -1,7 +1,98 @@
-# Página "clown-care". Estructura pendiente de llenado desde el panel.
 seo:
   titulo:
-    es: ''
+    es: Qué es el clown care — Doctor Payaso A.C.
   descripcion:
-    es: ''
+    es: >-
+      El clown care es una disciplina con método: arte clown, improvisación,
+      coaching ontológico y protocolo hospitalario. Así funciona una visita.
   imagenAlCompartir: null
+antetitulo:
+  es: El programa
+titulo:
+  es: Actos inesperados de cariño, con método detrás.
+entrada:
+  es: >-
+    El clown care es una disciplina, no una ocurrencia. Combina arte clown,
+    improvisación, coaching ontológico y protocolo hospitalario. Así es como
+    funciona una visita.
+video:
+  portada:
+    archivo: null
+    textoAlternativo:
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
+  enlace: ''
+  pie:
+    es: ''
+anatomia:
+  titulo:
+    es: Anatomía de una visita
+  entrada:
+    es: >-
+      Cada intervención sigue una secuencia. No se improvisa la estructura: se
+      improvisa dentro de ella.
+  pasos:
+    - titulo:
+        es: Briefing clínico
+      descripcion:
+        es: >-
+          Antes de entrar, el equipo recibe indicaciones del personal de piso:
+          qué habitaciones sí, cuáles no, qué precauciones de contacto aplican.
+    - titulo:
+        es: Pedir permiso en la puerta
+      descripcion:
+        es: >-
+          El paciente decide si quiere la visita. Es su primera decisión libre
+          del día y suele ser la única.
+    - titulo:
+        es: Inversión de roles
+      descripcion:
+        es: >-
+          El clown se equivoca, se cae, no entiende. El paciente corrige, enseña,
+          manda. La jerarquía del hospital se voltea.
+    - titulo:
+        es: Cierre y registro
+      descripcion:
+        es: >-
+          La visita se documenta: sede, hospital, número de pacientes, duración.
+          Ese registro alimenta el informe anual.
+acompanamos:
+  titulo:
+    es: A quién acompañamos
+  grupos:
+    - icono: 🧒
+      color: coral
+      titulo:
+        es: Pacientes pediátricos
+      descripcion:
+        es: >-
+          El núcleo del programa. Oncología, cirugía, terapia intensiva,
+          hospitalización prolongada.
+    - icono: 👵
+      color: azul
+      titulo:
+        es: Adultos mayores
+      descripcion:
+        es: >-
+          Acompañamos hasta los 114 años. El aislamiento geriátrico duele igual
+          que el pediátrico.
+    - icono: 🩺
+      color: teal
+      titulo:
+        es: Personal de salud
+      descripcion:
+        es: >-
+          Enfermeras y médicos comparten el pasillo. El efecto de la visita
+          también los alcanza a ellos.
+llamadoHospitales:
+  titulo:
+    es: ¿Quieres este programa en tu hospital?
+  cuerpo:
+    es: >-
+      Operamos programas permanentes con instituciones de salud públicas y
+      privadas.
+  boton:
+    texto:
+      es: Hablar con el equipo institucional →
+    destino: /alianzas

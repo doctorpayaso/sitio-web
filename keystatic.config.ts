@@ -180,6 +180,25 @@ const boton = (label: string) =>
     { label },
   );
 
+/** Tarjeta con icono de color, usada en varias páginas. */
+const tarjetaIcono = (label: string) =>
+  fields.object(
+    {
+      icono: fields.text({ label: 'Icono', description: 'Un emoji. Ej. 🧒' }),
+      color: fields.select({ label: 'Color', options: OPCIONES_COLOR, defaultValue: 'coral' }),
+      titulo: texto('Título'),
+      descripcion: parrafo('Descripción'),
+    },
+    { label },
+  );
+
+/** Lista de pasos numerados automáticamente. */
+const listaDePasos = (label: string) =>
+  fields.array(
+    fields.object({ titulo: texto('Título'), descripcion: parrafo('Descripción') }),
+    { label, description: 'Se numeran solos: 01, 02, 03…', itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Paso' },
+  );
+
 /** Tarjeta de las dos rutas de entrada de la portada. */
 const rutaDeEntrada = (label: string) =>
   fields.object(
@@ -600,9 +619,8 @@ export default config({
       schema: {
         seo: seo(),
         antetitulo: texto('Antetítulo'),
-        titulo: texto('Titular'),
+        titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
         entrada: parrafo('Párrafo de entrada'),
-
         video: fields.object(
           {
             portada: imagen('Portada panorámica (21:9)', 'video'),
@@ -611,44 +629,27 @@ export default config({
           },
           { label: 'Video' },
         ),
-
-        anatomiaDeUnaVisita: fields.object(
+        anatomia: fields.object(
           {
-            titulo: texto('Titular del bloque'),
-            pasos: fields.array(
-              fields.object({
-                titulo: texto('Título del paso'),
-                descripcion: parrafo('Descripción'),
-              }),
-              {
-                label: 'Pasos de la visita',
-                itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Paso',
-              },
-            ),
+            titulo: texto('Titular', { variasLineas: true }),
+            entrada: parrafo('Entrada'),
+            pasos: listaDePasos('Pasos de la visita'),
           },
           { label: 'Anatomía de una visita' },
         ),
-
-        aQuienAcompanamos: fields.object(
+        acompanamos: fields.object(
           {
-            titulo: texto('Titular del bloque'),
-            grupos: fields.array(
-              fields.object({
-                titulo: texto('Grupo'),
-                descripcion: parrafo('Descripción'),
-              }),
-              {
-                label: 'Grupos',
-                itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Grupo',
-              },
-            ),
+            titulo: texto('Titular', { variasLineas: true }),
+            grupos: fields.array(tarjetaIcono('Grupo'), {
+              label: 'Grupos',
+              itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Grupo',
+            }),
           },
           { label: 'A quién acompañamos' },
         ),
-
         llamadoHospitales: fields.object(
           {
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true }),
             cuerpo: parrafo('Cuerpo'),
             boton: boton('Botón'),
           },
@@ -667,47 +668,36 @@ export default config({
       format: { data: 'yaml' },
       schema: {
         seo: seo(),
-
         hero: fields.object(
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', {
-              description: 'Propuesta aprobada: «No buscamos payasos. Buscamos personas.»',
+              variasLineas: true,
+              description: `Aprobado por Dirección: «No buscamos payasos. Buscamos personas.» ${NOTA_SALTOS}`,
             }),
-            palabraDestacada: texto('Palabra resaltada'),
+            palabraDestacada: texto('Palabra resaltada en coral'),
             entrada: parrafo('Párrafo de entrada'),
             botonPrincipal: boton('Botón principal'),
             botonSecundario: boton('Botón secundario'),
             avisoDeCierre: texto('Aviso de cierre de inscripciones', {
-              description:
-                'Ej. «Cierre de inscripciones Monterrey: 20 de diciembre». Dejar vacío lo oculta.',
+              description: 'Ej. «Cierre de inscripciones Monterrey: 20 de diciembre». Dejar vacío lo oculta.',
             }),
-            imagen: imagen('Fotografía', 'hero'),
+            imagen: imagen('Fotografía', 'hero', {
+              description: 'Vertical 4:5. Grupo en formación, en pleno ejercicio. Energía, no pose oficial.',
+            }),
           },
           { label: 'Primera pantalla' },
         ),
-
         requisitos: fields.object(
           {
-            titulo: texto('Titular del bloque'),
-            lista: fields.array(
-              fields.object({
-                titulo: texto('Requisito'),
-                descripcion: parrafo('Explicación'),
-              }),
-              {
-                label: 'Requisitos',
-                itemLabel: (props) =>
-                  props.fields.titulo.fields.es?.value || 'Requisito',
-              },
-            ),
+            titulo: texto('Titular', { variasLineas: true }),
+            lista: fields.array(tarjetaIcono('Requisito'), {
+              label: 'Requisitos',
+              itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Requisito',
+            }),
           },
           { label: 'Lo que sí necesitas' },
         ),
-
-        // ---------------------------------------------------------------------
-        //  COSTO — pendiente #1 del proyecto, el que más bloquea la conversión
-        // ---------------------------------------------------------------------
         costo: fields.conditional(
           fields.checkbox({
             label: '¿Ya se puede publicar el costo?',
@@ -716,11 +706,7 @@ export default config({
               'Mientras esté desmarcado, el sitio dice «monto por confirmar» en lugar de dejar el espacio vacío. Es la duda número uno del candidato.',
           }),
           {
-            false: fields.object({
-              textoProvisional: texto('Texto provisional', {
-                description: 'Ej. «Monto por confirmar. Escríbenos y te lo compartimos.»',
-              }),
-            }),
+            false: fields.object({ textoProvisional: texto('Texto provisional') }),
             true: fields.object({
               monto: fields.integer({ label: 'Monto' }),
               moneda: fields.select({
@@ -736,34 +722,42 @@ export default config({
             }),
           },
         ),
-
         becas: fields.conditional(
-          fields.checkbox({
-            label: '¿Existe esquema de becas?',
-            defaultValue: false,
-            description: 'Pendiente #2 del proyecto.',
-          }),
+          fields.checkbox({ label: '¿Existe esquema de becas?', defaultValue: false }),
           {
             false: fields.empty(),
             true: fields.object({
-              descripcion: parrafo('Cómo funcionan las becas'),
+              descripcion: parrafo('Cómo funcionan'),
               comoSolicitar: parrafo('Cómo se solicita'),
             }),
           },
         ),
-
         modulosIntro: fields.object(
           {
             antetitulo: texto('Antetítulo'),
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             entrada: parrafo('Entrada'),
+            etiquetas: fields.array(texto('Etiqueta'), {
+              label: 'Etiquetas de colores',
+              itemLabel: (props) => props.fields.es?.value || 'Etiqueta',
+            }),
           },
           {
             label: 'Introducción a los módulos',
             description: 'Los seis módulos se editan en «Módulos de certificación».',
           },
         ),
-
+        generaciones: fields.object(
+          {
+            antetitulo: texto('Antetítulo'),
+            titulo: texto('Titular', { variasLineas: true }),
+            nota: parrafo('Nota al costado'),
+          },
+          {
+            label: 'Bloque de generaciones',
+            description: 'Las fechas y sedes se editan en «Generaciones de certificación».',
+          },
+        ),
         programaUniversidades: fields.object(
           {
             titulo: texto('Titular'),
@@ -772,22 +766,20 @@ export default config({
           },
           { label: 'Programa para estudiantes de salud' },
         ),
-
         formulario: fields.object(
           {
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             entrada: parrafo('Entrada'),
             pasos: fields.array(texto('Paso'), {
               label: 'Los tres pasos del proceso',
               itemLabel: (props) => props.fields.es?.value || 'Paso',
             }),
             textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', {
-              description:
-                'Redacción validada por la abogada. La casilla NUNCA viene premarcada.',
+              description: 'Redacción validada por la abogada. La casilla NUNCA viene premarcada.',
               obligatorio: true,
             }),
             textoDeExito: parrafo('Mensaje después de enviar'),
-            textoWhatsApp: texto('Alternativa por WhatsApp'),
+            textoWhatsApp: texto('Texto del botón de WhatsApp'),
           },
           { label: 'Formulario de solicitud' },
         ),
@@ -803,26 +795,36 @@ export default config({
       format: { data: 'yaml' },
       schema: {
         seo: seo(),
-
         hero: fields.object(
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', {
-              description: 'Propuesta aprobada: «Impacto social que sí se documenta.»',
+              variasLineas: true,
+              description: `Aprobado por Dirección: «Impacto social que sí se documenta.» ${NOTA_SALTOS}`,
             }),
-            palabraDestacada: texto('Palabra resaltada'),
+            palabraDestacada: texto('Palabra resaltada en verde'),
             entrada: parrafo('Párrafo de entrada'),
             botonPrincipal: boton('Botón principal'),
-            imagen: imagen('Fotografía', 'hero'),
+            botonSecundario: boton('Botón secundario'),
+            insignia: fields.object(
+              {
+                destacado: texto('Texto grande'),
+                etiqueta: texto('Etiqueta', { variasLineas: true }),
+              },
+              { label: 'Insignia flotante sobre la foto' },
+            ),
+            imagen: imagen('Fotografía', 'hero', {
+              description: 'Vertical 4:5. Registro sobrio, institucional. No festivo.',
+            }),
           },
           { label: 'Primera pantalla' },
         ),
-
         modelosDeColaboracion: fields.object(
           {
-            titulo: texto('Titular del bloque'),
+            titulo: texto('Titular', { variasLineas: true }),
             modelos: fields.array(
               fields.object({
+                icono: fields.text({ label: 'Icono', description: 'Un emoji. Ej. 🏥' }),
                 nombre: texto('Nombre del modelo'),
                 paraQuien: texto('Para quién'),
                 descripcion: parrafo('Descripción'),
@@ -839,31 +841,27 @@ export default config({
           },
           { label: 'Modelos de colaboración' },
         ),
-
+        citaInstitucional: fields.object(
+          {
+            texto: parrafo('Cita'),
+            autor: texto('Autor y procedencia', { variasLineas: true }),
+          },
+          { label: 'Cita sobre fondo verde' },
+        ),
         proceso: fields.object(
           {
-            titulo: texto('Titular del bloque'),
-            pasos: fields.array(
-              fields.object({
-                titulo: texto('Título del paso'),
-                descripcion: parrafo('Descripción'),
-              }),
-              {
-                label: 'Pasos',
-                itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Paso',
-              },
-            ),
+            antetitulo: texto('Antetítulo'),
+            titulo: texto('Titular', { variasLineas: true }),
+            entrada: parrafo('Entrada'),
+            pasos: listaDePasos('Pasos del proceso'),
           },
           { label: 'De la primera llamada al primer pasillo' },
         ),
-
-        formulario: fields.object(
+        contacto: fields.object(
           {
             titulo: texto('Titular'),
             entrada: parrafo('Entrada'),
-            textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', {
-              obligatorio: true,
-            }),
+            textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', { obligatorio: true }),
             textoDeExito: parrafo('Mensaje después de enviar'),
           },
           { label: 'Formulario institucional' },
@@ -882,31 +880,23 @@ export default config({
         seo: seo(),
         antetitulo: texto('Antetítulo'),
         titulo: texto('Titular', {
-          description: 'Propuesta aprobada: «Los números antes que las fotos.»',
+          variasLineas: true,
+          description: `Aprobado por Dirección: «Los números antes que las fotos.» ${NOTA_SALTOS}`,
         }),
         entrada: parrafo('Párrafo de entrada'),
-
         cifrasQueSeMuestran: fields.multiselect({
           label: 'Cifras que se muestran',
           options: OPCIONES_CIFRAS,
         }),
-
         informes: fields.object(
+          { titulo: texto('Titular'), entrada: parrafo('Entrada') },
           {
-            titulo: texto('Titular del bloque'),
-            entrada: parrafo('Entrada'),
-          },
-          {
-            label: 'Informes anuales',
+            label: 'Bloque de informes',
             description: 'Los archivos se cargan en «Informes anuales».',
           },
         ),
-
         gobernanza: fields.array(
-          fields.object({
-            titulo: texto('Título'),
-            cuerpo: parrafo('Cuerpo'),
-          }),
+          fields.object({ titulo: texto('Título'), cuerpo: parrafo('Cuerpo') }),
           {
             label: 'Bloques de gobernanza',
             itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
@@ -926,11 +916,10 @@ export default config({
         seo: seo(),
         antetitulo: texto('Antetítulo'),
         titulo: texto('Titular', {
-          description:
-            'Propuesta aprobada: «Tu donativo no compra narices. Compra tiempo.»',
+          variasLineas: true,
+          description: `Aprobado por Dirección: «Tu donativo no compra narices. Compra tiempo.» ${NOTA_SALTOS}`,
         }),
         entrada: parrafo('Párrafo de entrada'),
-
         montos: fields.array(
           fields.object({
             monto: fields.integer({ label: 'Monto en pesos' }),
@@ -939,46 +928,30 @@ export default config({
               options: [
                 { label: 'Mensual', value: 'mensual' },
                 { label: 'Único', value: 'unico' },
-                { label: 'Ambas', value: 'ambas' },
               ],
-              defaultValue: 'ambas',
+              defaultValue: 'mensual',
             }),
             equivalencia: parrafo('Qué financia este monto', {
-              description:
-                'Las equivalencias deben validarse con el área financiera antes de publicarse.',
+              description: 'Las equivalencias deben validarse con el área financiera antes de publicarse.',
             }),
-            destacado: fields.checkbox({
-              label: 'Marcar como «más elegido»',
-              defaultValue: false,
-            }),
+            destacado: fields.checkbox({ label: 'Marcar como «más elegido»', defaultValue: false }),
           }),
           {
             label: 'Montos sugeridos',
             itemLabel: (props) => `$${props.fields.monto.value ?? '—'} MXN`,
           },
         ),
-
         metodosDePago: fields.multiselect({
           label: 'Métodos de pago disponibles',
           options: OPCIONES_METODO_PAGO,
           description:
             'Solo marcar los que estén realmente habilitados en la pasarela. Anunciar un método que no funciona pierde al donante en el peor momento.',
         }),
-
-        garantias: fields.array(
-          fields.object({
-            titulo: texto('Título'),
-            descripcion: parrafo('Descripción'),
-          }),
-          {
-            label: 'Bloques de confianza',
-            itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
-          },
-        ),
-
-        textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', {
-          obligatorio: true,
+        garantias: fields.array(tarjetaIcono('Bloque de confianza'), {
+          label: 'Bloques de confianza',
+          itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
         }),
+        textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', { obligatorio: true }),
       },
     }),
 

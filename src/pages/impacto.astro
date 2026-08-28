@@ -1,0 +1,103 @@
+---
+// Impacto y transparencia — la página que sostiene la credibilidad del sitio.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
+import { paginas, cifras, informes } from '../lib/contenido';
+
+const p = paginas.impacto;
+const idioma = idiomaDe(Astro);
+const listaInformes = informes();
+
+const ETIQUETAS: Record<string, { es: string; en: string }> = {
+  voluntariosCertificados: { es: 'Voluntarios certificados', en: 'Certified volunteers' },
+  voluntariosActivos: { es: 'Voluntarios certificados activos', en: 'Active certified volunteers' },
+  visitasHospitalarias: { es: 'Visitas a hospitales', en: 'Hospital visits' },
+  personasBeneficiadas: { es: 'Personas beneficiadas', en: 'People reached' },
+  ciudadesConOperacion: { es: 'Ciudades con operación permanente', en: 'Cities with permanent operations' },
+  informesPublicados: { es: 'Informes anuales publicados', en: 'Annual reports published' },
+  rangoDeEdad: { es: 'Rango de edad de pacientes acompañados', en: 'Age range of patients accompanied' },
+};
+
+const franja = (p.cifrasQueSeMuestran ?? [])
+  .map((clave: string) => ({
+    clave,
+    valor: (cifras as any)[clave],
+    etiqueta: ETIQUETAS[clave]?.[idioma as 'es'] ?? ETIQUETAS[clave]?.es ?? clave,
+  }))
+  .filter((c: any) => c.valor !== undefined && c.valor !== null && c.valor !== '');
+---
+
+<Base seo={p.seo} ruta="institucional">
+  <section class="pad-s" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--teal)">
+        <span class="dot" style="background:var(--teal)"></span> {t(p.antetitulo, idioma)}
+      </span>
+      <h1 class="h1" style="margin:16px 0 20px;max-width:18ch" set:html={tr(p.titulo, idioma)} />
+      <p class="lead" style="font-size:1.2rem" set:html={tr(p.entrada, idioma)} />
+    </div>
+  </section>
+
+  {franja.length > 0 && (
+    <section class="pad-s">
+      <div class="wrap">
+        <div class="proof" style="border-radius:var(--r-xl);padding:44px 34px">
+          <div class="proof-grid" style="max-width:100%">
+            {franja.map((c: any) => (
+              <div class="proof-item">
+                <div class="n">
+                  {c.clave === 'rangoDeEdad' ? String(c.valor) : formatearNumero(c.valor, idioma)}
+                  {c.clave !== 'rangoDeEdad' && c.clave !== 'ciudadesConOperacion' && c.clave !== 'informesPublicados' && <em>+</em>}
+                </div>
+                <div class="t">{c.etiqueta}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {cifras.fechaDeCorte && (
+          <p class="small muted" style="margin-top:18px">
+            {idioma === 'en' ? 'Figures as of' : 'Cifras a'}{' '}
+            {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
+            {cifras.aprobadoPor ? ` · ${idioma === 'en' ? 'Approved by' : 'Aprobado por'} ${cifras.aprobadoPor}` : ''}
+          </p>
+        )}
+        {t(cifras.notaMetodologica, idioma) && (
+          <p class="small muted" style="margin-top:10px;max-width:80ch">{t(cifras.notaMetodologica, idioma)}</p>
+        )}
+      </div>
+    </section>
+  )}
+
+  <section class="pad">
+    <div class="wrap">
+      <h2 class="h2" style="margin-bottom:8px" set:html={tr(p.informes?.titulo, idioma)} />
+      <p class="lead" style="margin-bottom:32px" set:html={tr(p.informes?.entrada, idioma)} />
+
+      {listaInformes.length > 0 ? (
+        <div class="grid g4" style="gap:14px">
+          {listaInformes.map((i: any) => (
+            <a href={i.archivoEspanol ?? '#'} class="report" download>
+              <span class="ic" aria-hidden="true">📄</span>
+              {idioma === 'en' ? 'Report' : 'Informe'} {i.anio}
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="muted">
+          {idioma === 'en' ? 'Reports coming soon.' : 'Los informes se publicarán próximamente.'}
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap grid g3">
+      {(p.gobernanza ?? []).map((b: any) => (
+        <div class="card">
+          <h4>{t(b.titulo, idioma)}</h4>
+          <p>{t(b.cuerpo, idioma)}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
