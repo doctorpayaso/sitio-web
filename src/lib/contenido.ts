@@ -41,8 +41,21 @@ export { cifras, configuracion };
 //  Colecciones (muchos de cada)
 // -----------------------------------------------------------------------------
 
-function cargarCarpeta<T>(modulos: Record<string, { default: T }>): T[] {
-  return Object.values(modulos).map((m) => m.default);
+/**
+ * Carga una carpeta de contenido y le añade a cada elemento su identificador.
+ *
+ * El identificador es el nombre del archivo, y es el valor que guarda el panel
+ * cuando una página apunta a otro contenido. No está dentro del archivo: el
+ * panel lo usa como nombre. Por eso hay que sacarlo de la ruta.
+ *
+ * Sin esto, una referencia guardada como `dra-sonia-gutierrez` se compara contra
+ * el campo Nombre, que dice `Dra. Sonia Gutiérrez`, y nunca coincide.
+ */
+function cargarCarpeta<T>(modulos: Record<string, { default: T }>): (T & { id: string })[] {
+  return Object.entries(modulos).map(([ruta, m]) => ({
+    ...(m.default as T),
+    id: ruta.split('/').pop()!.replace(/\.ya?ml$/, ''),
+  }));
 }
 
 const todasLasSedes = cargarCarpeta<any>(
@@ -103,19 +116,9 @@ export const generaciones = () => {
 };
 
 /** La próxima generación con inscripciones abiertas, si existe. */
-/** Sede por su identificador. */
+/** Sede por su identificador de archivo. */
 export const sedePorId = (id: string | null | undefined) =>
-  id ? (todasLasSedes.find((s) => s.nombre === id || slugDe(s.nombre) === id) ?? null) : null;
-
-/** Convierte un nombre en el identificador que usa Keystatic para los archivos. */
-function slugDe(nombre: string): string {
-  return String(nombre)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
+  id ? (todasLasSedes.find((s) => s.id === id) ?? null) : null;
 
 export const proximaGeneracion = () =>
   generaciones().find((g) => g.estado === 'abiertas' || g.estado === 'continua') ?? null;
@@ -129,7 +132,7 @@ export const testimonios = () =>
   todosLosTestimonios.filter((t) => t.publicar && t.autorizacionVigente);
 
 export const testimonioPorId = (id: string | null | undefined) =>
-  id ? (testimonios().find((t) => t.nombre === id) ?? null) : null;
+  id ? (testimonios().find((t) => t.id === id) ?? null) : null;
 
 /**
  * Aliados publicables.
