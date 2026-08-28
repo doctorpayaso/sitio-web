@@ -48,7 +48,7 @@ hero:
         acostado en una cama y sostiene un juguete rojo. Ambos se miran, en un
         ambiente hospitalario infantil.
     muestraPersonasIdentificables: true
-    folioConsentimiento: CONS-AAAA-0001
+    folioConsentimiento: CONS-2026-0001
 franjaDeCifras:
   - voluntariosActivos
   - visitasHospitalarias
@@ -122,7 +122,7 @@ metodo:
         verde. Ambos se miran y juegan, mientras el doctor sostiene suavemente
         el pie del niño.
     muestraPersonasIdentificables: true
-    folioConsentimiento: CONS-AAAA0002
+    folioConsentimiento: CONS-2026-002
   pasos:
     - titulo:
         es: Devolver el control
@@ -224,7 +224,7 @@ testimonio:
         objetos decorativos. En la parte inferior aparece una franja con un
         logotipo y el texto: “Dra. Sonia Gutiérrez - C.M.N. 20 de Noviembre”.
     muestraPersonasIdentificables: true
-    folioConsentimiento: CONS-AAAA-003
+    folioConsentimiento: CONS-2026-003
 aliados:
   titulo:
     es: Hospitales, empresas y universidades que confían en nosotros
