@@ -15,6 +15,18 @@ function armarTitular(titular: string, palabra: string): string {
 }
 const titularHtml = armarTitular(t(p.hero?.titulo, idioma), t(p.hero?.palabraDestacada, idioma));
 const COLORES = ['azul', 'teal', 'coral-d'];
+
+/** Fondo tenue del color elegido, con el icono en el tono fuerte. */
+const TENUE: Record<string, string> = {
+  coral: 'background:rgba(244,98,98,.14);color:var(--coral-d)',
+  azul: 'background:rgba(66,128,191,.14);color:var(--azul)',
+  teal: 'background:rgba(43,114,104,.14);color:var(--teal)',
+  menta: 'background:rgba(73,182,166,.16);color:var(--teal)',
+  mango: 'background:rgba(255,162,49,.2);color:#a05c00',
+  vino: 'background:rgba(155,53,79,.14);color:var(--vino)',
+};
+const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
+
 ---
 
 <Base seo={p.seo} ruta="institucional">
@@ -57,7 +69,9 @@ const COLORES = ['azul', 'teal', 'coral-d'];
       <div class="grid g3">
         {(p.modelosDeColaboracion?.modelos ?? []).map((m: any, i: number) => (
           <article class="card" style="padding:34px">
-            <div class="icon-chip" style={`background:var(--${COLORES[i % 3].replace('-d', '')});color:#fff`} aria-hidden="true">{m.icono}</div>
+            <div class="icon-chip" style={fondoTenue(COLORES[i % 3].replace('-d', ''))} aria-hidden={m.iconoImagen ? undefined : 'true'}>
+              {m.iconoImagen ? <img src={rutaDeImagen(m.iconoImagen)} alt="" /> : m.icono}
+            </div>
             <h4 style="font-size:1.35rem">{t(m.nombre, idioma)}</h4>
             <p style="margin-bottom:18px">{t(m.descripcion, idioma)}</p>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:22px">

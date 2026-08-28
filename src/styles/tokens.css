@@ -78,9 +78,12 @@ h1, h2, h3, h4 {
   font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.02em;
-  /* opsz alto = trazo de titular, con más contraste entre gruesos y finos.
-     SOFT redondea los remates. WONK activa las formas excéntricas. */
-  font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 144;
+  /* SOFT redondea los remates. WONK activa las formas excéntricas.
+     El tamaño óptico (opsz) NO se fija: se deja que el navegador lo ajuste al
+     tamaño real del texto. Forzarlo a 144 comprime los títulos medianos y les
+     mete un contraste que solo funciona a tamaño de portada. */
+  font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  font-optical-sizing: auto;
 }
 .h-hero {
   /* El tope baja de 5.2rem a 4.4rem para que "que no se receta." quepa en un
@@ -270,7 +273,30 @@ header.nav {
 .card .num { font-family: var(--display); font-size: 2.4rem; font-weight: 600; line-height: 1; color: var(--coral); opacity: 0.9; }
 .card h4 { font-size: 1.18rem; margin: 14px 0 9px; }
 .card p { font-size: 0.95rem; color: var(--tinta-60); }
-.icon-chip { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 1.35rem; flex: none; }
+.icon-chip {
+  width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+  font-size: 1.35rem; flex: none; overflow: hidden;
+}
+/* Un icono cargado por el equipo ocupa toda la ficha; el emoji queda centrado. */
+.icon-chip img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+
+/* ============ VIDEO ============ */
+/* Fachada: se muestra la portada y el reproductor de YouTube solo se carga
+   cuando alguien pulsa play. Así ninguna visita envía datos a Google sin que el
+   visitante lo haya decidido, y la página carga más rápido. */
+.video-fachada { position: relative; width: 100%; border: 0; padding: 0; cursor: pointer; background: none; display: block; }
+.video-play {
+  position: absolute; inset: 0; display: grid; place-items: center; z-index: 3;
+  background: rgba(19, 46, 42, 0.18); transition: background 0.2s;
+}
+.video-fachada:hover .video-play { background: rgba(19, 46, 42, 0.32); }
+.video-play span {
+  width: 74px; height: 74px; border-radius: 50%; background: rgba(255, 255, 255, 0.94);
+  display: grid; place-items: center; font-size: 1.6rem; color: var(--coral-d);
+  padding-left: 6px; box-shadow: var(--shadow-lg); transition: transform 0.2s;
+}
+.video-fachada:hover .video-play span { transform: scale(1.08); }
+.video-marco { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 4; }
 
 /* ============ CITA EDITORIAL ============ */
 .quote { position: relative; padding: clamp(36px, 5vw, 64px); border-radius: var(--r-xl); background: var(--crema-2); overflow: hidden; }

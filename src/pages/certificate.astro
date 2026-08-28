@@ -15,6 +15,18 @@ const listaGeneraciones = generaciones();
 const faq = preguntas('certificate');
 const heroVisible = imagenPublicable(p.hero?.imagen);
 
+/** Fondo tenue del color elegido, con el icono en el tono fuerte. */
+const TENUE: Record<string, string> = {
+  coral: 'background:rgba(244,98,98,.14);color:var(--coral-d)',
+  azul: 'background:rgba(66,128,191,.14);color:var(--azul)',
+  teal: 'background:rgba(43,114,104,.14);color:var(--teal)',
+  menta: 'background:rgba(73,182,166,.16);color:var(--teal)',
+  mango: 'background:rgba(255,162,49,.2);color:#a05c00',
+  vino: 'background:rgba(155,53,79,.14);color:var(--vino)',
+};
+const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
+
+
 const [antes, acento] = (() => {
   const titulo = t(p.hero?.titulo, idioma);
   const palabra = t(p.hero?.palabraDestacada, idioma);
@@ -76,7 +88,9 @@ const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
       <div class="grid g4">
         {(p.requisitos?.lista ?? []).map((r: any) => (
           <div class="card">
-            <div class="icon-chip" style={`background:var(--${r.color || 'coral'});color:#fff`} aria-hidden="true">{r.icono}</div>
+            <div class="icon-chip" style={fondoTenue(r.color)} aria-hidden={r.iconoImagen ? undefined : 'true'}>
+              {r.iconoImagen ? <img src={rutaDeImagen(r.iconoImagen)} alt="" /> : r.icono}
+            </div>
             <h4>{t(r.titulo, idioma)}</h4>
             <p>{t(r.descripcion, idioma)}</p>
           </div>

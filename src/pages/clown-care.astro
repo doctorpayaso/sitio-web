@@ -2,12 +2,24 @@
 // Qué es Clown Care — la página que explica el método.
 // Mismo patrón que index.astro: ningún texto visible se escribe aquí.
 import Base from '../layouts/Base.astro';
-import { t, tr, idiomaDe } from '../lib/idioma';
+import { t, tr, idiomaDe, idDeYouTube } from '../lib/idioma';
 import { paginas, imagenPublicable, rutaDeImagen } from '../lib/contenido';
 
 const p = paginas.clownCare;
 const idioma = idiomaDe(Astro);
 const videoVisible = imagenPublicable(p.video?.portada);
+const videoId = idDeYouTube(p.video?.enlace);
+
+/** Fondo tenue del color elegido, con el icono en el tono fuerte. */
+const TENUE: Record<string, string> = {
+  coral: 'background:rgba(244,98,98,.14);color:var(--coral-d)',
+  azul: 'background:rgba(66,128,191,.14);color:var(--azul)',
+  teal: 'background:rgba(43,114,104,.14);color:var(--teal)',
+  menta: 'background:rgba(73,182,166,.16);color:var(--teal)',
+  mango: 'background:rgba(255,162,49,.2);color:#a05c00',
+  vino: 'background:rgba(155,53,79,.14);color:var(--vino)',
+};
+const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
 ---
 
 <Base seo={p.seo} ruta="institucional">
@@ -24,13 +36,45 @@ const videoVisible = imagenPublicable(p.video?.portada);
   {videoVisible && (
     <section class="pad-s">
       <div class="wrap">
-        <div class="photo duo-azul dots-bg filled" style="aspect-ratio:21/9;border-radius:var(--r-xl)">
-          <img class="slot-img" src={rutaDeImagen(p.video.portada.archivo)} alt={t(p.video.portada.textoAlternativo, idioma)} loading="lazy" />
-        </div>
+        {videoId ? (
+          <button
+            class="video-fachada photo duo-azul dots-bg filled"
+            style="aspect-ratio:21/9;border-radius:var(--r-xl)"
+            data-video={videoId}
+            aria-label={`${idioma === 'en' ? 'Play video' : 'Reproducir video'}: ${t(p.video.portada.textoAlternativo, idioma)}`}
+          >
+            <img class="slot-img" src={rutaDeImagen(p.video.portada.archivo)} alt={t(p.video.portada.textoAlternativo, idioma)} loading="lazy" />
+            <span class="video-play"><span aria-hidden="true">▶</span></span>
+          </button>
+        ) : (
+          <div class="photo duo-azul dots-bg filled" style="aspect-ratio:21/9;border-radius:var(--r-xl)">
+            <img class="slot-img" src={rutaDeImagen(p.video.portada.archivo)} alt={t(p.video.portada.textoAlternativo, idioma)} loading="lazy" />
+          </div>
+        )}
         {t(p.video?.pie, idioma) && <p class="small muted" style="margin-top:14px">{t(p.video.pie, idioma)}</p>}
       </div>
     </section>
   )}
+
+  <script>
+    // Al pulsar la portada se inserta el reproductor. Antes de ese clic no se
+    // carga nada de YouTube: ninguna visita al sitio envía datos a Google sin
+    // que el visitante lo haya decidido.
+    document.querySelectorAll<HTMLButtonElement>('.video-fachada').forEach((fachada) => {
+      fachada.addEventListener('click', () => {
+        const id = fachada.dataset.video;
+        if (!id) return;
+        const marco = document.createElement('iframe');
+        marco.className = 'video-marco';
+        // Dominio sin cookies de seguimiento.
+        marco.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        marco.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+        marco.allowFullscreen = true;
+        marco.title = fachada.getAttribute('aria-label') ?? 'Video';
+        fachada.replaceChildren(marco);
+      });
+    });
+  </script>
 
   <section class="pad">
     <div class="wrap grid g2" style="gap:clamp(32px,5vw,64px)">
@@ -58,7 +102,11 @@ const videoVisible = imagenPublicable(p.video?.portada);
       <div class="grid g3">
         {(p.acompanamos?.grupos ?? []).map((g: any) => (
           <div class="card">
-            <div class="icon-chip" style={`background:var(--${g.color || 'coral'});color:#fff`} aria-hidden="true">{g.icono}</div>
+            <div class="icon-chip" style={fondoTenue(g.color)} aria-hidden={g.iconoImagen ? undefined : 'true'}>
+              {g.iconoImagen
+                ? <img src={rutaDeImagen(g.iconoImagen)} alt="" />
+                : g.icono}
+            </div>
             <h4>{t(g.titulo, idioma)}</h4>
             <p>{t(g.descripcion, idioma)}</p>
           </div>

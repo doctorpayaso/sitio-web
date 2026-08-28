@@ -184,8 +184,18 @@ const boton = (label: string) =>
 const tarjetaIcono = (label: string) =>
   fields.object(
     {
-      icono: fields.text({ label: 'Icono', description: 'Un emoji. Ej. 🧒' }),
-      color: fields.select({ label: 'Color', options: OPCIONES_COLOR, defaultValue: 'coral' }),
+      iconoImagen: fields.image({
+        label: 'Icono propio',
+        directory: 'src/assets/iconos',
+        publicPath: '/src/assets/iconos/',
+        description:
+          'SVG o PNG con fondo transparente, cuadrado, mínimo 96 px. Si se carga uno aquí, sustituye al emoji.',
+      }),
+      icono: fields.text({
+        label: 'Emoji (alternativa)',
+        description: 'Se usa solo si no hay icono propio cargado. Ej. 🧒',
+      }),
+      color: fields.select({ label: 'Color de fondo', options: OPCIONES_COLOR, defaultValue: 'coral' }),
       titulo: texto('Título'),
       descripcion: parrafo('Descripción'),
     },
@@ -824,7 +834,13 @@ export default config({
             titulo: texto('Titular', { variasLineas: true }),
             modelos: fields.array(
               fields.object({
-                icono: fields.text({ label: 'Icono', description: 'Un emoji. Ej. 🏥' }),
+                iconoImagen: fields.image({
+                  label: 'Icono propio',
+                  directory: 'src/assets/iconos',
+                  publicPath: '/src/assets/iconos/',
+                  description: 'SVG o PNG con fondo transparente. Sustituye al emoji.',
+                }),
+                icono: fields.text({ label: 'Emoji (alternativa)', description: 'Ej. 🏥' }),
                 nombre: texto('Nombre del modelo'),
                 paraQuien: texto('Para quién'),
                 descripcion: parrafo('Descripción'),

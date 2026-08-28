@@ -126,3 +126,25 @@ export function enriquecer(texto: string): string {
 export function tr(campo: TextoLocalizado, idioma: string = IDIOMA_POR_DEFECTO): string {
   return enriquecer(t(campo, idioma));
 }
+
+/**
+ * Extrae el identificador de un video de YouTube desde cualquiera de sus formas
+ * de enlace: youtu.be/ID, watch?v=ID, /embed/ID o /shorts/ID.
+ *
+ * Devuelve null si no reconoce el enlace, y entonces la portada se muestra sin
+ * botón de reproducción en vez de llevar a un error.
+ */
+export function idDeYouTube(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const patrones = [
+    /youtu\.be\/([\w-]{11})/,
+    /[?&]v=([\w-]{11})/,
+    /\/embed\/([\w-]{11})/,
+    /\/shorts\/([\w-]{11})/,
+  ];
+  for (const p of patrones) {
+    const m = String(url).match(p);
+    if (m) return m[1];
+  }
+  return null;
+}
