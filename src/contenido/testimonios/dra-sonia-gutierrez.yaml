@@ -6,15 +6,20 @@ cita:
   es: >-
     ...reírse hace que a los pacientes se les olvide por lo menos un ratito toda
     esa angustia, no simplemente son doctores payasos, todos saben cómo abordar
-    un tema, cómo de alguna u otra manera acompañar a las personas. Doctor payaso
-    es amor.
+    un tema, cómo de alguna u otra manera acompañar a las personas. Doctor
+    payaso es amor.
 fuente: Video institucional Doctor Payaso A.C.
 fotografia:
-  archivo: null
+  archivo: /src/assets/testimonios/dra-sonia-gutierrez/fotografia/archivo.jpg
   textoAlternativo:
-    es: ''
-  muestraPersonasIdentificables: false
-  folioConsentimiento: ''
-autorizacionVigente: false
-fechaDeAutorizacion: null
-publicar: false
+    es: >-
+      Fotografía de una mujer con bata blanca, sentada y mirando hacia la
+      cámara, en un consultorio u oficina. Lleva una identificación y
+      distintivos médicos en la bata. Al fondo hay fotografías enmarcadas y
+      objetos decorativos. En la parte inferior aparece una franja con un
+      logotipo y el texto: “Dra. Sonia Gutiérrez - C.M.N. 20 de Noviembre”.
+  muestraPersonasIdentificables: true
+  folioConsentimiento: CONS-AAAA-003
+autorizacionVigente: true
+fechaDeAutorizacion: 2026-08-27
+publicar: true
