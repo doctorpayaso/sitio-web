@@ -120,6 +120,17 @@ strong, b { font-weight: 700; color: var(--tinta); }
 section { position: relative; }
 .pad { padding: clamp(64px, 9vw, 132px) 0; }
 .pad-s { padding: clamp(44px, 6vw, 80px) 0; }
+
+/* Cuando una sección sigue a otra, sus espacios se suman y el hueco queda del
+   doble de lo previsto. El espacio generoso es parte del diseño; el doble no.
+   Se reduce el de arriba a la mitad, salvo cuando la sección tiene fondo propio
+   —ahí el aire interior es lo que la separa visualmente del resto. */
+section.pad + section.pad,
+section.pad + section.pad-s,
+section.pad-s + section.pad,
+section.pad-s + section.pad-s {
+  padding-top: clamp(24px, 3.5vw, 52px);
+}
 .grid { display: grid; gap: 28px; }
 .g2 { grid-template-columns: repeat(2, 1fr); }
 .g3 { grid-template-columns: repeat(3, 1fr); }
