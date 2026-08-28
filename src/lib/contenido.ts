@@ -166,6 +166,35 @@ export const equipo = () => todoElEquipo.filter((p) => p.publicar).sort(porOrden
 // -----------------------------------------------------------------------------
 
 /**
+ * Índice de todas las imágenes del proyecto, con su dirección web definitiva.
+ *
+ * Hace falta porque el panel guarda rutas de disco (`/src/assets/hero/foto.jpg`)
+ * y el navegador necesita direcciones web. El compilador procesa cada imagen y
+ * le asigna un nombre versionado en `/_astro/`; este índice traduce de una a
+ * otra.
+ *
+ * Es la misma solución que aplicamos al logotipo: no depender de que el
+ * hospedaje copie archivos sueltos, sino hacer que la imagen forme parte de la
+ * compilación.
+ */
+const IMAGENES = import.meta.glob<string>(
+  '/src/assets/**/*.{jpg,jpeg,png,webp,avif,gif,svg}',
+  { eager: true, query: '?url', import: 'default' },
+);
+
+/**
+ * Traduce la ruta que guardó el panel a la dirección web real.
+ * Si la imagen no existe, devuelve null y la sección no se dibuja: es preferible
+ * un hueco a una imagen rota con el texto alternativo desbordado encima.
+ */
+export function rutaDeImagen(ruta: string | null | undefined): string | null {
+  if (!ruta) return null;
+  if (ruta.startsWith('http') || ruta.startsWith('/_astro/')) return ruta;
+  const limpia = ruta.startsWith('/') ? ruta : `/${ruta}`;
+  return IMAGENES[limpia] ?? null;
+}
+
+/**
  * Decide si una imagen puede mostrarse.
  *
  * REGLA: si la imagen contiene personas identificables y no tiene folio de
@@ -175,6 +204,7 @@ export const equipo = () => todoElEquipo.filter((p) => p.publicar).sort(porOrden
  */
 export function imagenPublicable(imagen: any): boolean {
   if (!imagen?.archivo) return false;
+  if (!rutaDeImagen(imagen.archivo)) return false;
   if (!imagen.muestraPersonasIdentificables) return true;
   return Boolean(imagen.folioConsentimiento?.trim());
 }

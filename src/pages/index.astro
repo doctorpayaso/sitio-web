@@ -26,6 +26,7 @@ import {
   sedePorId,
   testimonioPorId,
   imagenPublicable,
+  rutaDeImagen,
 } from '../lib/contenido';
 
 const p = paginas.inicio;
@@ -137,7 +138,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           {heroVisible && (
             <img
               class="slot-img"
-              src={p.hero.imagen.archivo}
+              src={rutaDeImagen(p.hero.imagen.archivo)}
               alt={t(p.hero.imagen.textoAlternativo, idioma)}
               loading="eager"
             />
@@ -240,7 +241,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           {metodoVisible && (
             <img
               class="slot-img"
-              src={p.metodo.imagen.archivo}
+              src={rutaDeImagen(p.metodo.imagen.archivo)}
               alt={t(p.metodo.imagen.textoAlternativo, idioma)}
               loading="lazy"
             />
@@ -361,7 +362,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           {testimonioVisible && (
             <img
               class="slot-img"
-              src={p.testimonio.imagen.archivo}
+              src={rutaDeImagen(p.testimonio.imagen.archivo)}
               alt={t(p.testimonio.imagen.textoAlternativo, idioma)}
               loading="lazy"
             />

@@ -38,6 +38,9 @@ import {
 
 type Idioma = 'es' | 'en';
 
+/** Aviso reutilizado en los campos donde el salto de línea es intencional. */
+const NOTA_SALTOS = 'Cada salto de línea se respeta en el sitio. El diseño lo contempla.';
+
 const IDIOMAS_ACTIVOS: readonly Idioma[] = ['es'] as const;
 //                                          ^^^^ agregar 'en' aquí y nada más
 
@@ -74,12 +77,19 @@ function porIdioma<T extends ComponentSchema>(
 /** Texto corto, localizado. */
 const texto = (
   label: string,
-  opciones: { description?: string; obligatorio?: boolean; maximo?: number } = {},
+  opciones: {
+    description?: string;
+    obligatorio?: boolean;
+    maximo?: number;
+    /** Permite saltos de línea. Necesario en titulares con quiebre deliberado. */
+    variasLineas?: boolean;
+  } = {},
 ) =>
   porIdioma(
     (etiqueta) =>
       fields.text({
         label: etiqueta,
+        multiline: opciones.variasLineas,
         validation: {
           length: {
             min: opciones.obligatorio ? 1 : 0,
@@ -431,7 +441,9 @@ export default config({
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', {
-              description: 'Aprobado por Dirección: «Hay medicina que no se receta.»',
+              variasLineas: true,
+              description:
+                'Aprobado por Dirección: «Hay medicina que no se receta.» Cada salto de línea se respeta en el sitio. El diseño lo contempla.',
             }),
             palabraDestacada: texto('Palabra resaltada en coral', {
               description: 'Debe aparecer tal cual dentro del titular. Se pinta de coral.',
@@ -448,7 +460,7 @@ export default config({
             insignia: fields.object(
               {
                 numero: fields.integer({ label: 'Número' }),
-                etiqueta: texto('Etiqueta'),
+                etiqueta: texto('Etiqueta', { variasLineas: true }),
               },
               { label: 'Insignia flotante sobre la foto' },
             ),
@@ -468,7 +480,7 @@ export default config({
         dosRutas: fields.object(
           {
             antetitulo: texto('Antetítulo'),
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             entrada: parrafo('Entrada'),
             rutaPersonas: rutaDeEntrada('Tarjeta coral — para personas'),
             rutaInstituciones: rutaDeEntrada('Tarjeta azul — para instituciones'),
@@ -479,7 +491,7 @@ export default config({
         metodo: fields.object(
           {
             antetitulo: texto('Antetítulo'),
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             entrada: parrafo('Entrada'),
             imagen: imagen('Fotografía cuadrada', 'metodo'),
             pasos: fields.array(
@@ -503,7 +515,7 @@ export default config({
               description:
                 'REGLA: se transcribe de la fuente original. Nunca se redacta ni se parafrasea una cita atribuida a una persona real.',
             }),
-            autor: texto('Autor y procedencia'),
+            autor: texto('Autor y procedencia', { variasLineas: true, description: NOTA_SALTOS }),
           },
           { label: 'Cita editorial' },
         ),
@@ -520,7 +532,7 @@ export default config({
         transparencia: fields.object(
           {
             antetitulo: texto('Antetítulo'),
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             entrada: parrafo('Entrada'),
             enlace: boton('Enlace a los informes'),
             tarjetas: fields.array(
@@ -567,7 +579,7 @@ export default config({
 
         cierre: fields.object(
           {
-            titulo: texto('Titular'),
+            titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             descripcion: parrafo('Descripción'),
             firma: texto('Firma'),
             botonPrincipal: boton('Botón principal'),
