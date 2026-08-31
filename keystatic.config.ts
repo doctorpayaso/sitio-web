@@ -134,6 +134,18 @@ const textoConFormato = (label: string, opciones: { description?: string } = {})
  * es procedimental, no técnica: queda asentada en el manual de edición y es
  * verificable en la revisión del pull request.
  */
+/**
+ * Campo de imagen.
+ *
+ * `carpeta` DEBE ser única por página. Keystatic no usa el nombre del archivo
+ * que sube el equipo: arma la ruta con esta carpeta más la posición del campo
+ * dentro del documento. Si dos páginas comparten carpeta y tienen un campo en
+ * la misma posición —por ejemplo `hero.imagen.archivo`— producen exactamente la
+ * misma ruta y se sobrescriben entre sí, en silencio.
+ *
+ * Las colecciones no tienen este problema: Keystatic les inserta el
+ * identificador de cada entrada. El riesgo es solo de las páginas únicas.
+ */
 const imagen = (
   label: string,
   carpeta: string,
@@ -496,7 +508,7 @@ export default config({
               },
               { label: 'Insignia flotante sobre la foto' },
             ),
-            imagen: imagen('Fotografía principal', 'hero', {
+            imagen: imagen('Fotografía principal', 'paginas/inicio', {
               description: 'Vertical, proporción 4:5. Voluntario y paciente, mirada a mirada.',
             }),
           },
@@ -525,7 +537,7 @@ export default config({
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
             entrada: parrafo('Entrada'),
-            imagen: imagen('Fotografía cuadrada', 'metodo'),
+            imagen: imagen('Fotografía cuadrada', 'paginas/inicio'),
             pasos: fields.array(
               fields.object({
                 titulo: texto('Título del paso'),
@@ -596,7 +608,7 @@ export default config({
               description:
                 'Solo aparece en el sitio si el testimonio tiene autorización vigente registrada.',
             }),
-            imagen: imagen('Retrato', 'testimonios'),
+            imagen: imagen('Retrato', 'paginas/inicio'),
           },
           { label: 'Testimonio' },
         ),
@@ -636,7 +648,7 @@ export default config({
         entrada: parrafo('Párrafo de entrada'),
         video: fields.object(
           {
-            portada: imagen('Portada panorámica (21:9)', 'video'),
+            portada: imagen('Portada panorámica (21:9)', 'paginas/clown-care'),
             enlace: fields.url({ label: 'Enlace del video' }),
             pie: texto('Pie del video'),
           },
@@ -695,7 +707,7 @@ export default config({
             avisoDeCierre: texto('Aviso de cierre de inscripciones', {
               description: 'Ej. «Cierre de inscripciones Monterrey: 20 de diciembre». Dejar vacío lo oculta.',
             }),
-            imagen: imagen('Fotografía', 'hero', {
+            imagen: imagen('Fotografía', 'paginas/certificate', {
               description: 'Vertical 4:5. Grupo en formación, en pleno ejercicio. Energía, no pose oficial.',
             }),
           },
@@ -836,7 +848,7 @@ export default config({
               },
               { label: 'Insignia flotante sobre la foto' },
             ),
-            imagen: imagen('Fotografía', 'hero', {
+            imagen: imagen('Fotografía', 'paginas/alianzas', {
               description: 'Vertical 4:5. Registro sobrio, institucional. No festivo.',
             }),
           },
