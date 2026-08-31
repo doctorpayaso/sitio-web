@@ -2,13 +2,11 @@ nombre: Virtual
 estado: Nacional
 tipo: virtual
 descripcion:
-  es: 'Certificación 100% en línea, con práctica coordinada en tu ciudad.'
+  es: Certificación 100% en línea, con práctica coordinada en tu ciudad.
 imagen:
-  archivo: null
+  archivo: /src/assets/sedes/virtual/imagen/archivo.png
   textoAlternativo:
-    es: ''
+    es: Mujer realizando una videollamada desde su celular
   muestraPersonasIdentificables: false
-  folioConsentimiento: ''
-correoDeContacto: ''
 activa: true
 orden: 5
