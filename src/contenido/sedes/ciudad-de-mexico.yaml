@@ -1,14 +1,11 @@
 nombre: Ciudad de México
 estado: Ciudad de México
 tipo: presencial
-descripcion:
-  es: ''
+descripcion: {}
 imagen:
-  archivo: null
+  archivo: /src/assets/sedes/ciudad-de-mexico/imagen/archivo.jpg
   textoAlternativo:
-    es: ''
+    es: Lugares emblematicos de la Ciudad de México.
   muestraPersonasIdentificables: false
-  folioConsentimiento: ''
-correoDeContacto: ''
 activa: true
 orden: 1
