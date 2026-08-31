@@ -1,5 +1,4 @@
 anio: '2017'
-archivoEspanol: null
-archivoIngles: null
+archivoEspanol: /src/assets/informes/2017/archivoEspanol.pdf
 cifrasDestacadas: []
 publicar: true
