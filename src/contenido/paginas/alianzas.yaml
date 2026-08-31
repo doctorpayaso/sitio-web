@@ -5,7 +5,6 @@ seo:
     es: >-
       Programas de clown care para hospitales, voluntariado corporativo con
       impacto medible y certificación para estudiantes de ciencias de la salud.
-  imagenAlCompartir: null
 hero:
   antetitulo:
     es: Empresas · Hospitales · Universidades
@@ -36,11 +35,11 @@ hero:
         Primer informe
         anual público
   imagen:
-    archivo: null
+    archivo: /src/assets/hero/hero/imagen/archivo.jpg
     textoAlternativo:
-      es: ''
-    muestraPersonasIdentificables: false
-    folioConsentimiento: ''
+      es: Mujer dando la mano de frente en señal de alianza.
+    muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-2026-0009
 modelosDeColaboracion:
   titulo:
     es: Tres modelos de colaboración
@@ -48,8 +47,7 @@ modelosDeColaboracion:
     - icono: 🏢
       nombre:
         es: Empresas
-      paraQuien:
-        es: ''
+      paraQuien: {}
       descripcion:
         es: >-
           Voluntariado corporativo con certificación real para tus
@@ -66,8 +64,7 @@ modelosDeColaboracion:
     - icono: 🏥
       nombre:
         es: Hospitales
-      paraQuien:
-        es: ''
+      paraQuien: {}
       descripcion:
         es: >-
           Programa permanente de clown care en tus áreas de hospitalización, con
@@ -84,13 +81,12 @@ modelosDeColaboracion:
     - icono: 🎓
       nombre:
         es: Universidades
-      paraQuien:
-        es: ''
+      paraQuien: {}
       descripcion:
         es: >-
           Certificación en clown care para estudiantes de medicina, enfermería y
-          psicología. Formación en humanización de la atención dentro del plan de
-          estudios.
+          psicología. Formación en humanización de la atención dentro del plan
+          de estudios.
       incluye:
         - es: Programa adaptado al calendario académico
         - es: Servicio social y horas curriculares
@@ -103,9 +99,11 @@ citaInstitucional:
   texto:
     es: Llevamos el corazón en la punta de la nariz.
   autor:
-    es: |-
+    es: >-
       Doctor Payaso A.C.
-      Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed Hub
+
+      Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed
+      Hub
 proceso:
   antetitulo:
     es: Cómo trabajamos
@@ -113,8 +111,8 @@ proceso:
     es: De la primera llamada al primer pasillo
   entrada:
     es: >-
-      Un proceso claro y acotado. La mayoría de las alianzas arranca operación en
-      cuestión de semanas, no de trimestres.
+      Un proceso claro y acotado. La mayoría de las alianzas arranca operación
+      en cuestión de semanas, no de trimestres.
   boton:
     texto:
       es: Iniciar conversación →
@@ -136,8 +134,8 @@ proceso:
         es: Formación y protocolo
       descripcion:
         es: >-
-          Certificamos a los participantes y alineamos el protocolo con las áreas
-          clínicas y de seguridad del paciente.
+          Certificamos a los participantes y alineamos el protocolo con las
+          áreas clínicas y de seguridad del paciente.
     - titulo:
         es: Operación y medición
       descripcion:
