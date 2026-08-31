@@ -1,5 +1,5 @@
 anio: '2021'
-archivoEspanol: null
-archivoIngles: null
+archivoEspanol: /src/assets/informes/2021/archivoEspanol.pdf
+archivoIngles: /src/assets/informes/2021/archivoIngles.pdf
 cifrasDestacadas: []
 publicar: true
