@@ -1,5 +1,4 @@
 anio: '2022'
-archivoEspanol: null
-archivoIngles: null
+archivoEspanol: /src/assets/informes/2022/archivoEspanol.pdf
 cifrasDestacadas: []
 publicar: true
