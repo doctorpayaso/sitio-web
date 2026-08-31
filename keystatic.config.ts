@@ -404,6 +404,9 @@ export default config({
           defaultValue: 'FELICIDAD QUE SIRVE',
           description: 'Pendiente de Dirección: decidir si convive con el eslogan.',
         }),
+        descripcionBreve: parrafo('Descripción breve', {
+          description: 'Aparece en el pie de página, bajo el eslogan. Dos líneas como máximo.',
+        }),
 
         contacto: fields.object(
           {
