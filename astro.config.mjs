@@ -104,6 +104,14 @@ export default defineConfig({
 
   vite: {
     plugins: [yaml()], // permite importar los .yaml que escribe Keystatic
+    build: {
+      // Por defecto los archivos pequeños se incrustan dentro del HTML en vez de
+      // servirse como archivo. Es una optimización razonable, pero hace que el
+      // comportamiento dependa del peso: el mismo PDF se sirve de una forma u
+      // otra según cuánto mida. Aquí se desactiva para que todo archivo sea
+      // siempre un archivo, y una descarga sea siempre una descarga.
+      assetsInlineLimit: 0,
+    },
   },
 
   build: {

@@ -928,7 +928,18 @@ export default config({
           },
         ),
         gobernanza: fields.array(
-          fields.object({ titulo: texto('Título'), cuerpo: parrafo('Cuerpo') }),
+          fields.object({
+            iconoImagen: fields.image({
+              label: 'Icono propio',
+              directory: 'src/assets/iconos',
+              publicPath: '/src/assets/iconos/',
+              description: 'SVG o PNG con fondo transparente. Sustituye al emoji.',
+            }),
+            icono: fields.text({ label: 'Emoji (alternativa)', description: 'Ej. 📋' }),
+            color: fields.select({ label: 'Color de fondo', options: OPCIONES_COLOR, defaultValue: 'coral' }),
+            titulo: texto('Título'),
+            cuerpo: parrafo('Cuerpo'),
+          }),
           {
             label: 'Bloques de gobernanza',
             itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
@@ -1199,13 +1210,16 @@ export default config({
         anio: fields.slug({ name: { label: 'Año' } }),
         archivoEspanol: fields.file({
           label: 'PDF en español',
-          directory: 'public/informes',
-          publicPath: '/informes/',
+          directory: 'src/assets/informes',
+          publicPath: '/src/assets/informes/',
+          description:
+            'Sin este archivo el informe no aparece en el sitio: una tarjeta que no descarga nada es peor que ninguna.',
         }),
         archivoIngles: fields.file({
           label: 'PDF en inglés',
-          directory: 'public/informes',
-          publicPath: '/informes/',
+          directory: 'src/assets/informes',
+          publicPath: '/src/assets/informes/',
+          description: 'Opcional. Si existe, se muestra la tarjeta «Versiones en inglés».',
         }),
         cifrasDestacadas: fields.array(
           fields.object({

@@ -25,19 +25,28 @@ informes:
   entrada:
     es: Descarga abierta. Sin registro ni formulario de por medio.
 gobernanza:
-  - titulo:
+  - icono: 📋
+    color: mango
+    iconoImagen: null
+    titulo:
       es: Donataria autorizada
     cuerpo:
       es: >-
         Estatus, número de autorización y publicación en el DOF. Dato por
         confirmar con el equipo.
-  - titulo:
+  - icono: ⚖️
+    color: teal
+    iconoImagen: null
+    titulo:
       es: Gobernanza
     cuerpo:
       es: >-
         Consejo directivo, acta constitutiva y estatutos vigentes disponibles
         para consulta de aliados institucionales.
-  - titulo:
+  - icono: 📊
+    color: azul
+    iconoImagen: null
+    titulo:
       es: Cómo medimos
     cuerpo:
       es: >-

@@ -2,11 +2,23 @@
 // Impacto y transparencia — la página que sostiene la credibilidad del sitio.
 import Base from '../layouts/Base.astro';
 import { t, tr, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
-import { paginas, cifras, informes } from '../lib/contenido';
+import { paginas, cifras, informes, informesEnIngles, rutaDeDocumento, rutaDeImagen } from '../lib/contenido';
 
 const p = paginas.impacto;
 const idioma = idiomaDe(Astro);
 const listaInformes = informes();
+const conIngles = informesEnIngles();
+
+/** Fondo tenue del color elegido, con el icono en el tono fuerte. */
+const TENUE: Record<string, string> = {
+  coral: 'background:rgba(244,98,98,.14);color:var(--coral-d)',
+  azul: 'background:rgba(66,128,191,.14);color:var(--azul)',
+  teal: 'background:rgba(43,114,104,.14);color:var(--teal)',
+  menta: 'background:rgba(73,182,166,.16);color:var(--teal)',
+  mango: 'background:rgba(255,162,49,.2);color:#a05c00',
+  vino: 'background:rgba(155,53,79,.14);color:var(--vino)',
+};
+const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
 
 const ETIQUETAS: Record<string, { es: string; en: string }> = {
   voluntariosCertificados: { es: 'Voluntarios certificados', en: 'Certified volunteers' },
@@ -76,11 +88,17 @@ const franja = (p.cifrasQueSeMuestran ?? [])
       {listaInformes.length > 0 ? (
         <div class="grid g4" style="gap:14px">
           {listaInformes.map((i: any) => (
-            <a href={i.archivoEspanol ?? '#'} class="report" download>
+            <a href={rutaDeDocumento(i.archivoEspanol)} class="report" download>
               <span class="ic" aria-hidden="true">📄</span>
               {idioma === 'en' ? 'Report' : 'Informe'} {i.anio}
             </a>
           ))}
+          {conIngles.length > 0 && (
+            <a href={rutaDeDocumento(conIngles[0].archivoIngles)} class="report" download style="border-style:dashed">
+              <span class="ic" aria-hidden="true">🌐</span>
+              {idioma === 'en' ? 'Spanish versions' : 'Versiones en inglés'}
+            </a>
+          )}
         </div>
       ) : (
         <p class="muted">
@@ -94,6 +112,9 @@ const franja = (p.cifrasQueSeMuestran ?? [])
     <div class="wrap grid g3">
       {(p.gobernanza ?? []).map((b: any) => (
         <div class="card">
+          <div class="icon-chip" style={fondoTenue(b.color)} aria-hidden={b.iconoImagen ? undefined : 'true'}>
+            {b.iconoImagen ? <img src={rutaDeImagen(b.iconoImagen)} alt="" /> : b.icono}
+          </div>
           <h4>{t(b.titulo, idioma)}</h4>
           <p>{t(b.cuerpo, idioma)}</p>
         </div>

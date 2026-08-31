@@ -155,7 +155,12 @@ export const aliados = () => {
 export const informes = () =>
   todosLosInformes
     .filter((i) => i.publicar)
+    .filter((i) => Boolean(rutaDeDocumento(i.archivoEspanol)))
     .sort((a, b) => String(b.anio).localeCompare(String(a.anio)));
+
+/** Informes que además tienen versión en inglés. */
+export const informesEnIngles = () =>
+  informes().filter((i) => Boolean(rutaDeDocumento(i.archivoIngles)));
 
 /** Preguntas frecuentes de una página. */
 export const preguntas = (pagina: string) =>
@@ -184,6 +189,27 @@ const IMAGENES = import.meta.glob<string>(
   '/src/assets/**/*.{jpg,jpeg,png,webp,avif,gif,svg}',
   { eager: true, query: '?url', import: 'default' },
 );
+
+/**
+ * Índice de los documentos del proyecto (PDF y similares).
+ *
+ * Mismo motivo que las imágenes: el panel guarda rutas de disco y el navegador
+ * necesita direcciones web. Se usa `src/assets` y no `public/` porque un archivo
+ * suelto en `public/` depende de que el hospedaje lo copie tal cual, y ahí ya
+ * tuvimos un archivo que nunca llegó a producción.
+ */
+const DOCUMENTOS = import.meta.glob<string>(
+  '/src/assets/**/*.{pdf,doc,docx,xlsx,csv,zip}',
+  { eager: true, query: '?url', import: 'default' },
+);
+
+/** Traduce la ruta de un documento guardada por el panel. */
+export function rutaDeDocumento(ruta: string | null | undefined): string | null {
+  if (!ruta) return null;
+  if (ruta.startsWith('http') || ruta.startsWith('/_astro/')) return ruta;
+  const limpia = ruta.startsWith('/') ? ruta : `/${ruta}`;
+  return DOCUMENTOS[limpia] ?? null;
+}
 
 /**
  * Traduce la ruta que guardó el panel a la dirección web real.
