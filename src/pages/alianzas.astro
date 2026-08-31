@@ -54,7 +54,7 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
           )}
         </div>
         {p.hero?.insignia?.destacado && (
-          <div class="badge-float" style="left:-14px;bottom:44px">
+          <div class="badge-float badge-float--izq" style="bottom:44px">
             <div class="n" style="color:var(--coral)">{t(p.hero.insignia.destacado, idioma)}</div>
             <div class="t" set:html={tr(p.hero.insignia.etiqueta, idioma)} />
           </div>
@@ -68,7 +68,7 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       <h2 class="h2" style="margin-bottom:34px;max-width:22ch" set:html={tr(p.modelosDeColaboracion?.titulo, idioma)} />
       <div class="grid g3">
         {(p.modelosDeColaboracion?.modelos ?? []).map((m: any, i: number) => (
-          <article class="card" style="padding:34px">
+          <article class="card" style="padding:34px;display:flex;flex-direction:column">
             <div class="icon-chip" style={fondoTenue(COLORES[i % 3].replace('-d', ''))} aria-hidden={m.iconoImagen ? undefined : 'true'}>
               {m.iconoImagen ? <img src={rutaDeImagen(m.iconoImagen)} alt="" /> : m.icono}
             </div>
@@ -82,6 +82,15 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
                 </li>
               ))}
             </ul>
+            {t(m.enlace?.texto, idioma) && (
+              <a
+                href={m.enlace.destino}
+                class="link-arrow"
+                style={`color:var(--${COLORES[i % 3]});margin-top:auto`}
+              >
+                {t(m.enlace.texto, idioma)}
+              </a>
+            )}
           </article>
         ))}
       </div>
@@ -108,6 +117,11 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
         </span>
         <h2 class="h2" style="margin:14px 0 18px" set:html={tr(p.proceso?.titulo, idioma)} />
         <p class="lead" set:html={tr(p.proceso?.entrada, idioma)} />
+        {t(p.proceso?.boton?.texto, idioma) && (
+          <a href={p.proceso.boton.destino} class="btn btn-teal" style="margin-top:28px">
+            {t(p.proceso.boton.texto, idioma)}
+          </a>
+        )}
       </div>
       <div>
         {(p.proceso?.pasos ?? []).map((paso: any, i: number) => (
@@ -144,19 +158,30 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
               <span class="ic" aria-hidden="true">☎</span> {configuracion.contacto.telefono}
             </a>
           )}
-          <a href="/impacto" class="report"><span class="ic" aria-hidden="true">📄</span>
-            {idioma === 'en' ? 'Annual reports' : 'Informes anuales'}
-          </a>
+          {t(p.contacto?.recurso?.texto, idioma) && (
+            <a href={p.contacto.recurso.destino} class="report">
+              <span class="ic" aria-hidden="true">📄</span> {t(p.contacto.recurso.texto, idioma)}
+            </a>
+          )}
         </div>
       </div>
 
       <div class="form">
         <div class="field-row">
-          <div class="field"><label for="in">{idioma === 'en' ? 'Name and role' : 'Nombre y cargo'}</label><input id="in" disabled /></div>
-          <div class="field"><label for="io">{idioma === 'en' ? 'Organization' : 'Institución'}</label><input id="io" disabled /></div>
+          <div class="field">
+            <label for="in">{idioma === 'en' ? 'Name and role' : 'Nombre y cargo'}</label>
+            <input id="in" disabled placeholder={idioma === 'en' ? 'Name · Role' : 'Nombre · Cargo'} />
+          </div>
+          <div class="field">
+            <label for="io">{idioma === 'en' ? 'Organization' : 'Institución'}</label>
+            <input id="io" disabled placeholder={idioma === 'en' ? 'Company, hospital or university' : 'Empresa, hospital o universidad'} />
+          </div>
         </div>
         <div class="field-row">
-          <div class="field"><label for="ie">{idioma === 'en' ? 'Work email' : 'Correo institucional'}</label><input id="ie" type="email" disabled /></div>
+          <div class="field">
+            <label for="ie">{idioma === 'en' ? 'Work email' : 'Correo institucional'}</label>
+            <input id="ie" type="email" disabled placeholder="nombre@institucion.mx" />
+          </div>
           <div class="field">
             <label for="it">{idioma === 'en' ? 'Type' : 'Tipo de alianza'}</label>
             <select id="it" disabled>
@@ -166,7 +191,7 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
         </div>
         <div class="field">
           <label for="im">{idioma === 'en' ? 'Tell us what you need' : 'Cuéntanos qué buscas'}</label>
-          <textarea id="im" rows="4" disabled></textarea>
+          <textarea id="im" rows="4" disabled placeholder={idioma === 'en' ? 'Goal, location, approximate number of participants' : 'Objetivo, sede, número aproximado de participantes'}></textarea>
         </div>
         <div class="field-consent">
           <input type="checkbox" id="ic" disabled />
@@ -180,8 +205,17 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
           </label>
         </div>
         <p class="small muted" style="text-align:center">
-          {idioma === 'en' ? 'Form coming soon. Meanwhile, write to us by email.' : 'Formulario en preparación. Mientras tanto, escríbenos por correo.'}
+          {idioma === 'en' ? 'Form coming soon. Meanwhile, write to us:' : 'Formulario en preparación. Mientras tanto, escríbenos:'}
         </p>
+        {(configuracion.contacto?.correoInstitucional || configuracion.contacto?.correo) && (
+          <a
+            href={`mailto:${configuracion.contacto.correoInstitucional || configuracion.contacto.correo}`}
+            class="btn btn-teal"
+            style="width:100%;margin-top:12px"
+          >
+            {configuracion.contacto.correoInstitucional || configuracion.contacto.correo}
+          </a>
+        )}
       </div>
     </div>
   </section>

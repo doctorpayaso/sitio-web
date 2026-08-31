@@ -861,6 +861,7 @@ export default config({
                   label: 'Qué incluye',
                   itemLabel: (props) => props.fields.es?.value || 'Elemento',
                 }),
+                enlace: boton('Enlace al pie de la tarjeta'),
               }),
               {
                 label: 'Modelos',
@@ -882,6 +883,7 @@ export default config({
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', { variasLineas: true }),
             entrada: parrafo('Entrada'),
+            boton: boton('Botón'),
             pasos: listaDePasos('Pasos del proceso'),
           },
           { label: 'De la primera llamada al primer pasillo' },
@@ -890,6 +892,7 @@ export default config({
           {
             titulo: texto('Titular'),
             entrada: parrafo('Entrada'),
+            recurso: boton('Tercer enlace de contacto'),
             textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', { obligatorio: true }),
             textoDeExito: parrafo('Mensaje después de enviar'),
           },

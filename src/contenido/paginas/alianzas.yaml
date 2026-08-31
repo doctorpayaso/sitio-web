@@ -5,6 +5,7 @@ seo:
     es: >-
       Programas de clown care para hospitales, voluntariado corporativo con
       impacto medible y certificación para estudiantes de ciencias de la salud.
+  imagenAlCompartir: null
 hero:
   antetitulo:
     es: Empresas · Hospitales · Universidades
@@ -35,11 +36,11 @@ hero:
         Primer informe
         anual público
   imagen:
-    archivo: /src/assets/hero/hero/imagen/archivo.jpg
+    archivo: null
     textoAlternativo:
-      es: Mujer dando la mano en señal de alianza.
-    muestraPersonasIdentificables: true
-    folioConsentimiento: CONS-2026-009
+      es: ''
+    muestraPersonasIdentificables: false
+    folioConsentimiento: ''
 modelosDeColaboracion:
   titulo:
     es: Tres modelos de colaboración
@@ -47,7 +48,8 @@ modelosDeColaboracion:
     - icono: 🏢
       nombre:
         es: Empresas
-      paraQuien: {}
+      paraQuien:
+        es: ''
       descripcion:
         es: >-
           Voluntariado corporativo con certificación real para tus
@@ -57,10 +59,15 @@ modelosDeColaboracion:
         - es: Generación cerrada para tu equipo
         - es: Reporte de impacto para tu informe de RSE
         - es: Recibo deducible de impuestos
+      enlace:
+        texto:
+          es: Ver esquema →
+        destino: '#contacto-institucional'
     - icono: 🏥
       nombre:
         es: Hospitales
-      paraQuien: {}
+      paraQuien:
+        es: ''
       descripcion:
         es: >-
           Programa permanente de clown care en tus áreas de hospitalización, con
@@ -70,28 +77,35 @@ modelosDeColaboracion:
         - es: Sin costo para la institución
         - es: Voluntarios con capacitación en protocolo
         - es: Reporte mensual de visitas por piso
+      enlace:
+        texto:
+          es: Ver esquema →
+        destino: '#contacto-institucional'
     - icono: 🎓
       nombre:
         es: Universidades
-      paraQuien: {}
+      paraQuien:
+        es: ''
       descripcion:
         es: >-
           Certificación en clown care para estudiantes de medicina, enfermería y
-          psicología. Formación en humanización de la atención dentro del plan
-          de estudios.
+          psicología. Formación en humanización de la atención dentro del plan de
+          estudios.
       incluye:
         - es: Programa adaptado al calendario académico
         - es: Servicio social y horas curriculares
         - es: 'Antecedente: 2ª generación en FacMed UNAM'
+      enlace:
+        texto:
+          es: Ver esquema →
+        destino: '#contacto-institucional'
 citaInstitucional:
   texto:
     es: Llevamos el corazón en la punta de la nariz.
   autor:
-    es: >-
+    es: |-
       Doctor Payaso A.C.
-
-      Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed
-      Hub
+      Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed Hub
 proceso:
   antetitulo:
     es: Cómo trabajamos
@@ -99,8 +113,12 @@ proceso:
     es: De la primera llamada al primer pasillo
   entrada:
     es: >-
-      Un proceso claro y acotado. La mayoría de las alianzas arranca operación
-      en cuestión de semanas, no de trimestres.
+      Un proceso claro y acotado. La mayoría de las alianzas arranca operación en
+      cuestión de semanas, no de trimestres.
+  boton:
+    texto:
+      es: Iniciar conversación →
+    destino: '#contacto-institucional'
   pasos:
     - titulo:
         es: Diagnóstico
@@ -118,8 +136,8 @@ proceso:
         es: Formación y protocolo
       descripcion:
         es: >-
-          Certificamos a los participantes y alineamos el protocolo con las
-          áreas clínicas y de seguridad del paciente.
+          Certificamos a los participantes y alineamos el protocolo con las áreas
+          clínicas y de seguridad del paciente.
     - titulo:
         es: Operación y medición
       descripcion:
@@ -133,6 +151,10 @@ contacto:
     es: >-
       Escríbenos y te contactamos con el responsable de vinculación
       institucional. Sin bots, sin cotizador automático.
+  recurso:
+    texto:
+      es: Informes anuales
+    destino: /impacto
   textoDelConsentimiento:
     es: >-
       Acepto el tratamiento de mis datos de contacto profesional para dar

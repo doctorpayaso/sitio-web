@@ -241,6 +241,9 @@ header.nav {
   padding: 14px 18px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px;
   right: -14px; bottom: 52px;
 }
+/* Variante a la izquierda. Sin anular el costado derecho, la ficha queda anclada
+   por los dos lados y se estira a todo lo ancho de la foto. */
+.badge-float--izq { left: -14px; right: auto; }
 .badge-float .n { font-family: var(--display); font-size: 1.65rem; font-weight: 700; line-height: 1; color: var(--teal); }
 .badge-float .t { font-size: 0.74rem; font-weight: 700; line-height: 1.25; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tinta-60); }
 
