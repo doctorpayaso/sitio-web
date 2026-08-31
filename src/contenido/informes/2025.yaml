@@ -1,5 +1,5 @@
 anio: '2025'
-archivoEspanol: null
-archivoIngles: null
+archivoEspanol: /src/assets/informes/2025/archivoEspanol.pdf
+archivoIngles: /src/assets/informes/2025/archivoIngles.pdf
 cifrasDestacadas: []
 publicar: true
