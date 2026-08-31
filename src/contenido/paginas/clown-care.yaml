@@ -3,9 +3,11 @@ seo:
     es: Qué es el clown care — Doctor Payaso A.C.
   descripcion:
     es: >-
-      El clown care es una disciplina con método: arte clown, improvisación,
-      coaching ontológico y protocolo hospitalario. Así funciona una visita.
-  imagenAlCompartir: null
+      El Clown Care es una intervención de acompañamiento y apoyo emocional en
+      la que personas capacitadas, conocidos como Doctores Payasos, utilizan el
+      humor, la improvisación, el coaching ontológico y el juego para generar
+      momentos de alegría y bienestar en personas que atraviesan situaciones
+      difíciles, especialmente pacientes hospitalizados y sus familias.
 antetitulo:
   es: El programa
 titulo:
@@ -13,18 +15,24 @@ titulo:
 entrada:
   es: >-
     El clown care es una disciplina, no una ocurrencia. Combina arte clown,
-    improvisación, coaching ontológico y protocolo hospitalario. Así es como
+    improvisación, coaching ontológico y protocolos hospitalarios. Así es como
     funciona una visita.
 video:
   portada:
-    archivo: null
+    archivo: /src/assets/paginas/clown-care/video/portada/archivo.jpg
     textoAlternativo:
-      es: ''
-    muestraPersonasIdentificables: false
-    folioConsentimiento: ''
-  enlace: ''
+      es: >-
+        Un grupo de ocho voluntarios sonríe animadamente vestidos como payasos
+        de hospital, portando batas blancas de médico y narices rojas. Llevan
+        accesorios coloridos y llamativos, como pelucas, tocados, pines y
+        collares.
+    muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-2026-004
+  enlace: https://youtu.be/5WJPHbEqr5U?si=v4dIo2Fa1shYps9d
   pie:
-    es: ''
+    es: >-
+      Gracias a nuestros voluntarios por vivir nuestra misión de "Sanar con Amor
+      y Alegría" ¡Ustedes SON el regalo! 
 anatomia:
   titulo:
     es: Anatomía de una visita
@@ -49,8 +57,8 @@ anatomia:
         es: Inversión de roles
       descripcion:
         es: >-
-          El clown se equivoca, se cae, no entiende. El paciente corrige, enseña,
-          manda. La jerarquía del hospital se voltea.
+          El clown se equivoca, se cae, no entiende. El paciente corrige,
+          enseña, manda. La jerarquía del hospital se voltea.
     - titulo:
         es: Cierre y registro
       descripcion:
