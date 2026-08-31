@@ -30,14 +30,15 @@ hero:
   avisoDeCierre:
     es: 'Cierre de inscripciones Monterrey: por confirmar'
   imagen:
-    archivo: null
+    archivo: /src/assets/paginas/certificate/hero/imagen/archivo.jpg
     textoAlternativo:
       es: >-
         Dos mujeres realizan una dinámica teatral o expresiva frente a frente,
         gesticulando con las manos abiertas y posturas enérgicas. Al fondo,
         otras personas replican gestos similares en un salón amplio equipado y
         sillas de trabajo.
-    muestraPersonasIdentificables: false
+    muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-2026-004
 requisitos:
   titulo:
     es: Lo que sí necesitas
