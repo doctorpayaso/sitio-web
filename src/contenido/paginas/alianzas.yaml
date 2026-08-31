@@ -35,7 +35,7 @@ hero:
         Primer informe
         anual público
   imagen:
-    archivo: /src/assets/hero/hero/imagen/archivo.jpg
+    archivo: null
     textoAlternativo:
       es: Mujer dando la mano de frente en señal de alianza.
     muestraPersonasIdentificables: true

@@ -30,7 +30,7 @@ hero:
   avisoDeCierre:
     es: 'Cierre de inscripciones Monterrey: por confirmar'
   imagen:
-    archivo: /src/assets/hero/hero/imagen/archivo.jpg
+    archivo: null
     textoAlternativo:
       es: >-
         Dos mujeres realizan una dinámica teatral o expresiva frente a frente,
