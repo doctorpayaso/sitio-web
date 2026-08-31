@@ -1,5 +1,4 @@
 anio: '2019'
-archivoEspanol: null
-archivoIngles: null
+archivoEspanol: /src/assets/informes/2019/archivoEspanol.pdf
 cifrasDestacadas: []
 publicar: true
