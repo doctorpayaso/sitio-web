@@ -39,7 +39,7 @@ hero:
         Voluntarios
         certificados
   imagen:
-    archivo: /src/assets/hero/hero/imagen/archivo.jpg
+    archivo: /src/assets/paginas/inicio/hero/imagen/archivo.jpg
     textoAlternativo:
       es: >-
         Fotografía de una doctora payasa con bata blanca, lentes amarillos y
@@ -113,7 +113,7 @@ metodo:
       rutina, su intimidad. El clown care invierte esa relación de poder. Por
       unos minutos, el paciente manda y el adulto obedece.
   imagen:
-    archivo: /src/assets/metodo/metodo/imagen/archivo.jpg
+    archivo: /src/assets/paginas/inicio/metodo/imagen/archivo.jpg
     textoAlternativo:
       es: >-
         Fotografía de un niño hospitalizado sentado en una silla de ruedas,
@@ -215,7 +215,7 @@ testimonio:
     es: Lo dice el hospital
   persona: dra-sonia-gutierrez
   imagen:
-    archivo: /src/assets/testimonios/testimonio/imagen/archivo.jpg
+    archivo: /src/assets/paginas/inicio/testimonio/imagen/archivo.jpg
     textoAlternativo:
       es: >-
         Fotografía de una mujer con bata blanca, sentada y mirando hacia la
