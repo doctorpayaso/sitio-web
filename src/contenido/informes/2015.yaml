@@ -1,5 +1,16 @@
 anio: '2015'
-archivoEspanol: null
-archivoIngles: null
-cifrasDestacadas: []
+archivoEspanol: /src/assets/informes/2015/archivoEspanol.pdf
+cifrasDestacadas:
+  - etiqueta:
+      es: Visitas de Clown Care
+    valor: '166'
+  - etiqueta:
+      es: 'Horas de voluntariado '
+    valor: 2,803
+  - etiqueta:
+      es: ' Personas beneficiadas '
+    valor: 16,251
+  - etiqueta:
+      es: 'Doctores Payasos '
+    valor: '59'
 publicar: true
