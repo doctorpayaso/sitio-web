@@ -1,14 +1,11 @@
 nombre: Monterrey
 estado: Nuevo León
 tipo: presencial
-descripcion:
-  es: ''
+descripcion: {}
 imagen:
-  archivo: null
+  archivo: /src/assets/sedes/monterrey/imagen/archivo.jpg
   textoAlternativo:
-    es: ''
+    es: Lugares emblematicos de la ciudad de Monterrey.
   muestraPersonasIdentificables: false
-  folioConsentimiento: ''
-correoDeContacto: ''
 activa: true
 orden: 2
