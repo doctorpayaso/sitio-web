@@ -40,13 +40,34 @@ function armarTitular(titular: string, palabra: string): string {
 }
 const titularHtml = armarTitular(antes, acento);
 
-const ESTADO: Record<string, { es: string; en: string; tag: string; boton: string }> = {
-  abiertas: { es: 'Inscripciones abiertas', en: 'Enrollment open', tag: 'tag-coral', boton: 'btn-coral' },
-  lista_espera: { es: 'Lista de espera', en: 'Waiting list', tag: 'tag-mango', boton: 'btn-ghost' },
-  cerradas: { es: 'Inscripciones cerradas', en: 'Enrollment closed', tag: 'tag-azul', boton: 'btn-ghost' },
-  continua: { es: 'Generación continua', en: 'Rolling admission', tag: 'tag-teal', boton: 'btn-teal' },
+// Vocabulario del prototipo: la etiqueta comunica urgencia, el texto explica.
+const ESTADO: Record<
+  string,
+  { es: string; en: string; etiqueta: { es: string; en: string }; tag: string; boton: string; punto: string }
+> = {
+  abiertas: {
+    es: 'Inscripciones abiertas', en: 'Enrollment open',
+    etiqueta: { es: 'Próxima', en: 'Next' }, tag: 'tag-coral', boton: 'btn-coral', punto: 'var(--coral)',
+  },
+  lista_espera: {
+    es: 'Lista de espera', en: 'Waiting list',
+    etiqueta: { es: 'Preinscripción', en: 'Pre-registration' }, tag: 'tag-mango', boton: 'btn-ghost', punto: 'var(--mango)',
+  },
+  cerradas: {
+    es: 'Inscripciones cerradas', en: 'Enrollment closed',
+    etiqueta: { es: 'Cerrada', en: 'Closed' }, tag: 'tag-azul', boton: 'btn-ghost', punto: 'var(--azul)',
+  },
+  continua: {
+    es: 'Generación continua', en: 'Rolling admission',
+    etiqueta: { es: 'Siempre abierta', en: 'Always open' }, tag: 'tag-teal', boton: 'btn-teal', punto: 'var(--menta)',
+  },
 };
-const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
+const DEGRADADOS = ['duo-coral', 'duo-azul', 'duo-mixto', 'duo-teal'];
+const MODALIDAD: Record<string, { es: string; en: string }> = {
+  presencial: { es: 'Presencial', en: 'In person' },
+  virtual: { es: '100% en línea', en: '100% online' },
+  mixta: { es: 'Mixta', en: 'Hybrid' },
+};
 ---
 
 <Base seo={p.seo} ruta="emocional">
@@ -150,24 +171,30 @@ const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
             const e = ESTADO[g.estado] ?? ESTADO.lista_espera;
             return (
               <article class="sede">
-                <div class:list={['sede-top', DEGRADADOS[i % 4], 'dots-bg']}>
+                <div
+                  class:list={['sede-top', DEGRADADOS[i % 4], 'dots-bg', imagenPublicable(sede?.imagen) && 'filled']}
+                >
+                  {imagenPublicable(sede?.imagen) && (
+                    <img class="slot-img" src={rutaDeImagen(sede.imagen.archivo)} alt={t(sede.imagen.textoAlternativo, idioma)} loading="lazy" />
+                  )}
                   <span class="sede-city">{sede?.nombre ?? g.identificador}</span>
                 </div>
                 <div class="sede-body">
                   <div class="sede-date">
-                    <span class="dot"></span>
+                    <span class="dot" style={`background:${e.punto}`}></span>
                     {g.estado === 'continua'
                       ? (idioma === 'en' ? 'Rolling admission' : 'Generación continua')
                       : formatearFecha(g.fechaDeInicio, idioma)}
                   </div>
                   <div class="sede-meta">
-                    {sede?.estado}
+                    {MODALIDAD[g.modalidad]?.[idioma as 'es'] ?? MODALIDAD[g.modalidad]?.es}
+                    {sede?.estado ? ` · ${sede.estado}` : ''}
                     <br />
                     {e[idioma as 'es'] ?? e.es}
                   </div>
                   {t(g.notas, idioma) && <div class="sede-meta">{t(g.notas, idioma)}</div>}
                   <span class:list={['tag', e.tag]} style="align-self:flex-start">
-                    {g.cupoLimitado ? (idioma === 'en' ? 'Limited seats' : 'Cupo limitado') : (e[idioma as 'es'] ?? e.es)}
+                    {e.etiqueta[idioma as 'es'] ?? e.etiqueta.es}
                   </span>
                   <a href="#solicitud" class:list={['btn', e.boton, 'btn-sm']} style="margin-top:auto">
                     {g.estado === 'abiertas' || g.estado === 'continua'
@@ -204,7 +231,10 @@ const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
   {faq.length > 0 && (
     <section class="pad">
       <div class="wrap-narrow">
-        <h2 class="h2" style="margin-bottom:12px">{idioma === 'en' ? 'Frequently asked' : 'Preguntas que todos hacen'}</h2>
+        <h2 class="h2" style="margin-bottom:8px" set:html={tr(p.preguntas?.titulo, idioma)} />
+        {t(p.preguntas?.entrada, idioma) && (
+          <p class="lead" style="margin-bottom:22px">{t(p.preguntas.entrada, idioma)}</p>
+        )}
         {faq.map((q: any, i: number) => (
           <details class="faq" open={i === 0}>
             <summary>{t(q.pregunta, idioma)}</summary>
@@ -237,11 +267,17 @@ const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
            vacío, con la alternativa por WhatsApp visible. -->
       <div class="form">
         <div class="field-row">
-          <div class="field"><label for="n">{idioma === 'en' ? 'Full name' : 'Nombre completo'}</label><input id="n" disabled /></div>
-          <div class="field"><label for="e">{idioma === 'en' ? 'Email' : 'Correo'}</label><input id="e" type="email" disabled /></div>
+          <div class="field">
+            <label for="n">{idioma === 'en' ? 'Full name' : 'Nombre completo'}</label>
+            <input id="n" disabled placeholder={idioma === 'en' ? 'Your name' : 'Tu nombre'} />
+          </div>
+          <div class="field">
+            <label for="e">{idioma === 'en' ? 'Email' : 'Correo'}</label>
+            <input id="e" type="email" disabled placeholder="tu@correo.com" />
+          </div>
         </div>
         <div class="field-row">
-          <div class="field"><label for="w">WhatsApp</label><input id="w" disabled /></div>
+          <div class="field"><label for="w">WhatsApp</label><input id="w" disabled placeholder="55 1234 5678" /></div>
           <div class="field">
             <label for="s">{idioma === 'en' ? 'Preferred location' : 'Sede de interés'}</label>
             <select id="s" disabled>
@@ -254,7 +290,7 @@ const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
         </div>
         <div class="field">
           <label for="m">{idioma === 'en' ? 'Why do you want to join?' : '¿Por qué quieres ser Doctor Payaso?'}</label>
-          <textarea id="m" rows="3" disabled></textarea>
+          <textarea id="m" rows="3" disabled placeholder={idioma === 'en' ? 'Tell us in a line or two' : 'Cuéntanos en una o dos líneas'}></textarea>
         </div>
         <div class="field-consent">
           <input type="checkbox" id="c" disabled />
@@ -270,12 +306,16 @@ const DEGRADADOS = ['duo-coral', 'duo-mango', 'duo-azul', 'duo-teal'];
         <p class="small muted" style="text-align:center">
           {idioma === 'en' ? 'Form coming soon. Meanwhile, write to us:' : 'Formulario en preparación. Mientras tanto, escríbenos:'}
         </p>
-        {configuracion.contacto?.whatsapp && (
+        {configuracion.contacto?.whatsapp ? (
           <a href={`https://wa.me/${String(configuracion.contacto.whatsapp).replace(/[^0-9]/g, '')}`}
              class="btn btn-coral" style="width:100%;margin-top:12px" target="_blank" rel="noopener noreferrer">
             {t(p.formulario?.textoWhatsApp, idioma) || 'WhatsApp'}
           </a>
-        )}
+        ) : configuracion.contacto?.correo ? (
+          <a href={`mailto:${configuracion.contacto.correo}`} class="btn btn-coral" style="width:100%;margin-top:12px">
+            {configuracion.contacto.correo}
+          </a>
+        ) : null}
       </div>
     </div>
   </section>

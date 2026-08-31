@@ -1,0 +1,10 @@
+identificador: Virtual continua
+sede: virtual
+fechaDeInicio: null
+fechaDeCierreDeInscripciones: null
+modalidad: virtual
+estado: continua
+cupoLimitado: false
+notas:
+  es: 'Práctica coordinada en tu ciudad'
+publicar: true

@@ -776,6 +776,16 @@ export default config({
           },
           { label: 'Programa para estudiantes de salud' },
         ),
+        preguntas: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            entrada: parrafo('Entrada'),
+          },
+          {
+            label: 'Bloque de preguntas frecuentes',
+            description: 'Las preguntas se editan en «Preguntas frecuentes».',
+          },
+        ),
         formulario: fields.object(
           {
             titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),

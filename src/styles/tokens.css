@@ -385,8 +385,17 @@ footer .logo-img { height: 56px; }
   overflow: hidden; display: flex; flex-direction: column; transition: 0.22s;
 }
 .sede:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-.sede-top { height: 132px; position: relative; }
-.sede-city { position: absolute; left: 22px; bottom: 16px; color: #fff; font-family: var(--display); font-size: 1.5rem; font-weight: 600; z-index: 2; }
+.sede-top { height: 132px; position: relative; overflow: hidden; }
+/* Velo oscuro de abajo hacia arriba: sin él, el nombre de la ciudad se pierde
+   sobre las zonas claras de la fotografía. */
+.sede-top.filled::after {
+  content: ''; position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to top, rgba(19, 46, 42, 0.72), rgba(19, 46, 42, 0.05) 60%);
+}
+.sede-city {
+  position: absolute; left: 22px; bottom: 16px; color: #fff; font-family: var(--display);
+  font-size: 1.5rem; font-weight: 600; z-index: 3; text-shadow: 0 1px 12px rgba(19, 46, 42, 0.5);
+}
 .sede-body { padding: 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .sede-date { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 0.95rem; }
 .sede-meta { font-size: 0.85rem; color: var(--tinta-60); line-height: 1.5; }

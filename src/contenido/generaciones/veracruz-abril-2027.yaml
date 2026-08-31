@@ -1,0 +1,10 @@
+identificador: Veracruz abril 2027
+sede: veracruz
+fechaDeInicio: '2027-04-17'
+fechaDeCierreDeInscripciones: null
+modalidad: presencial
+estado: lista_espera
+cupoLimitado: true
+notas:
+  es: ''
+publicar: true
