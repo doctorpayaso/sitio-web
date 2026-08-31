@@ -1,14 +1,11 @@
 nombre: Veracruz
 estado: Veracruz
 tipo: presencial
-descripcion:
-  es: ''
+descripcion: {}
 imagen:
-  archivo: null
+  archivo: /src/assets/sedes/veracruz/imagen/archivo.jpg
   textoAlternativo:
-    es: ''
+    es: Lugares emblematicos de la Ciudad de Veracruz
   muestraPersonasIdentificables: false
-  folioConsentimiento: ''
-correoDeContacto: ''
 activa: true
 orden: 3
