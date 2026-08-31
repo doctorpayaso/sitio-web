@@ -5,7 +5,6 @@ seo:
     es: >-
       Seis módulos de formación, práctica hospitalaria acompañada y una
       comunidad que te sostiene. No necesitas experiencia en actuación.
-  imagenAlCompartir: null
 hero:
   antetitulo:
     es: Certificación en clown care
@@ -28,14 +27,17 @@ hero:
     texto:
       es: Ver los 6 módulos
     destino: '#modulos'
-  avisoDeCierre:
-    es: ''
+  avisoDeCierre: {}
   imagen:
-    archivo: null
+    archivo: /src/assets/hero/hero/imagen/archivo.jpg
     textoAlternativo:
-      es: ''
-    muestraPersonasIdentificables: false
-    folioConsentimiento: ''
+      es: >-
+        Dos mujeres realizan una dinámica teatral o expresiva frente a frente,
+        gesticulando con las manos abiertas y posturas enérgicas.Al fondo, otras
+        personas replican gestos similares en un salón amplio equipado y sillas
+        de trabajo.
+    muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-2026-004
 requisitos:
   titulo:
     es: Lo que sí necesitas
@@ -70,7 +72,8 @@ requisitos:
         es: Pasar la entrevista
       descripcion:
         es: >-
-          Conversación previa para asegurar alineación de valores y expectativas.
+          Conversación previa para asegurar alineación de valores y
+          expectativas.
 costo:
   discriminant: false
   value:
@@ -102,8 +105,8 @@ generaciones:
     es: Próximas generaciones
   nota:
     es: >-
-      Cada sede abre una sola generación al año. Los lugares son limitados por la
-      capacidad de práctica hospitalaria.
+      Cada sede abre una sola generación al año. Los lugares son limitados por
+      la capacidad de práctica hospitalaria.
 programaUniversidades:
   titulo:
     es: Programa especial para estudiantes de ciencias de la salud
