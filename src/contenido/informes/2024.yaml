@@ -1,5 +1,5 @@
 anio: '2024'
-archivoEspanol: null
-archivoIngles: null
+archivoEspanol: /src/assets/informes/2024/archivoEspanol.pdf
+archivoIngles: /src/assets/informes/2024/archivoIngles.pdf
 cifrasDestacadas: []
 publicar: true
