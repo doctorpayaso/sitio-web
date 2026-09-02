@@ -7,15 +7,14 @@ descripcionBreve:
     Doctor Payaso A.C., México.
 contacto:
   correo: mexico@doctorpayaso.com
-  telefono: '+52 55 3899 9466'
-  whatsapp: ''
-  correoInstitucional: ''
+  telefono: +52 55 3899 9466
+  whatsapp: '+525538999466'
+  correoInstitucional: mexico@doctorpayaso.com
 redes:
-  facebook: ''
-  instagram: ''
-  youtube: ''
-  linkedin: ''
-  tiktok: ''
+  facebook: https://www.facebook.com/doctorpayasoac/
+  instagram: https://www.instagram.com/doctorpayaso.ac
+  youtube: www.youtube.com/@DoctorPayaso
+  linkedin: https://www.linkedin.com/company/doctor-payaso-a.c./
+  tiktok: https://www.linkedin.com/company/doctor-payaso-a.c./
 donataria:
   discriminant: false
-avisoDePrivacidad: ''
