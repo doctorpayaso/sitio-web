@@ -12,6 +12,8 @@ const METODOS: Record<string, string> = {
   domiciliacion: 'Domiciliación', paypal: 'PayPal',
 };
 const metodos = p.metodosDePago ?? [];
+// La pasarela solo existe si el equipo la marcó como activa en el panel.
+const pasarela = p.pasarela?.discriminant ? p.pasarela.value : null;
 
 /** Fondo tenue del color elegido, con el icono en el tono fuerte. */
 const TENUE: Record<string, string> = {
@@ -39,18 +41,38 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
     <div class="wrap" style="max-width:940px">
       <div class="grid g3">
         {(p.montos ?? []).map((m: any) => (
-          <div class:list={['amount', m.destacado && 'sel']}>
-            {m.destacado && <span class="ribbon">{idioma === 'en' ? 'Most chosen' : 'Más elegido'}</span>}
-            <div class="amt">
-              ${formatearNumero(m.monto, idioma)}<span style="font-size:.9rem;font-weight:600"> MXN</span>
-            </div>
-            <div class="per">
-              {m.periodicidad === 'unico'
-                ? (idioma === 'en' ? 'one time' : 'donativo único')
-                : (idioma === 'en' ? 'per month' : 'al mes')}
-            </div>
-            <p class="does">{t(m.equivalencia, idioma)}</p>
-          </div>
+          <Fragment>
+            {m.enlace ? (
+              <a class:list={['amount', m.destacado && 'sel']} href={m.enlace} rel="noopener">
+                {m.destacado && <span class="ribbon">{idioma === 'en' ? 'Most chosen' : 'Más elegido'}</span>}
+                <div class="amt">
+                  ${formatearNumero(m.monto, idioma)}<span style="font-size:.9rem;font-weight:600"> MXN</span>
+                </div>
+                <div class="per">
+                  {m.periodicidad === 'unico'
+                    ? (idioma === 'en' ? 'one time' : 'donativo único')
+                    : (idioma === 'en' ? 'per month' : 'al mes')}
+                </div>
+                <p class="does">{t(m.equivalencia, idioma)}</p>
+                <span class="link-arrow" style="color:var(--coral-d);margin-top:14px;display:inline-flex">
+                  {idioma === 'en' ? 'Donate this amount' : 'Donar este monto'}
+                </span>
+              </a>
+            ) : (
+              <div class:list={['amount', m.destacado && 'sel']}>
+                {m.destacado && <span class="ribbon">{idioma === 'en' ? 'Most chosen' : 'Más elegido'}</span>}
+                <div class="amt">
+                  ${formatearNumero(m.monto, idioma)}<span style="font-size:.9rem;font-weight:600"> MXN</span>
+                </div>
+                <div class="per">
+                  {m.periodicidad === 'unico'
+                    ? (idioma === 'en' ? 'one time' : 'donativo único')
+                    : (idioma === 'en' ? 'per month' : 'al mes')}
+                </div>
+                <p class="does">{t(m.equivalencia, idioma)}</p>
+              </div>
+            )}
+          </Fragment>
         ))}
       </div>
 
@@ -69,15 +91,28 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
             )}
           </div>
           <div>
-            <p class="small muted" style="margin-bottom:16px">
-              {idioma === 'en'
-                ? 'The donation gateway is being set up. Meanwhile, write to us and we will guide you.'
-                : 'La pasarela de donativos está en preparación. Mientras tanto, escríbenos y te orientamos.'}
-            </p>
-            {configuracion.contacto?.correo && (
-              <a href={`mailto:${configuracion.contacto.correo}`} class="btn btn-coral" style="width:100%">
-                {idioma === 'en' ? 'I want to donate' : 'Quiero donar'}
-              </a>
+            {pasarela?.enlace ? (
+              <Fragment>
+                <a href={pasarela.enlace} class="btn btn-coral" style="width:100%" rel="noopener">
+                  {t(pasarela.textoBoton, idioma) || (idioma === 'en' ? 'Donate now' : 'Donar ahora')}
+                </a>
+                {t(pasarela.nota, idioma) && (
+                  <p class="small muted" style="margin-top:12px;text-align:center">{t(pasarela.nota, idioma)}</p>
+                )}
+              </Fragment>
+            ) : (
+              <Fragment>
+                <p class="small muted" style="margin-bottom:16px">
+                  {idioma === 'en'
+                    ? 'The donation gateway is being set up. Meanwhile, write to us and we will guide you.'
+                    : 'La pasarela de donativos está en preparación. Mientras tanto, escríbenos y te orientamos.'}
+                </p>
+                {configuracion.contacto?.correo && (
+                  <a href={`mailto:${configuracion.contacto.correo}`} class="btn btn-coral" style="width:100%">
+                    {idioma === 'en' ? 'I want to donate' : 'Quiero donar'}
+                  </a>
+                )}
+              </Fragment>
             )}
           </div>
         </div>

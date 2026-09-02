@@ -990,6 +990,11 @@ export default config({
               description: 'Las equivalencias deben validarse con el área financiera antes de publicarse.',
             }),
             destacado: fields.checkbox({ label: 'Marcar como «más elegido»', defaultValue: false }),
+            enlace: fields.url({
+              label: 'Enlace de pago con este importe',
+              description:
+                'Opcional. Si PayPal te da un enlace con el monto ya definido, pégalo aquí y la tarjeta se vuelve un botón. Si lo dejas vacío, la tarjeta es solo informativa y el donante escribe el importe en la pasarela.',
+            }),
           }),
           {
             label: 'Montos sugeridos',
@@ -1002,6 +1007,29 @@ export default config({
           description:
             'Solo marcar los que estén realmente habilitados en la pasarela. Anunciar un método que no funciona pierde al donante en el peor momento.',
         }),
+
+        pasarela: fields.conditional(
+          fields.checkbox({
+            label: '¿La pasarela de donativos ya está activa?',
+            defaultValue: false,
+            description:
+              'Apagado, la página ofrece escribir por correo. Encendido, muestra el botón de pago.',
+          }),
+          {
+            false: fields.empty(),
+            true: fields.object({
+              enlace: fields.url({
+                label: 'Enlace de la pasarela',
+                description: 'La dirección de PayPal, Stripe o el proveedor que se use.',
+              }),
+              textoBoton: texto('Texto del botón'),
+              nota: parrafo('Nota bajo el botón', {
+                description:
+                  'Para advertir que el donante sale del sitio y hacia dónde. Genera confianza decirlo antes, no después.',
+              }),
+            }),
+          },
+        ),
         garantias: fields.array(tarjetaIcono('Bloque de confianza'), {
           label: 'Bloques de confianza',
           itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
