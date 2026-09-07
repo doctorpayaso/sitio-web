@@ -50,10 +50,10 @@ hero:
     muestraPersonasIdentificables: true
     folioConsentimiento: CONS-2026-0001
 franjaDeCifras:
-  - voluntariosActivos
   - visitasHospitalarias
+  - visitasVirtuales
+  - horasDeVisita
   - personasBeneficiadas
-  - rangoDeEdad
 dosRutas:
   antetitulo:
     es: Dos formas de entrar
