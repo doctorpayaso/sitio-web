@@ -1,6 +1,10 @@
 {
-  // Configuración mínima. El adaptador de Astro genera el resto solo.
   "name": "doctorpayaso-sitio-web",
   "compatibility_date": "2026-08-01",
-  "compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"]
+  "compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"],
+  "keep_vars": true,
+  "vars": {
+    "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "doctor-payaso-panel-de-contenido"
+  }
 }
+

@@ -37,7 +37,19 @@ montos:
         Financia la beca completa de certificación de un voluntario que no puede
         pagarla.
     destacado: false
-metodosDePago: []
+metodosDePago:
+  - paypal
+  - tarjeta
+pasarela:
+  discriminant: true
+  value:
+    enlace: https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN
+    textoBoton:
+      es: Donar ahora
+    nota:
+      es: >-
+        Elige el monto que prefieras. Puedes pagar con tu cuenta de PayPal o con
+        tarjeta de débito/crédito.
 garantias:
   - icono: 🧾
     color: coral
@@ -60,7 +72,10 @@ garantias:
     titulo:
       es: Cancela cuando quieras
     descripcion:
-      es: Sin llamadas ni trámites. Un enlace en cada correo, un clic y listo.
+      es: >-
+        Tu donativo recurrente se administra desde tu cuenta de PayPal. Puedes
+        pausarlo o cancelarlo en cualquier momento, sin llamadas ni trámites con
+        nosotros.
 textoDelConsentimiento:
   es: >-
     Acepto el tratamiento de mis datos personales para procesar el donativo y
