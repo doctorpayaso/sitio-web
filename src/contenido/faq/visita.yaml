@@ -1,0 +1,14 @@
+identificador: visita
+pagina: certificate
+pregunta:
+  es: ¿Qué sucede durante las visitas?
+respuesta:
+  es: >
+    Participarás de acuerdo con los lineamientos de Doctor Payaso y las
+    indicaciones de cada institución.
+
+
+    La formación incluye preparación para el acompañamiento, el trabajo en
+    equipo y el manejo de situaciones emocionalmente complejas.
+orden: 4
+publicar: true
