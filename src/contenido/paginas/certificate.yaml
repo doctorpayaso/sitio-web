@@ -1,27 +1,35 @@
 seo:
   titulo:
-    es: Certifícate en clown care — Doctor Payaso A.C.
+    es: Certificación Doctor Payaso
   descripcion:
     es: >-
       Seis módulos de formación, práctica hospitalaria acompañada y una
       comunidad que te sostiene. No necesitas experiencia en actuación.
 hero:
   antetitulo:
-    es: Certificación en clown care
+    es: Certificación Doctor Payaso
   titulo:
-    es: |-
-      No buscamos payasos.
-      Buscamos personas.
+    es: ¡Tú eres el regalo!
   palabraDestacada:
-    es: personas
+    es: regalo
   entrada:
-    es: >-
-      No necesitas saber actuar, ni hacer malabares, ni ser gracioso. Necesitas
-      estar dispuesto a exponerte, a fallar en público y a que un niño de siete
-      años te mande. El resto te lo enseñamos en seis módulos.
+    es: >
+      Hay algo extraordinario en ti que puedes compartir con el mundo.
+
+
+      Tu sensibilidad, tu historia, tu creatividad y tu manera única de conectar
+      con las personas son el punto de partida.
+
+
+      En Doctor Payaso te acompañamos a descubrir y desarrollar esas cualidades
+      a través de un proceso de formación que integra autoconocimiento, manejo
+      emocional, arte clown y herramientas de acompañamiento.
+
+
+      **Ven a descubrir tu Doctor Payaso.**
   botonPrincipal:
     texto:
-      es: Inscribirme a la próxima generación
+      es: Quiero certificarme
     destino: '#solicitud'
   botonSecundario:
     texto:
@@ -106,7 +114,6 @@ modulosIntro:
   etiquetas:
     - es: Arte clown
     - es: Coaching ontológico
-    - es: Metodología Patch Adams
     - es: Práctica hospitalaria
 generaciones:
   antetitulo:
