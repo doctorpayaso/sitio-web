@@ -1,0 +1,14 @@
+identificador: reconocimiento
+pagina: certificate
+pregunta:
+  es: ¿Qué reconocimiento obtengo?
+respuesta:
+  es: >
+    Al cumplir los requisitos del programa, recibirás la certificación
+    institucional correspondiente de Doctor Payaso A.C.
+
+
+    Esta formación acredita tu preparación dentro de nuestro modelo de
+    voluntariado.
+orden: 7
+publicar: true
