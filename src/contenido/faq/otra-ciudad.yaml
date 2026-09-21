@@ -1,0 +1,10 @@
+identificador: otra-ciudad
+pagina: certificate
+pregunta:
+  es: ¿Puedo participar desde otra ciudad?
+respuesta:
+  es: >
+    Contamos con alternativas de formación y voluntariado virtual. Nuestro
+    equipo te orientará sobre las opciones disponibles para tu ubicación.
+orden: 6
+publicar: true
