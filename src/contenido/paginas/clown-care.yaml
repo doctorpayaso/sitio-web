@@ -3,20 +3,28 @@ seo:
     es: Qué es el clown care — Doctor Payaso A.C.
   descripcion:
     es: >-
-      El Clown Care es una intervención de acompañamiento y apoyo emocional en
-      la que personas capacitadas, conocidos como Doctores Payasos, utilizan el
-      humor, la improvisación, el coaching ontológico y el juego para generar
-      momentos de alegría y bienestar en personas que atraviesan situaciones
-      difíciles, especialmente pacientes hospitalizados y sus familias.
+      El clown care es una práctica de acompañamiento que integra arte clown,
+      juego, improvisación, escucha y herramientas de conexión humana. En Doctor
+      Payaso lo desarrollamos a través de un modelo de formación, práctica
+      supervisada y coordinación con las instituciones que visitamos.
 antetitulo:
-  es: El programa
+  es: Nuestro método
 titulo:
-  es: Actos inesperados de cariño, con método detrás.
+  es: Actos inesperados de cariño, con metodología detrás.
 entrada:
   es: >-
-    El clown care es una disciplina, no una ocurrencia. Combina arte clown,
-    improvisación, coaching ontológico y protocolos hospitalarios. Así es como
-    funciona una visita.
+    El clown care es una práctica de acompañamiento que integra arte clown,
+    juego, improvisación, escucha y herramientas de conexión humana.
+
+
+    En Doctor Payaso lo desarrollamos a través de un modelo de formación,
+    práctica supervisada y coordinación con las instituciones que visitamos.
+    Nuestro propósito es crear encuentros respetuosos y significativos que
+    contribuyan a humanizar la experiencia de quienes atraviesan momentos de
+    vulnerabilidad.
+
+
+    **Cada persona importa. Cada encuentro es único.**
 video:
   portada:
     archivo: /src/assets/paginas/clown-care/video/portada/archivo.jpg
@@ -35,72 +43,105 @@ video:
       y Alegría" ¡Ustedes SON el regalo! 
 anatomia:
   titulo:
-    es: Anatomía de una visita
+    es: ¿Qué sucede durante una visita?
   entrada:
     es: >-
       Cada intervención sigue una secuencia. No se improvisa la estructura: se
       improvisa dentro de ella.
   pasos:
     - titulo:
-        es: Briefing clínico
+        es: Nos preparamos
       descripcion:
         es: >-
-          Antes de entrar, el equipo recibe indicaciones del personal de piso:
-          qué habitaciones sí, cuáles no, qué precauciones de contacto aplican.
+          Antes de cada visita, recibimos las indicaciones del personal
+          responsable y revisamos las condiciones del espacio.
+
+          La seguridad, la privacidad y el bienestar de las personas orientan
+          nuestra intervención.
     - titulo:
-        es: Pedir permiso en la puerta
+        es: Pedimos permiso
       descripcion:
         es: >-
-          El paciente decide si quiere la visita. Es su primera decisión libre
-          del día y suele ser la única.
+          Cada persona decide si desea recibirnos.
+
+          Escuchamos su respuesta, respetamos su espacio y adaptamos el
+          encuentro a sus necesidades. **El respeto comienza con la libertad de
+          elegir.**
     - titulo:
-        es: Inversión de roles
+        es: Entramos en su mundo
       descripcion:
         es: >-
-          El clown se equivoca, se cae, no entiende. El paciente corrige,
-          enseña, manda. La jerarquía del hospital se voltea.
+          A través del juego, la improvisación y la inversión de roles,
+          invitamos a la persona a participar. Puede dirigir el juego,
+          enseñarnos algo, corregirnos, reír, conversar o simplemente compartir
+          un momento de compañía.
+
+
+          La persona marca el ritmo.
     - titulo:
-        es: Cierre y registro
+        es: Cerramos con respeto
       descripcion:
         es: >-
-          La visita se documenta: sede, hospital, número de pacientes, duración.
-          Ese registro alimenta el informe anual.
+          Cada encuentro tiene un cierre atento y cuidadoso.
+
+
+          Registramos la actividad conforme a nuestros lineamientos
+          institucionales y compartimos con el equipo responsable la información
+          pertinente. La confidencialidad y la dignidad acompañan cada paso.
 acompanamos:
   titulo:
-    es: A quién acompañamos
+    es: ¿A quiénes acompañamos?
   grupos:
     - icono: 🧒
       color: coral
       titulo:
-        es: Pacientes pediátricos
+        es: Niñas, niños y adolescentes
       descripcion:
         es: >-
-          El núcleo del programa. Oncología, cirugía, terapia intensiva,
-          hospitalización prolongada.
+          Creamos encuentros adaptados a su edad, intereses, estado de salud y
+          disposición para participar.
+
+          El juego puede abrir un espacio de expresión y conexión en medio de la
+          experiencia hospitalaria.
     - icono: 👵
       color: azul
       titulo:
-        es: Adultos mayores
+        es: Personas adultas y adultas mayores
       descripcion:
         es: >-
-          Acompañamos hasta los 114 años. El aislamiento geriátrico duele igual
-          que el pediátrico.
+          Acompañamos con escucha, humor, juego y respeto por la historia y las
+          preferencias de cada persona.
+
+          Cada encuentro se construye desde su individualidad.
+    - icono: 👩‍🦰
+      color: coral
+      titulo:
+        es: Familias y cuidadores
+      descripcion:
+        es: >-
+          Reconocemos a quienes acompañan, esperan, cuidan y sostienen.
+
+          Una conversación, una sonrisa o un momento compartido también pueden
+          ser significativos para ellos.
     - icono: 🩺
       color: teal
       titulo:
-        es: Personal de salud
+        es: Profesionales de la salud
       descripcion:
         es: >-
-          Enfermeras y médicos comparten el pasillo. El efecto de la visita
-          también los alcanza a ellos.
+          Compartimos espacios de conexión y alegría con quienes dedican su vida
+          a cuidar de otras personas.
+
+          Nuestro trabajo se realiza en coordinación con las instituciones y sus
+          equipos.
 llamadoHospitales:
   titulo:
-    es: ¿Quieres este programa en tu hospital?
+    es: Llevemos Doctor Payaso a tu institución
   cuerpo:
     es: >-
-      Operamos programas permanentes con instituciones de salud públicas y
-      privadas.
+      Construimos programas de acompañamiento en colaboración con hospitales y
+      organizaciones comprometidas con la humanización del cuidado.
   boton:
     texto:
-      es: Hablar con el equipo institucional →
+      es: Construyamos una alianza→
     destino: /alianzas
