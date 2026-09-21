@@ -41,40 +41,46 @@ hero:
     folioConsentimiento: CONS-2026-004
 requisitos:
   titulo:
-    es: Lo que sí necesitas
+    es: ¿Qué necesitas para comenzar?
   lista:
     - icono: 🎂
       color: coral
       titulo:
-        es: Ser mayor de 18
+        es: Ser mayor de 18 años
       descripcion:
-        es: >-
-          Requisito indispensable de los hospitales para el acceso a áreas de
-          pacientes.
+        es: Nuestro programa de certificación está dirigido a personas adultas.
     - icono: ❤️
       color: mango
       titulo:
-        es: Sensibilidad social
+        es: Sensibilidad y respeto
       descripcion:
         es: >-
-          Empatía y respeto frente a la vulnerabilidad, el dolor y, a veces, la
-          muerte.
+          Disposición para escuchar, acompañar y reconocer la dignidad de cada
+          persona.
+    - icono: 😃
+      color: coral
+      titulo:
+        es: Apertura para aprender
+      descripcion:
+        es: >-
+          Curiosidad para conocerte, jugar, recibir retroalimentación y
+          descubrir nuevas posibilidades.
     - icono: 📅
       color: azul
       titulo:
-        es: Compromiso real
+        es: Compromiso
       descripcion:
         es: >-
-          Asistencia completa al curso y a las prácticas hospitalarias
-          posteriores.
+          Disponibilidad para participar en la formación, las prácticas y las
+          actividades de voluntariado.
     - icono: 🗣️
       color: teal
       titulo:
-        es: Pasar la entrevista
+        es: Una entrevista inicial
       descripcion:
         es: >-
-          Conversación previa para asegurar alineación de valores y
-          expectativas.
+          Queremos conocerte, escuchar tus motivaciones y compartir contigo las
+          responsabilidades de ser Doctor Payaso.
 costo:
   discriminant: false
   value:
@@ -88,12 +94,15 @@ modulosIntro:
   titulo:
     es: |-
       Seis módulos.
-      Uno de ellos eres tú.
+      Un encuentro contigo.
   entrada:
     es: >-
-      Cada módulo combina taller, trabajo personal y práctica. Al final del
-      recorrido haces tu primera visita hospitalaria acompañado por un
-      coordinador.
+      Nuestra certificación es un recorrido de aprendizaje personal y formación
+      para el acompañamiento.
+
+
+      Cada módulo integra experiencias, reflexión, práctica y herramientas que
+      podrás llevar a tu vida cotidiana y a tu labor como voluntario.
   etiquetas:
     - es: Arte clown
     - es: Coaching ontológico
