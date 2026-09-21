@@ -1,0 +1,14 @@
+identificador: compromiso
+pagina: certificate
+pregunta:
+  es: ¿Qué compromiso adquiero como voluntario?
+respuesta:
+  es: >
+    Esperamos que cada voluntario participe al menos en una visita mensual, de
+    acuerdo con su sede y los acuerdos establecidos con su coordinación.
+
+
+    La formación continua, el respeto a los lineamientos y la responsabilidad
+    compartida forman parte de nuestra comunidad.
+orden: 5
+publicar: true
