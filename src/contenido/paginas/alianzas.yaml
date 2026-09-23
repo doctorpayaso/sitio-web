@@ -57,9 +57,11 @@ modelosDeColaboracion:
         es: >-
           El compromiso social también se vive.
 
+
           Diseñamos experiencias de formación, voluntariado corporativo y
           acompañamiento que permiten a los colaboradores participar activamente
           en nuestra misión.
+
 
           Cada proyecto se construye de acuerdo con los objetivos y las
           posibilidades de la organización.
@@ -78,16 +80,23 @@ modelosDeColaboracion:
       paraQuien: {}
       descripcion:
         es: >-
-          Programa permanente de clown care en tus áreas de hospitalización, con
-          voluntarios certificados, protocolo sanitario y coordinación con tu
-          equipo clínico.
+          Humanizar el cuidado es una tarea compartida.
+
+
+          Colaboramos con instituciones de salud para llevar nuestro programa de
+          clown care a pacientes, familias y profesionales de la salud.
+
+
+          Nuestros voluntarios reciben formación y trabajan en coordinación con
+          los equipos responsables de cada institución.
       incluye:
-        - es: Sin costo para la institución
-        - es: Voluntarios con capacitación en protocolo
-        - es: Reporte mensual de visitas por piso
+        - es: Programas de visitas presenciales y virtuales
+        - es: Voluntariado formado y coordinado
+        - es: Respeto a los protocolos institucionales
+        - es: Seguimiento y registro de actividades
       enlace:
         texto:
-          es: Ver esquema →
+          es: Quiero doctor payaso en mi hospital →
         destino: '#contacto-institucional'
     - icono: 🎓
       nombre:
@@ -95,16 +104,25 @@ modelosDeColaboracion:
       paraQuien: {}
       descripcion:
         es: >-
-          Certificación en clown care para estudiantes de medicina, enfermería y
-          psicología. Formación en humanización de la atención dentro del plan
-          de estudios.
+          La formación de profesionales de la salud también se construye desde
+          la humanidad.
+
+
+          Colaboramos con instituciones educativas para acercar a sus
+          estudiantes experiencias de autoconocimiento, empatía, escucha y
+          acompañamiento.
+
+
+          Nuestros programas pueden adaptarse a las necesidades académicas y a
+          los objetivos de cada institución.
       incluye:
-        - es: Programa adaptado al calendario académico
-        - es: Servicio social y horas curriculares
-        - es: 'Antecedente: 2ª generación en FacMed UNAM'
+        - es: Formación en clown care
+        - es: Desarrollo de habilidades humanas
+        - es: Experiencias prácticas supervisadas
+        - es: Proyectos de vinculación y responsabilidad social
       enlace:
         texto:
-          es: Ver esquema →
+          es: Quiero conocer el programa →
         destino: '#contacto-institucional'
 citaInstitucional:
   texto:
@@ -117,16 +135,23 @@ citaInstitucional:
       Hub 
 proceso:
   antetitulo:
-    es: Cómo trabajamos
+    es: Nuestra experiencia
   titulo:
-    es: De la primera llamada al primer pasillo
+    es: Alianzas que se convierten en encuentros
   entrada:
     es: >-
-      Un proceso claro y acotado. La mayoría de las alianzas arranca operación
-      en cuestión de semanas, no de trimestres.
+      Hemos colaborado con organizaciones comprometidas con la salud, la
+      educación y el bienestar de las personas.
+
+
+      Cada alianza nos permite ampliar nuestro alcance, fortalecer nuestra
+      formación y compartir nuestra misión con nuevas comunidades.
+
+
+      **El impacto comienza cuando compartimos un propósito.**
   boton:
     texto:
-      es: Iniciar conversación →
+      es: Conoce nuestro impacto →
     destino: '#contacto-institucional'
   pasos:
     - titulo:
