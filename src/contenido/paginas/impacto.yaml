@@ -5,15 +5,21 @@ seo:
     es: >-
       Publicamos un informe anual desde 2015, en español e inglés, de descarga
       abierta. Los números antes que las fotos.
-  imagenAlCompartir: null
 antetitulo:
   es: Impacto y transparencia
 titulo:
-  es: Los números antes que las fotos.
+  es: Cada número representa un encuentro humano.
 entrada:
   es: >-
-    Cualquiera puede publicar una foto conmovedora. Nosotros publicamos el
-    informe completo, en español e inglés, todos los años desde 2015.
+    Detrás de cada cifra hay una persona, una historia y un momento compartido.
+
+
+    Medimos nuestro trabajo porque creemos en la responsabilidad de conocer
+    nuestro alcance, aprender de la experiencia y compartir los resultados con
+    quienes hacen posible nuestra misión.
+
+
+    **El amor nos mueve. La integridad nos guía.**
 cifrasQueSeMuestran:
   - voluntariosActivos
   - ciudadesConOperacion
@@ -23,11 +29,17 @@ informes:
   titulo:
     es: Informes anuales
   entrada:
-    es: Descarga abierta. Sin registro ni formulario de por medio.
+    es: >-
+      La transparencia es una forma de cuidar la confianza.
+
+
+      Compartimos nuestros informes institucionales para que voluntarios,
+      donantes, aliados y comunidad conozcan nuestro trabajo. En ellos
+      encontrarás información sobre actividades, alcance, voluntariado y
+      recursos.
 gobernanza:
   - icono: 📋
     color: mango
-    iconoImagen: null
     titulo:
       es: Donataria autorizada
     cuerpo:
@@ -36,7 +48,6 @@ gobernanza:
         confirmar con el equipo.
   - icono: ⚖️
     color: teal
-    iconoImagen: null
     titulo:
       es: Gobernanza
     cuerpo:
@@ -45,7 +56,6 @@ gobernanza:
         para consulta de aliados institucionales.
   - icono: 📊
     color: azul
-    iconoImagen: null
     titulo:
       es: Cómo medimos
     cuerpo:
