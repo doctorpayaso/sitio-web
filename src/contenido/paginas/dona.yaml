@@ -5,37 +5,48 @@ seo:
     es: >-
       Tu donativo sostiene la formación de un voluntario, su transporte al
       hospital y la coordinación de las visitas. Recibo deducible de impuestos.
-  imagenAlCompartir: null
 antetitulo:
   es: Donativos
 titulo:
-  es: Tu donativo no compra narices. Compra tiempo.
+  es: Tu donativo hace posible el próximo encuentro.
 entrada:
   es: >-
-    Cada peso sostiene la formación de un voluntario, su transporte al hospital y
-    la coordinación de las visitas. Eso es lo que convierte una buena intención
-    en una visita que sí ocurre.
+    Cada aportación ayuda a sostener la formación, la coordinación y las visitas
+    que permiten llevar nuestra misión a más personas.
+
+
+    Tu generosidad se convierte en presencia, juego, escucha y momentos de
+    conexión humana.
+
+
+    **Gracias por ayudarnos a Sanar con Amor y Alegría.**
 montos:
   - monto: 300
     periodicidad: mensual
     equivalencia:
       es: >-
-        Cubre el traslado de un voluntario a sus visitas hospitalarias durante un
-        mes.
+        **Un donativo que acompaña.**
+
+        Tu aportación contribuye a los traslados y a las actividades de nuestros
+        voluntarios.
     destacado: false
   - monto: 1500
     periodicidad: mensual
     equivalencia:
       es: >-
-        Sostiene la operación de clown care en una sede: coordinación, materiales
-        y visitas virtuales.
+        **Un donativo que fortalece.**
+
+        Tu aportación contribuye a sostener la coordinación, los materiales y
+        las actividades de acompañamiento.
     destacado: true
   - monto: 5000
     periodicidad: mensual
     equivalencia:
       es: >-
-        Financia la beca completa de certificación de un voluntario que no puede
-        pagarla.
+        **Un donativo que abre oportunidades.**
+
+        Tu aportación contribuye a la formación de nuevas personas voluntarias y
+        al crecimiento de nuestra comunidad.
     destacado: false
 metodosDePago:
   - paypal
@@ -43,39 +54,39 @@ metodosDePago:
 pasarela:
   discriminant: true
   value:
-    enlace: https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN
+    enlace: >-
+      https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN
     textoBoton:
-      es: Donar ahora
+      es: Quiero elegir mi donativo
     nota:
-      es: >-
-        Elige el monto que prefieras. Puedes pagar con tu cuenta de PayPal o con
-        tarjeta de débito/crédito.
+      es: |-
+        El monto que tú elijas. Cada aportación suma.
+        Puedes hacerlo con tu cuenta de PayPal o con tarjeta de débito/crédito.
 garantias:
-  - icono: 🧾
+  - icono: 👀
     color: coral
     titulo:
-      es: Deducible de impuestos
+      es: Transparencia
     descripcion:
       es: >-
-        Emitimos CFDI por donativo. Marca la casilla y te llegará junto con el
-        comprobante.
-  - icono: 📬
+        Compartimos información sobre nuestras actividades y el uso de los
+        recursos a través de nuestros informes institucionales.
+  - icono: 📄
     color: teal
     titulo:
-      es: Sabrás a dónde fue
+      es: Comprobante fiscal
     descripcion:
       es: >-
-        Los donantes recurrentes reciben el reporte de impacto de su sede antes
-        que el informe público.
-  - icono: 🛑
+        Podrás solicitar el comprobante correspondiente conforme a las
+        disposiciones fiscales aplicables.
+  - icono: 🗓️
     color: azul
     titulo:
-      es: Cancela cuando quieras
+      es: Donativos recurrentes
     descripcion:
       es: >-
-        Tu donativo recurrente se administra desde tu cuenta de PayPal. Puedes
-        pausarlo o cancelarlo en cualquier momento, sin llamadas ni trámites con
-        nosotros.
+        Si eliges una aportación periódica, podrás consultar y administrar tu
+        donativo desde la plataforma de pago correspondiente.
 textoDelConsentimiento:
   es: >-
     Acepto el tratamiento de mis datos personales para procesar el donativo y
