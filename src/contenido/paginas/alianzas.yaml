@@ -186,11 +186,14 @@ proceso:
           evaluar el alcance y fortalecer futuras acciones.
 contacto:
   titulo:
-    es: Hablemos
+    es: Hablemos de tu proyecto
   entrada:
     es: >-
-      Escríbenos y te contactamos con el responsable de vinculación
-      institucional. Sin bots, sin cotizador automático.
+      Una alianza puede cambiar muchas historias. Cuéntanos qué te gustaría
+      construir.
+
+
+      Nos encantará escucharte.
   recurso:
     texto:
       es: Informes anuales
