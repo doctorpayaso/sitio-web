@@ -41,24 +41,41 @@ gobernanza:
   - icono: 📋
     color: mango
     titulo:
-      es: Donataria autorizada
+      es: Informes anuales
     cuerpo:
       es: >-
-        Estatus, número de autorización y publicación en el DOF. Dato por
-        confirmar con el equipo.
+        La transparencia es una forma de cuidar la confianza.
+
+
+        Compartimos nuestros informes institucionales para que voluntarios,
+        donantes, aliados y comunidad conozcan nuestro trabajo.
+
+
+        En ellos encontrarás información sobre actividades, alcance,
+        voluntariado y recursos.
   - icono: ⚖️
     color: teal
     titulo:
-      es: Gobernanza
+      es: Gobernanza y responsabilidad
     cuerpo:
       es: >-
-        Consejo directivo, acta constitutiva y estatutos vigentes disponibles
-        para consulta de aliados institucionales.
+        La integridad se demuestra con acciones.
+
+
+        Nuestra operación se guía por valores, lineamientos institucionales y
+        responsabilidades definidas.
+
+
+        Promovemos la rendición de cuentas, el uso responsable de los recursos y
+        el respeto a las personas que forman parte de nuestra comunidad.
   - icono: 📊
     color: azul
     titulo:
-      es: Cómo medimos
+      es: Gracias por hacer posible cada encuentro
     cuerpo:
       es: >-
-        Cada visita se registra por sede, hospital, número de pacientes y
-        duración. Ese registro es la base del informe anual.
+        Cada hora de voluntariado, cada donativo y cada alianza forman parte de
+        una historia colectiva.
+
+
+        Tu participación también cuenta
