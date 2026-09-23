@@ -155,29 +155,35 @@ proceso:
     destino: '#contacto-institucional'
   pasos:
     - titulo:
-        es: Diagnóstico
+        es: Escuchamos
       descripcion:
         es: >-
-          Entendemos tu objetivo: RSE, humanización de la atención, formación
-          curricular o bienestar de colaboradores.
+          Conocemos a tu organización, sus objetivos y las necesidades de las
+          personas a quienes desea acompañar.
     - titulo:
-        es: Propuesta y convenio
+        es: Diseñamos
       descripcion:
         es: >-
-          Definimos alcance, sedes, número de participantes, indicadores y
-          periodicidad del reporte.
+          Construimos una propuesta con actividades, responsabilidades, recursos
+          e indicadores definidos.
     - titulo:
-        es: Formación y protocolo
+        es: Preparamos
       descripcion:
         es: >-
-          Certificamos a los participantes y alineamos el protocolo con las
-          áreas clínicas y de seguridad del paciente.
+          Alineamos equipos, formación, protocolos y condiciones para
+          desarrollar el proyecto.
     - titulo:
-        es: Operación y medición
+        es: Implementamos
       descripcion:
         es: >-
-          Arranca el programa. Entregamos reporte de visitas, cobertura y
-          testimonios para tu informe anual.
+          Ponemos en marcha las actividades en coordinación con las personas
+          responsables.
+    - titulo:
+        es: Medimos y aprendemos
+      descripcion:
+        es: >-
+          Documentamos los resultados y compartimos información que permite
+          evaluar el alcance y fortalecer futuras acciones.
 contacto:
   titulo:
     es: Hablemos
