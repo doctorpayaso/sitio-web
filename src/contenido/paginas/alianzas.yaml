@@ -10,23 +10,28 @@ hero:
     es: Empresas · Hospitales · Universidades
   titulo:
     es: |-
-      Impacto social
-      que sí se documenta.
+      Juntos podemos llevar
+      el amor más lejos.
   palabraDestacada:
-    es: documenta
+    es: más lejos
   entrada:
     es: >-
-      Once informes anuales públicos, más de 945 voluntarios certificados y
-      operación en cuatro estados. Si tu institución necesita evidencia antes de
-      firmar, la tenemos desde 2015.
+      Creemos en las alianzas que unen capacidades, recursos y personas para
+      generar un impacto social significativo.
+
+
+      En **Doctor Payaso** desarrollamos programas de formación, acompañamiento
+      y voluntariado con objetivos claros, procesos definidos e indicadores de
+      resultados.
+
+
+      **Tu organización puede formar parte de esta historia.**
   botonPrincipal:
     texto:
-      es: Agendar una reunión
+      es: Construyamos una alianza
     destino: '#contacto-institucional'
   botonSecundario:
-    texto:
-      es: Ver informes anuales
-    destino: /impacto
+    texto: {}
   insignia:
     destacado:
       es: '2015'
@@ -42,7 +47,7 @@ hero:
     folioConsentimiento: CONS-2026-0009
 modelosDeColaboracion:
   titulo:
-    es: Tres modelos de colaboración
+    es: Tres caminos para colaborar
   modelos:
     - icono: 🏢
       nombre:
@@ -50,16 +55,22 @@ modelosDeColaboracion:
       paraQuien: {}
       descripcion:
         es: >-
-          Voluntariado corporativo con certificación real para tus
-          colaboradores, programas de bienestar emocional y donativo deducible
-          con reporte de impacto.
+          El compromiso social también se vive.
+
+          Diseñamos experiencias de formación, voluntariado corporativo y
+          acompañamiento que permiten a los colaboradores participar activamente
+          en nuestra misión.
+
+          Cada proyecto se construye de acuerdo con los objetivos y las
+          posibilidades de la organización.
       incluye:
-        - es: Generación cerrada para tu equipo
-        - es: Reporte de impacto para tu informe de RSE
-        - es: Recibo deducible de impuestos
+        - es: Programas de voluntariado corporativo
+        - es: Formación y desarrollo de habilidades humanas
+        - es: Proyectos de bienestar y conexión
+        - es: Indicadores y reportes de impacto
       enlace:
         texto:
-          es: Ver esquema →
+          es: Quiero una alianza empresarial →
         destino: '#contacto-institucional'
     - icono: 🏥
       nombre:
@@ -103,7 +114,7 @@ citaInstitucional:
       Doctor Payaso A.C.
 
       Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed
-      Hub
+      Hub 
 proceso:
   antetitulo:
     es: Cómo trabajamos
