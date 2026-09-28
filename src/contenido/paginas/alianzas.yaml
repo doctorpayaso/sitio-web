@@ -124,15 +124,25 @@ modelosDeColaboracion:
         texto:
           es: Quiero conocer el programa →
         destino: '#contacto-institucional'
-citaInstitucional:
-  texto:
-    es: Llevamos el corazón en la punta de la nariz.
-  autor:
-    es: >-
-      Doctor Payaso A.C.
-
-      Presencia en medios: Proceso, Gaceta Facultad de Medicina UNAM, Expomed
-      Hub 
+medios:
+  antetitulo:
+    es: En los medios
+  apariciones:
+    - medio:
+        es: Proceso
+      nota:
+        es: ''
+      enlace: ''
+    - medio:
+        es: Gaceta Facultad de Medicina UNAM
+      nota:
+        es: ''
+      enlace: ''
+    - medio:
+        es: Expomed Hub
+      nota:
+        es: ''
+      enlace: ''
 proceso:
   antetitulo:
     es: Nuestra experiencia
@@ -152,7 +162,9 @@ proceso:
   boton:
     texto:
       es: Conoce nuestro impacto →
-    destino: '#contacto-institucional'
+    destino: /impacto
+  tituloPasos:
+    es: Así construimos una alianza
   pasos:
     - titulo:
         es: Escuchamos
@@ -198,9 +210,3 @@ contacto:
     texto:
       es: Informes anuales
     destino: /impacto
-  textoDelConsentimiento:
-    es: >-
-      Acepto el tratamiento de mis datos de contacto profesional para dar
-      seguimiento a esta solicitud, conforme a la LFPDPPP.
-  textoDeExito:
-    es: Recibimos tu mensaje. Te contactamos en los próximos días hábiles.
