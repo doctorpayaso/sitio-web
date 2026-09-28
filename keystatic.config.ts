@@ -785,7 +785,6 @@ export default config({
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', { variasLineas: true }),
-            nota: parrafo('Nota al costado'),
             descargo: parrafo('Descargo bajo las tarjetas', {
               description:
                 'Deslinde sobre fechas y modalidades. Protege a la A.C. si una generación se mueve. No lo quites sin consultarlo con el Comité.',
@@ -796,13 +795,19 @@ export default config({
             description: 'Las fechas y sedes se editan en «Generaciones de certificación».',
           },
         ),
-        programaUniversidades: fields.object(
+        formacionVirtual: fields.object(
           {
             titulo: texto('Titular'),
-            cuerpo: parrafo('Cuerpo'),
+            cuerpo: parrafo('Cuerpo', {
+              description: 'Una línea en blanco separa párrafos.',
+            }),
             boton: boton('Botón'),
           },
-          { label: 'Programa para estudiantes de salud' },
+          {
+            label: 'Formación virtual',
+            description:
+              'Franja bajo el calendario. La generación virtual no se dibuja como tarjeta: su entrada en «Generaciones de certificación» solo alimenta el menú de sedes del formulario.',
+          },
         ),
         preguntas: fields.object(
           {
