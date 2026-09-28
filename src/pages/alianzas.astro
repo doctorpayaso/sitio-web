@@ -5,6 +5,11 @@ import { t, tr, idiomaDe } from '../lib/idioma';
 import { paginas, configuracion, imagenPublicable, rutaDeImagen } from '../lib/contenido';
 
 const p = paginas.alianzas;
+// Un medio se publica solo si trae enlace. Sin enlace es una afirmación que
+// nadie puede comprobar, y el Comité pidió justamente verificarlas.
+const apariciones = (paginas.alianzas.medios?.apariciones ?? []).filter(
+  (m: any) => m.enlace && String(m.enlace).trim(),
+);
 const idioma = idiomaDe(Astro);
 const heroVisible = imagenPublicable(p.hero?.imagen);
 
@@ -97,13 +102,22 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
     </div>
   </section>
 
-  {t(p.citaInstitucional?.texto, idioma) && (
+  {apariciones.length > 0 && (
     <section class="pad-s">
       <div class="wrap">
-        <div class="quote" style="background:var(--teal);color:#fff">
-          <span class="quote-mark" style="color:#fff;opacity:.16" aria-hidden="true">&rdquo;</span>
-          <blockquote style="color:#fff">{t(p.citaInstitucional.texto, idioma)}</blockquote>
-          <cite style="color:rgba(255,255,255,.75)" set:html={tr(p.citaInstitucional.autor, idioma)} />
+        <span class="eyebrow" style="color:var(--teal)">
+          <span class="dot" style="background:var(--teal)"></span> {t(p.medios?.antetitulo, idioma)}
+        </span>
+        <div class="grid g3" style="margin-top:22px">
+          {apariciones.map((m: any) => (
+            <a href={m.enlace} class="report" target="_blank" rel="noopener noreferrer">
+              <span class="ic" aria-hidden="true">📰</span>
+              <span>
+                {t(m.medio, idioma)}
+                {t(m.nota, idioma) && <span class="small muted" style="display:block">{t(m.nota, idioma)}</span>}
+              </span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
@@ -124,6 +138,9 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
         )}
       </div>
       <div>
+        {t(p.proceso?.tituloPasos, idioma) && (
+          <h3 class="h3" style="margin-bottom:6px">{t(p.proceso.tituloPasos, idioma)}</h3>
+        )}
         {(p.proceso?.pasos ?? []).map((paso: any, i: number) => (
           <div class="method-row">
             <div class="method-n">{String(i + 1).padStart(2, '0')}</div>
@@ -142,78 +159,37 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       <div>
         <h2 class="h2" style="margin-bottom:16px" set:html={tr(p.contacto?.titulo, idioma)} />
         <p class="lead" set:html={tr(p.contacto?.entrada, idioma)} />
-        <div style="margin-top:30px;display:flex;flex-direction:column;gap:16px">
-          {configuracion.contacto?.correoInstitucional && (
-            <a href={`mailto:${configuracion.contacto.correoInstitucional}`} class="report">
-              <span class="ic" aria-hidden="true">✉</span> {configuracion.contacto.correoInstitucional}
-            </a>
-          )}
-          {configuracion.contacto?.correo && !configuracion.contacto?.correoInstitucional && (
-            <a href={`mailto:${configuracion.contacto.correo}`} class="report">
-              <span class="ic" aria-hidden="true">✉</span> {configuracion.contacto.correo}
-            </a>
-          )}
-          {configuracion.contacto?.telefono && (
-            <a href={`tel:${String(configuracion.contacto.telefono).replace(/\s/g, '')}`} class="report">
-              <span class="ic" aria-hidden="true">☎</span> {configuracion.contacto.telefono}
-            </a>
-          )}
-          {t(p.contacto?.recurso?.texto, idioma) && (
-            <a href={p.contacto.recurso.destino} class="report">
-              <span class="ic" aria-hidden="true">📄</span> {t(p.contacto.recurso.texto, idioma)}
-            </a>
-          )}
-        </div>
       </div>
 
-      <div class="form">
-        <div class="field-row">
-          <div class="field">
-            <label for="in">{idioma === 'en' ? 'Name and role' : 'Nombre y cargo'}</label>
-            <input id="in" disabled placeholder={idioma === 'en' ? 'Name · Role' : 'Nombre · Cargo'} />
-          </div>
-          <div class="field">
-            <label for="io">{idioma === 'en' ? 'Organization' : 'Institución'}</label>
-            <input id="io" disabled placeholder={idioma === 'en' ? 'Company, hospital or university' : 'Empresa, hospital o universidad'} />
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="ie">{idioma === 'en' ? 'Work email' : 'Correo institucional'}</label>
-            <input id="ie" type="email" disabled placeholder="nombre@institucion.mx" />
-          </div>
-          <div class="field">
-            <label for="it">{idioma === 'en' ? 'Type' : 'Tipo de alianza'}</label>
-            <select id="it" disabled>
-              {(p.modelosDeColaboracion?.modelos ?? []).map((m: any) => <option>{t(m.nombre, idioma)}</option>)}
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label for="im">{idioma === 'en' ? 'Tell us what you need' : 'Cuéntanos qué buscas'}</label>
-          <textarea id="im" rows="4" disabled placeholder={idioma === 'en' ? 'Goal, location, approximate number of participants' : 'Objetivo, sede, número aproximado de participantes'}></textarea>
-        </div>
-        <div class="field-consent">
-          <input type="checkbox" id="ic" disabled />
-          <label for="ic">
-            {t(p.contacto?.textoDelConsentimiento, idioma)}
-            {configuracion.avisoDePrivacidad && (
-              <> <a href={configuracion.avisoDePrivacidad} style="text-decoration:underline">
-                {idioma === 'en' ? 'Privacy notice' : 'Aviso de privacidad'}
-              </a></>
-            )}
-          </label>
-        </div>
-        <p class="small muted" style="text-align:center">
-          {idioma === 'en' ? 'Form coming soon. Meanwhile, write to us:' : 'Formulario en preparación. Mientras tanto, escríbenos:'}
-        </p>
-        {(configuracion.contacto?.correoInstitucional || configuracion.contacto?.correo) && (
+      <div style="display:flex;flex-direction:column;gap:14px">
+        {configuracion.contacto?.correoInstitucional && (
+          <a href={`mailto:${configuracion.contacto.correoInstitucional}`} class="report">
+            <span class="ic" aria-hidden="true">✉</span> {configuracion.contacto.correoInstitucional}
+          </a>
+        )}
+        {configuracion.contacto?.correo && !configuracion.contacto?.correoInstitucional && (
+          <a href={`mailto:${configuracion.contacto.correo}`} class="report">
+            <span class="ic" aria-hidden="true">✉</span> {configuracion.contacto.correo}
+          </a>
+        )}
+        {configuracion.contacto?.whatsapp && (
           <a
-            href={`mailto:${configuracion.contacto.correoInstitucional || configuracion.contacto.correo}`}
-            class="btn btn-teal"
-            style="width:100%;margin-top:12px"
+            href={`https://wa.me/${String(configuracion.contacto.whatsapp).replace(/[^0-9]/g, '')}`}
+            class="report"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            {configuracion.contacto.correoInstitucional || configuracion.contacto.correo}
+            <span class="ic" aria-hidden="true">💬</span> WhatsApp
+          </a>
+        )}
+        {configuracion.contacto?.telefono && (
+          <a href={`tel:${String(configuracion.contacto.telefono).replace(/\s/g, '')}`} class="report">
+            <span class="ic" aria-hidden="true">☎</span> {configuracion.contacto.telefono}
+          </a>
+        )}
+        {t(p.contacto?.recurso?.texto, idioma) && (
+          <a href={p.contacto.recurso.destino} class="report">
+            <span class="ic" aria-hidden="true">📄</span> {t(p.contacto.recurso.texto, idioma)}
           </a>
         )}
       </div>
