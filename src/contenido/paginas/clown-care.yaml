@@ -41,6 +41,46 @@ video:
     es: >-
       Gracias a nuestros voluntarios por vivir nuestra misión de "Sanar con Amor
       y Alegría" ¡Ustedes SON el regalo! 
+poderDelEncuentro:
+  titulo:
+    es: El poder de un encuentro humano
+  ejes:
+    - icono: 🗝️
+      color: azul
+      titulo:
+        es: Autonomía
+      descripcion:
+        es: >-
+          Ofrecemos oportunidades para elegir, participar y tomar decisiones
+          dentro del encuentro.
+    - icono: 🤝
+      color: teal
+      titulo:
+        es: Conexión
+      descripcion:
+        es: >-
+          La escucha, el juego y la presencia favorecen momentos de cercanía y
+          expresión emocional.
+    - icono: ✨
+      color: mango
+      titulo:
+        es: Alegría
+      descripcion:
+        es: >-
+          Creamos oportunidades para disfrutar, sorprendernos y compartir
+          experiencias positivas.
+    - icono: 🫂
+      color: coral
+      titulo:
+        es: Humanización
+      descripcion:
+        es: >-
+          Reconocemos a cada persona más allá de su situación de salud y
+          acompañamos respetuosamente el trabajo del personal clínico.
+  nota:
+    es: >-
+      Nuestra intervención complementa la experiencia de atención. El tratamiento
+      médico permanece a cargo de los profesionales de la salud.
 anatomia:
   titulo:
     es: ¿Qué sucede durante una visita?
@@ -48,6 +88,8 @@ anatomia:
     es: >-
       Cada intervención sigue una secuencia. No se improvisa la estructura: se
       improvisa dentro de ella.
+  frase:
+    es: El respeto comienza con la libertad de elegir.
   pasos:
     - titulo:
         es: Nos preparamos
@@ -65,8 +107,7 @@ anatomia:
           Cada persona decide si desea recibirnos.
 
           Escuchamos su respuesta, respetamos su espacio y adaptamos el
-          encuentro a sus necesidades. El respeto comienza con la libertad de
-          elegir.
+          encuentro a sus necesidades.
     - titulo:
         es: Entramos en su mundo
       descripcion:
@@ -134,6 +175,19 @@ acompanamos:
 
           Nuestro trabajo se realiza en coordinación con las instituciones y sus
           equipos.
+visitasVirtuales:
+  titulo:
+    es: El amor también llega por videollamada.
+  descripcion:
+    es: >-
+      Nuestro programa de visitas virtuales acerca a los voluntarios a personas
+      hospitalizadas, en aislamiento o que requieren acompañamiento a distancia.
+      Cada visita se organiza de acuerdo con la disponibilidad del equipo y las
+      condiciones de la persona que la solicita.
+  boton:
+    texto:
+      es: Solicita una visita
+    destino: /contacto
 llamadoHospitales:
   titulo:
     es: Llevemos Doctor Payaso a tu institución
