@@ -658,10 +658,29 @@ export default config({
           },
           { label: 'Video' },
         ),
+        poderDelEncuentro: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            ejes: fields.array(tarjetaIcono('Eje'), {
+              label: 'Ejes',
+              itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Eje',
+            }),
+            nota: parrafo('Nota de cierre', {
+              description:
+                'Deslinde clínico. Aclara que la intervención acompaña y no sustituye el tratamiento médico. No lo quites sin consultarlo con el Comité.',
+            }),
+          },
+          { label: 'El poder de un encuentro humano' },
+        ),
         anatomia: fields.object(
           {
             titulo: texto('Titular', { variasLineas: true }),
             entrada: parrafo('Entrada'),
+            frase: texto('Frase destacada', {
+              variasLineas: true,
+              description:
+                'Se muestra en grande bajo la entrada, junto a los pasos. Déjala vacía si no quieres frase.',
+            }),
             pasos: listaDePasos('Pasos de la visita'),
           },
           { label: 'Anatomía de una visita' },
@@ -675,6 +694,14 @@ export default config({
             }),
           },
           { label: 'A quién acompañamos' },
+        ),
+        visitasVirtuales: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            descripcion: parrafo('Descripción'),
+            boton: boton('Botón'),
+          },
+          { label: 'Visitas virtuales' },
         ),
         llamadoHospitales: fields.object(
           {
