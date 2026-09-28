@@ -901,12 +901,28 @@ export default config({
           },
           { label: 'Modelos de colaboración' },
         ),
-        citaInstitucional: fields.object(
+        medios: fields.object(
           {
-            texto: parrafo('Cita'),
-            autor: texto('Autor y procedencia', { variasLineas: true }),
+            antetitulo: texto('Antetítulo'),
+            apariciones: fields.array(
+              fields.object({
+                medio: texto('Medio'),
+                nota: texto('Nota', {
+                  description: 'Opcional. Ej. el título del artículo o la fecha.',
+                }),
+                enlace: fields.url({ label: 'Enlace a la publicación' }),
+              }),
+              {
+                label: 'Apariciones',
+                itemLabel: (props) => props.fields.medio.fields.es?.value || 'Medio',
+              },
+            ),
           },
-          { label: 'Cita sobre fondo verde' },
+          {
+            label: 'En los medios',
+            description:
+              'Cada medio se publica SOLO cuando tiene enlace. Sin enlace no aparece, y si ninguno lo tiene, la sección entera se oculta: nadie ve un hueco ni una afirmación sin comprobar.',
+          },
         ),
         proceso: fields.object(
           {
@@ -914,6 +930,7 @@ export default config({
             titulo: texto('Titular', { variasLineas: true }),
             entrada: parrafo('Entrada'),
             boton: boton('Botón'),
+            tituloPasos: texto('Titular de los pasos'),
             pasos: listaDePasos('Pasos del proceso'),
           },
           { label: 'De la primera llamada al primer pasillo' },
@@ -923,10 +940,8 @@ export default config({
             titulo: texto('Titular'),
             entrada: parrafo('Entrada'),
             recurso: boton('Tercer enlace de contacto'),
-            textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', { obligatorio: true }),
-            textoDeExito: parrafo('Mensaje después de enviar'),
           },
-          { label: 'Formulario institucional' },
+          { label: 'Contacto institucional' },
         ),
       },
     }),
