@@ -12,6 +12,10 @@ const p = paginas.certificate;
 const idioma = idiomaDe(Astro);
 const listaModulos = modulos();
 const listaGeneraciones = generaciones();
+// La generación continua no se dibuja como tarjeta: no tiene fecha ni cupo, así
+// que forzarla al molde de las presenciales la hacía ver rota. Vive en su propia
+// franja, bajo el calendario. Sigue en la lista para el menú del formulario.
+const generacionesConFecha = listaGeneraciones.filter((g: any) => g.estado !== 'continua');
 const faq = preguntas('certificate');
 const heroVisible = imagenPublicable(p.hero?.imagen);
 
@@ -178,19 +182,16 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
   <!-- GENERACIONES -->
   <section class="pad-s" style="background:var(--papel);border-top:1px solid var(--tinta-12);border-bottom:1px solid var(--tinta-12)">
     <div class="wrap">
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px">
-        <div>
-          <span class="eyebrow" style="color:var(--teal)">
-            <span class="dot" style="background:var(--teal)"></span> {t(p.generaciones?.antetitulo, idioma)}
-          </span>
-          <h2 class="h2" style="margin-top:14px" set:html={tr(p.generaciones?.titulo, idioma)} />
-        </div>
-        <p class="small muted" style="max-width:34ch">{t(p.generaciones?.nota, idioma)}</p>
+      <div style="margin-bottom:36px">
+        <span class="eyebrow" style="color:var(--teal)">
+          <span class="dot" style="background:var(--teal)"></span> {t(p.generaciones?.antetitulo, idioma)}
+        </span>
+        <h2 class="h2" style="margin-top:14px" set:html={tr(p.generaciones?.titulo, idioma)} />
       </div>
 
-      {listaGeneraciones.length > 0 ? (
-        <div class="grid g4 gen-grid">
-          {listaGeneraciones.map((g: any, i: number) => {
+      {generacionesConFecha.length > 0 ? (
+        <div class="grid g3 gen-grid">
+          {generacionesConFecha.map((g: any, i: number) => {
             const sede = sedePorId(g.sede);
             const e = ESTADO[g.estado] ?? ESTADO.lista_espera;
             return (
@@ -234,26 +235,27 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
         <p class="muted">{idioma === 'en' ? 'Dates coming soon.' : 'Próximas fechas por confirmar.'}</p>
       )}
 
-      {t(p.generaciones?.descargo, idioma) && (
-        <p class="small muted" style="margin-top:20px;max-width:64ch">
-          {t(p.generaciones.descargo, idioma)}
-        </p>
-      )}
-
-      {t(p.programaUniversidades?.titulo, idioma) && (
-        <div class="card split3" style="margin-top:22px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;background:linear-gradient(135deg,rgba(66,128,191,.12),rgba(43,169,220,.12));border-color:transparent">
-          <div class="icon-chip" style="background:var(--azul);color:#fff;width:54px;height:54px;border-radius:50%" aria-hidden="true">🎓</div>
+      {t(p.formacionVirtual?.titulo, idioma) && (
+        <div class="card split3" style="margin-top:24px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;background:linear-gradient(135deg,rgba(73,182,166,.14),rgba(255,162,49,.14));border-color:transparent">
+          <div class="icon-chip" style="background:var(--menta);color:#fff;width:54px;height:54px;border-radius:50%;align-self:start;margin-top:2px" aria-hidden="true">💻</div>
           <div>
-            <h4 style="font-family:var(--display);font-size:1.2rem;margin-bottom:4px">{t(p.programaUniversidades.titulo, idioma)}</h4>
-            <p class="small muted" set:html={tr(p.programaUniversidades.cuerpo, idioma)} />
+            <h4 style="font-family:var(--display);font-size:1.2rem;margin-bottom:6px">{t(p.formacionVirtual.titulo, idioma)}</h4>
+            <p class="small muted" set:html={tr(p.formacionVirtual.cuerpo, idioma)} />
           </div>
-          {t(p.programaUniversidades.boton?.texto, idioma) && (
-            <a href={p.programaUniversidades.boton.destino} class="btn btn-ghost btn-sm" style="flex:none">
-              {t(p.programaUniversidades.boton.texto, idioma)}
+          {t(p.formacionVirtual.boton?.texto, idioma) && (
+            <a href={p.formacionVirtual.boton.destino} class="btn btn-teal btn-sm" style="flex:none">
+              {t(p.formacionVirtual.boton.texto, idioma)}
             </a>
           )}
         </div>
       )}
+
+      {t(p.generaciones?.descargo, idioma) && (
+        <p class="small muted" style="margin-top:22px;max-width:64ch">
+          {t(p.generaciones.descargo, idioma)}
+        </p>
+      )}
+
     </div>
   </section>
 
@@ -393,6 +395,10 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
     .camino { grid-template-columns: repeat(3, 1fr); row-gap: 34px; }
     .camino li:nth-child(3)::before { right: calc(100% - 20px); }
     .camino li:nth-child(4)::before { left: 20px; }
+  }
+  @media (max-width: 1000px) {
+    /* Tres generaciones en tres columnas: a dos quedaría una huérfana. */
+    .gen-grid { grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width: 860px) {
     /* Una columna: las tarjetas de requisitos y de generaciones quedan
