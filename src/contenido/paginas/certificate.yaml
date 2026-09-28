@@ -89,13 +89,8 @@ requisitos:
         es: >-
           Queremos conocerte, escuchar tus motivaciones y compartir contigo las
           responsabilidades de ser Doctor Payaso.
-costo:
-  discriminant: false
-  value:
-    textoProvisional:
-      es: Monto por confirmar. Escríbenos y te lo compartimos.
-becas:
-  discriminant: false
+  frase:
+    es: Lo más importante es tu disposición para compartir quién eres.
 modulosIntro:
   antetitulo:
     es: El programa
@@ -115,6 +110,35 @@ modulosIntro:
     - es: Arte clown
     - es: Coaching ontológico
     - es: Práctica hospitalaria
+recorrido:
+  titulo:
+    es: Tu camino para convertirte en Doctor Payaso
+  entrada:
+    es: La certificación es el comienzo de una nueva forma de estar en el mundo.
+  pasos:
+    - titulo:
+        es: Inscríbete
+      descripcion:
+        es: Comparte tus datos y elige la sede de tu interés.
+    - titulo:
+        es: Conversemos
+      descripcion:
+        es: Participa en una entrevista para conocernos y resolver tus dudas.
+    - titulo:
+        es: Fórmate
+      descripcion:
+        es: Vive los seis módulos de certificación.
+    - titulo:
+        es: Practica
+      descripcion:
+        es: >-
+          Participa en las actividades supervisadas correspondientes a tu
+          programa.
+    - titulo:
+        es: Comparte
+      descripcion:
+        es: >-
+          Intégrate a nuestra comunidad y comienza tu camino como voluntario.
 generaciones:
   antetitulo:
     es: Calendario 2027
@@ -124,6 +148,10 @@ generaciones:
     es: >-
       Cada sede abre una sola generación al año. Los lugares son limitados por
       la capacidad de práctica hospitalaria.
+  descargo:
+    es: >-
+      Fechas, disponibilidad y modalidades sujetas a confirmación por el equipo
+      de certificación.
 programaUniversidades:
   titulo:
     es: Programa especial para estudiantes de ciencias de la salud
