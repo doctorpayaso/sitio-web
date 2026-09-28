@@ -10,7 +10,9 @@ hero:
   antetitulo:
     es: Clown care certificado · CDMX · Monterrey · Veracruz · Toluca
   titulo:
-    es: Hay medicina que no se receta
+    es: |-
+      Hay medicina
+      que no se receta.
   palabraDestacada:
     es: receta
   entrada:
