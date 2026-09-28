@@ -60,7 +60,7 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
     <section class="pad-s">
       <div class="wrap">
         <h2 class="h2" style="margin-bottom:32px;max-width:20ch" set:html={tr(p.poderDelEncuentro.titulo, idioma)} />
-        <div class="grid g4">
+        <div class="grid g4 ejes">
           {(p.poderDelEncuentro?.ejes ?? []).map((e: any) => (
             <div class="card">
               <div class="icon-chip" style={fondoTenue(e.color)} aria-hidden={e.iconoImagen ? undefined : 'true'}>
@@ -74,9 +74,11 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
           ))}
         </div>
         {t(p.poderDelEncuentro?.nota, idioma) && (
-          <p class="muted" style="margin-top:34px;padding-top:24px;border-top:1px solid rgba(19,46,42,.12);max-width:70ch">
-            {t(p.poderDelEncuentro.nota, idioma)}
-          </p>
+          <div style="margin-top:34px;padding-top:24px;border-top:1px solid rgba(19,46,42,.12)">
+            <p class="muted" style="margin:0;max-width:68ch">
+              {t(p.poderDelEncuentro.nota, idioma)}
+            </p>
+          </div>
         )}
       </div>
     </section>
@@ -110,7 +112,7 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
   <section class="pad-s">
     <div class="wrap">
       <h2 class="h2" style="margin-bottom:32px;max-width:20ch" set:html={tr(p.acompanamos?.titulo, idioma)} />
-      <div class="grid g3">
+      <div class="grid g2">
         {(p.acompanamos?.grupos ?? []).map((g: any) => (
           <div class="card">
             <div class="icon-chip" style={fondoTenue(g.color)} aria-hidden={g.iconoImagen ? undefined : 'true'}>
@@ -190,4 +192,13 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       });
     });
   </script>
+
+<style>
+  /* Las tarjetas de los ejes bajan a una columna en teléfono. El .g4 compartido
+     se queda en dos porque otras páginas lo usan para botones cortos —los
+     informes anuales, por ejemplo—, donde dos columnas sí funcionan. */
+  @media (max-width: 620px) {
+    .ejes { grid-template-columns: 1fr; }
+  }
+</style>
 </Base>
