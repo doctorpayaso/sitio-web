@@ -106,7 +106,7 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
   <section class="pad-s">
     <div class="wrap">
       <h2 class="h2" style="margin-bottom:30px" set:html={tr(p.requisitos?.titulo, idioma)} />
-      <div class="grid g4">
+      <div class="grid g3 req-grid">
         {(p.requisitos?.lista ?? []).map((r: any) => (
           <div class="card">
             <div class="icon-chip" style={fondoTenue(r.color)} aria-hidden={r.iconoImagen ? undefined : 'true'}>
@@ -117,6 +117,9 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
           </div>
         ))}
       </div>
+      {t(p.requisitos?.frase, idioma) && (
+        <p class="frase-cierre">{t(p.requisitos.frase, idioma)}</p>
+      )}
     </div>
   </section>
 
@@ -151,6 +154,27 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
     </div>
   </section>
 
+  <!-- TU CAMINO -->
+  {t(p.recorrido?.titulo, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <h2 class="h2" style="max-width:24ch" set:html={tr(p.recorrido.titulo, idioma)} />
+        {t(p.recorrido?.entrada, idioma) && (
+          <p class="lead" style="margin-top:14px;max-width:56ch">{t(p.recorrido.entrada, idioma)}</p>
+        )}
+        <ol class="camino">
+          {(p.recorrido?.pasos ?? []).map((paso: any, i: number) => (
+            <li>
+              <span class="camino-n">{i + 1}</span>
+              <h4>{t(paso.titulo, idioma)}</h4>
+              <p>{t(paso.descripcion, idioma)}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
   <!-- GENERACIONES -->
   <section class="pad-s" style="background:var(--papel);border-top:1px solid var(--tinta-12);border-bottom:1px solid var(--tinta-12)">
     <div class="wrap">
@@ -165,12 +189,12 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
       </div>
 
       {listaGeneraciones.length > 0 ? (
-        <div class="grid g4">
+        <div class="grid g4 gen-grid">
           {listaGeneraciones.map((g: any, i: number) => {
             const sede = sedePorId(g.sede);
             const e = ESTADO[g.estado] ?? ESTADO.lista_espera;
             return (
-              <article class="sede">
+              <article class:list={['sede', g.estado === 'abiertas' && 'sede-destacada']}>
                 <div
                   class:list={['sede-top', DEGRADADOS[i % 4], 'dots-bg', imagenPublicable(sede?.imagen) && 'filled']}
                 >
@@ -208,6 +232,12 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
         </div>
       ) : (
         <p class="muted">{idioma === 'en' ? 'Dates coming soon.' : 'Próximas fechas por confirmar.'}</p>
+      )}
+
+      {t(p.generaciones?.descargo, idioma) && (
+        <p class="small muted" style="margin-top:20px;max-width:64ch">
+          {t(p.generaciones.descargo, idioma)}
+        </p>
       )}
 
       {t(p.programaUniversidades?.titulo, idioma) && (
@@ -319,4 +349,66 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
       </div>
     </div>
   </section>
+
+<style>
+  /* Frase que cierra los requisitos. Centrada porque remata una retícula de
+     ancho completo, no una columna. */
+  .frase-cierre {
+    margin: 40px auto 0; max-width: 34ch; text-align: center;
+    font-family: var(--display); font-size: clamp(1.3rem, 2.4vw, 1.85rem);
+    line-height: 1.25; letter-spacing: -0.02em; color: var(--tinta-60);
+  }
+
+  /* El camino: cinco pasos en fila, unidos por una línea. En teléfono se
+     endereza y se vuelve una línea de tiempo vertical. */
+  .camino {
+    list-style: none; margin: 44px 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+  }
+  .camino li { position: relative; padding-top: 58px; }
+  .camino li::before {
+    content: ''; position: absolute; top: 19px; left: -12px; right: -12px;
+    height: 2px; background: var(--tinta-12);
+  }
+  .camino li:first-child::before { left: 20px; }
+  .camino li:last-child::before { right: calc(100% - 20px); }
+  .camino-n {
+    position: absolute; top: 0; left: 0; z-index: 1;
+    width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--coral); color: #fff;
+    font-family: var(--display); font-size: 1.15rem; font-weight: 600;
+  }
+  .camino h4 { font-size: 1.12rem; margin-bottom: 7px; }
+  .camino p { color: var(--tinta-60); font-size: 0.95rem; }
+
+  /* La generación con inscripciones abiertas se distingue del resto: el color
+     de la etiqueta solo no alcanzaba. */
+  .sede-destacada {
+    border-color: var(--coral);
+    box-shadow: 0 0 0 1px var(--coral), 0 14px 34px rgba(244, 98, 98, 0.16);
+  }
+
+  @media (max-width: 1000px) {
+    .camino { grid-template-columns: repeat(3, 1fr); row-gap: 34px; }
+    .camino li:nth-child(3)::before { right: calc(100% - 20px); }
+    .camino li:nth-child(4)::before { left: 20px; }
+  }
+  @media (max-width: 860px) {
+    /* Una columna: las tarjetas de requisitos y de generaciones quedan
+       ilegibles a dos columnas en teléfono. El .g4 compartido se queda en dos
+       porque otras páginas lo usan para botones cortos. */
+    .req-grid, .gen-grid { grid-template-columns: 1fr; }
+    .camino { grid-template-columns: 1fr; gap: 0; }
+    .camino li { padding: 0 0 30px 58px; }
+    .camino li::before,
+    .camino li:first-child::before,
+    .camino li:nth-child(3)::before,
+    .camino li:nth-child(4)::before {
+      top: 44px; bottom: -6px; left: 19px; right: auto;
+      width: 2px; height: auto;
+    }
+    .camino li:last-child::before { display: none; }
+  }
+</style>
 </Base>
