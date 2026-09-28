@@ -751,42 +751,12 @@ export default config({
               label: 'Requisitos',
               itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Requisito',
             }),
+            frase: texto('Frase de cierre', {
+              variasLineas: true,
+              description: 'Se muestra destacada bajo las tarjetas. Déjala vacía si no quieres frase.',
+            }),
           },
           { label: 'Lo que sí necesitas' },
-        ),
-        costo: fields.conditional(
-          fields.checkbox({
-            label: '¿Ya se puede publicar el costo?',
-            defaultValue: false,
-            description:
-              'Mientras esté desmarcado, el sitio dice «monto por confirmar» en lugar de dejar el espacio vacío. Es la duda número uno del candidato.',
-          }),
-          {
-            false: fields.object({ textoProvisional: texto('Texto provisional') }),
-            true: fields.object({
-              monto: fields.integer({ label: 'Monto' }),
-              moneda: fields.select({
-                label: 'Moneda',
-                options: [
-                  { label: 'Pesos mexicanos', value: 'MXN' },
-                  { label: 'Dólares', value: 'USD' },
-                ],
-                defaultValue: 'MXN',
-              }),
-              queIncluye: parrafo('Qué incluye'),
-              duracion: texto('Duración de la formación'),
-            }),
-          },
-        ),
-        becas: fields.conditional(
-          fields.checkbox({ label: '¿Existe esquema de becas?', defaultValue: false }),
-          {
-            false: fields.empty(),
-            true: fields.object({
-              descripcion: parrafo('Cómo funcionan'),
-              comoSolicitar: parrafo('Cómo se solicita'),
-            }),
-          },
         ),
         modulosIntro: fields.object(
           {
@@ -803,11 +773,23 @@ export default config({
             description: 'Los seis módulos se editan en «Módulos de certificación».',
           },
         ),
+        recorrido: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            entrada: parrafo('Entrada'),
+            pasos: listaDePasos('Pasos del camino'),
+          },
+          { label: 'Tu camino para convertirte en Doctor Payaso' },
+        ),
         generaciones: fields.object(
           {
             antetitulo: texto('Antetítulo'),
             titulo: texto('Titular', { variasLineas: true }),
             nota: parrafo('Nota al costado'),
+            descargo: parrafo('Descargo bajo las tarjetas', {
+              description:
+                'Deslinde sobre fechas y modalidades. Protege a la A.C. si una generación se mueve. No lo quites sin consultarlo con el Comité.',
+            }),
           },
           {
             label: 'Bloque de generaciones',
