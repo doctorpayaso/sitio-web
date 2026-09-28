@@ -56,31 +56,42 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
     </section>
   )}
 
-  <script>
-    // Al pulsar la portada se inserta el reproductor. Antes de ese clic no se
-    // carga nada de YouTube: ninguna visita al sitio envía datos a Google sin
-    // que el visitante lo haya decidido.
-    document.querySelectorAll<HTMLButtonElement>('.video-fachada').forEach((fachada) => {
-      fachada.addEventListener('click', () => {
-        const id = fachada.dataset.video;
-        if (!id) return;
-        const marco = document.createElement('iframe');
-        marco.className = 'video-marco';
-        // Dominio sin cookies de seguimiento.
-        marco.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-        marco.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
-        marco.allowFullscreen = true;
-        marco.title = fachada.getAttribute('aria-label') ?? 'Video';
-        fachada.replaceChildren(marco);
-      });
-    });
-  </script>
+  {t(p.poderDelEncuentro?.titulo, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <h2 class="h2" style="margin-bottom:32px;max-width:20ch" set:html={tr(p.poderDelEncuentro.titulo, idioma)} />
+        <div class="grid g4">
+          {(p.poderDelEncuentro?.ejes ?? []).map((e: any) => (
+            <div class="card">
+              <div class="icon-chip" style={fondoTenue(e.color)} aria-hidden={e.iconoImagen ? undefined : 'true'}>
+                {e.iconoImagen
+                  ? <img src={rutaDeImagen(e.iconoImagen)} alt="" />
+                  : e.icono}
+              </div>
+              <h4>{t(e.titulo, idioma)}</h4>
+              <p>{t(e.descripcion, idioma)}</p>
+            </div>
+          ))}
+        </div>
+        {t(p.poderDelEncuentro?.nota, idioma) && (
+          <p class="muted" style="margin-top:34px;padding-top:24px;border-top:1px solid rgba(19,46,42,.12);max-width:70ch">
+            {t(p.poderDelEncuentro.nota, idioma)}
+          </p>
+        )}
+      </div>
+    </section>
+  )}
 
   <section class="pad">
     <div class="wrap grid g2" style="gap:clamp(32px,5vw,64px)">
       <div>
         <h2 class="h2" style="margin-bottom:18px" set:html={tr(p.anatomia?.titulo, idioma)} />
         <p class="lead" set:html={tr(p.anatomia?.entrada, idioma)} />
+        {t(p.anatomia?.frase, idioma) && (
+          <blockquote style="margin:30px 0 0;padding-left:20px;border-left:3px solid var(--coral);font-family:var(--display);font-size:clamp(1.25rem,2.2vw,1.7rem);line-height:1.28;letter-spacing:-.02em;color:var(--tinta-60);max-width:22ch">
+            {t(p.anatomia.frase, idioma)}
+          </blockquote>
+        )}
       </div>
       <div>
         {(p.anatomia?.pasos ?? []).map((paso: any, i: number) => (
@@ -115,6 +126,34 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
     </div>
   </section>
 
+  {t(p.visitasVirtuales?.titulo, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <div
+          class="card split3"
+          style="display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center;padding:34px;background:linear-gradient(135deg,rgba(73,182,166,.14),rgba(255,162,49,.14));border-color:transparent"
+        >
+          <div
+            class="icon-chip"
+            style="background:var(--menta);color:#fff;width:58px;height:58px;border-radius:50%"
+            aria-hidden="true"
+          >
+            💻
+          </div>
+          <div>
+            <h3 class="h3" style="margin-bottom:6px">{t(p.visitasVirtuales.titulo, idioma)}</h3>
+            <p class="muted small">{t(p.visitasVirtuales.descripcion, idioma)}</p>
+          </div>
+          {t(p.visitasVirtuales.boton?.texto, idioma) && (
+            <a href={p.visitasVirtuales.boton.destino} class="btn btn-teal" style="flex:none">
+              {t(p.visitasVirtuales.boton.texto, idioma)}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
   <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
     <div class="wrap">
       <div class="cta-final" style="background:var(--teal)">
@@ -132,4 +171,23 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       </div>
     </div>
   </section>
+  <script>
+    // Al pulsar la portada se inserta el reproductor. Antes de ese clic no se
+    // carga nada de YouTube: ninguna visita al sitio envía datos a Google sin
+    // que el visitante lo haya decidido.
+    document.querySelectorAll<HTMLButtonElement>('.video-fachada').forEach((fachada) => {
+      fachada.addEventListener('click', () => {
+        const id = fachada.dataset.video;
+        if (!id) return;
+        const marco = document.createElement('iframe');
+        marco.className = 'video-marco';
+        // Dominio sin cookies de seguimiento.
+        marco.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        marco.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+        marco.allowFullscreen = true;
+        marco.title = fachada.getAttribute('aria-label') ?? 'Video';
+        fachada.replaceChildren(marco);
+      });
+    });
+  </script>
 </Base>
