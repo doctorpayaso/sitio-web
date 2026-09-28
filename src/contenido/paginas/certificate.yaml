@@ -144,26 +144,25 @@ generaciones:
     es: Calendario 2027
   titulo:
     es: Próximas generaciones
-  nota:
-    es: >-
-      Cada sede abre una sola generación al año. Los lugares son limitados por
-      la capacidad de práctica hospitalaria.
   descargo:
     es: >-
       Fechas, disponibilidad y modalidades sujetas a confirmación por el equipo
       de certificación.
-programaUniversidades:
+formacionVirtual:
   titulo:
-    es: Programa especial para estudiantes de ciencias de la salud
+    es: Formación virtual
   cuerpo:
     es: >-
-      En alianza con facultades de medicina. La 2ª generación de Doctoras y
-      Doctores Payaso de la Facultad de Medicina de la UNAM inició en enero de
-      2026.
+      Aprende desde donde estés y descubre las posibilidades de participar en
+      nuestro voluntariado a distancia.
+
+
+      La práctica y la integración a las actividades se coordinan según la
+      modalidad y la disponibilidad de cada sede.
   boton:
     texto:
-      es: Info para universidades
-    destino: /alianzas
+      es: Conoce el programa virtual
+    destino: '#solicitud'
 preguntas:
   titulo:
     es: Preguntas que todos hacen
