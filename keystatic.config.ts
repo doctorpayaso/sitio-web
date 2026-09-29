@@ -396,6 +396,13 @@ export default config({
           description: 'Se muestra tal cual. Es la métrica más humana que tenemos.',
         }),
 
+        pendientesDeValidar: fields.multiselect({
+          label: 'Cifras pendientes de validar',
+          options: OPCIONES_CIFRAS,
+          description:
+            'Las cifras marcadas aquí se muestran como un guión (—) en todo el sitio y se excluyen de los datos estructurados que leen los buscadores. Sirve para no publicar un número que Dirección todavía no confirma. Al quitar la marca, el número aparece solo.',
+        }),
+
         notaMetodologica: parrafo('Nota metodológica', {
           description:
             'Cómo se cuenta cada cifra. Es lo que se responde cuando una empresa pide el respaldo del dato.',
@@ -961,10 +968,39 @@ export default config({
           description: `Aprobado por Dirección: «Los números antes que las fotos.» ${NOTA_SALTOS}`,
         }),
         entrada: parrafo('Párrafo de entrada'),
-        cifrasQueSeMuestran: fields.multiselect({
-          label: 'Cifras que se muestran',
-          options: OPCIONES_CIFRAS,
-        }),
+        comunidad: fields.object(
+          {
+            titulo: texto('Titular del grupo'),
+            cifras: fields.multiselect({ label: 'Cifras', options: OPCIONES_CIFRAS }),
+          },
+          {
+            label: 'Cifras — nuestra comunidad',
+            description:
+              'Las cifras de personas. Van separadas del alcance a propósito: certificados y activos son indicadores distintos y juntos en una sola fila se leían como una contradicción.',
+          },
+        ),
+        alcance: fields.object(
+          {
+            titulo: texto('Titular del grupo'),
+            cifras: fields.multiselect({ label: 'Cifras', options: OPCIONES_CIFRAS }),
+          },
+          { label: 'Cifras — nuestro alcance' },
+        ),
+        medicion: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            criterios: fields.array(tarjetaIcono('Criterio'), {
+              label: 'Criterios',
+              itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Criterio',
+            }),
+            frase: texto('Frase de cierre', { variasLineas: true }),
+          },
+          {
+            label: '¿Cómo medimos nuestro trabajo?',
+            description:
+              'Explica de dónde salen las cifras de arriba. Es lo que responde a quien pregunta si los números son confiables.',
+          },
+        ),
         informes: fields.object(
           { titulo: texto('Titular'), entrada: parrafo('Entrada') },
           {
@@ -972,23 +1008,27 @@ export default config({
             description: 'Los archivos se cargan en «Informes anuales».',
           },
         ),
-        gobernanza: fields.array(
-          fields.object({
-            iconoImagen: fields.image({
-              label: 'Icono propio',
-              directory: 'src/assets/iconos',
-              publicPath: '/src/assets/iconos/',
-              description: 'SVG o PNG con fondo transparente. Sustituye al emoji.',
-            }),
-            icono: fields.text({ label: 'Emoji (alternativa)', description: 'Ej. 📋' }),
-            color: fields.select({ label: 'Color de fondo', options: OPCIONES_COLOR, defaultValue: 'coral' }),
-            titulo: texto('Título'),
-            cuerpo: parrafo('Cuerpo'),
-          }),
+        gobernanza: fields.object(
           {
-            label: 'Bloques de gobernanza',
-            itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
+            titulo: texto('Titular', { variasLineas: true }),
+            frase: texto('Frase destacada', { variasLineas: true }),
+            cuerpo: parrafo('Cuerpo'),
+            boton: boton('Botón'),
           },
+          {
+            label: 'Gobernanza y responsabilidad',
+            description:
+              'El botón aparece solo si tiene texto y destino. Déjalo vacío mientras no exista la página a la que apunta.',
+          },
+        ),
+        cierre: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            cuerpo: parrafo('Cuerpo'),
+            frase: texto('Frase de cierre', { variasLineas: true }),
+            boton: boton('Botón'),
+          },
+          { label: 'Cierre de la página' },
         ),
       },
     }),
