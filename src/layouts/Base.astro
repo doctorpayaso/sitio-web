@@ -54,7 +54,11 @@ const datosEstructurados = {
   telephone: configuracion.contacto?.telefono,
   areaServed: { '@type': 'Country', name: 'México' },
   sameAs: Object.values(configuracion.redes ?? {}).filter(Boolean),
-  ...(cifras.voluntariosCertificados && {
+  // Una cifra marcada como pendiente de validar no se publica tampoco aquí: si
+  // no la enseñamos en pantalla, no tiene por qué leerla un buscador.
+  ...(cifras.voluntariosCertificados
+    && !(cifras.pendientesDeValidar ?? []).includes('voluntariosCertificados')
+    && {
     member: {
       '@type': 'QuantitativeValue',
       value: cifras.voluntariosCertificados,
