@@ -21,22 +21,43 @@ const TENUE: Record<string, string> = {
 const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
 
 const ETIQUETAS: Record<string, { es: string; en: string }> = {
-  voluntariosCertificados: { es: 'Voluntarios certificados', en: 'Certified volunteers' },
-  voluntariosActivos: { es: 'Voluntarios certificados activos', en: 'Active certified volunteers' },
-  visitasHospitalarias: { es: 'Visitas a hospitales', en: 'Hospital visits' },
-  personasBeneficiadas: { es: 'Personas beneficiadas', en: 'People reached' },
+  voluntariosCertificados: { es: 'Personas certificadas desde nuestra fundación', en: 'People certified since our founding' },
+  voluntariosActivos: { es: 'Voluntarios activos a la fecha de corte', en: 'Active volunteers as of the cut-off date' },
+  visitasHospitalarias: { es: 'Visitas hospitalarias registradas', en: 'Hospital visits recorded' },
+  visitasVirtuales: { es: 'Visitas virtuales realizadas', en: 'Virtual visits completed' },
+  horasDeVisita: { es: 'Horas de visita acumuladas', en: 'Visit hours accumulated' },
+  personasBeneficiadas: { es: 'Personas beneficiadas registradas', en: 'People reached, recorded' },
   ciudadesConOperacion: { es: 'Ciudades con operación permanente', en: 'Cities with permanent operations' },
   informesPublicados: { es: 'Informes anuales publicados', en: 'Annual reports published' },
   rangoDeEdad: { es: 'Rango de edad de pacientes acompañados', en: 'Age range of patients accompanied' },
 };
 
-const franja = (p.cifrasQueSeMuestran ?? [])
-  .map((clave: string) => ({
-    clave,
-    valor: (cifras as any)[clave],
-    etiqueta: ETIQUETAS[clave]?.[idioma as 'es'] ?? ETIQUETAS[clave]?.es ?? clave,
-  }))
-  .filter((c: any) => c.valor !== undefined && c.valor !== null && c.valor !== '');
+const PENDIENTES: string[] = (cifras as any).pendientesDeValidar ?? [];
+const SIN_MAS = ['rangoDeEdad', 'ciudadesConOperacion', 'informesPublicados'];
+
+/**
+ * Arma un grupo de cifras.
+ *
+ * A diferencia de la portada, aquí NO se descarta la cifra que falta: se
+ * muestra con un guión. Ocultarla haría creer que no la medimos; el guión dice
+ * la verdad, que es que la medimos y todavía no está validada.
+ */
+function grupo(claves: string[] = []) {
+  return claves.map((clave) => {
+    const pendiente = PENDIENTES.includes(clave);
+    const valor = (cifras as any)[clave];
+    return {
+      clave,
+      pendiente: pendiente || valor === undefined || valor === null || valor === '',
+      valor,
+      etiqueta: ETIQUETAS[clave]?.[idioma as 'es'] ?? ETIQUETAS[clave]?.es ?? clave,
+    };
+  });
+}
+
+const comunidad = grupo(p.comunidad?.cifras);
+const alcance = grupo(p.alcance?.cifras);
+const hayCifras = comunidad.length > 0 || alcance.length > 0;
 ---
 
 <Base seo={p.seo} ruta="institucional">
@@ -50,37 +71,83 @@ const franja = (p.cifrasQueSeMuestran ?? [])
     </div>
   </section>
 
-  {franja.length > 0 && (
+  {hayCifras && (
     <section class="pad-s">
       <div class="wrap">
-        <div class="proof" style="border-radius:var(--r-xl);padding:44px 34px">
-          <div class="proof-grid" style="max-width:100%">
-            {franja.map((c: any) => (
-              <div class="proof-item">
-                <div class="n">
-                  {c.clave === 'rangoDeEdad' ? String(c.valor) : formatearNumero(c.valor, idioma)}
-                  {c.clave !== 'rangoDeEdad' && c.clave !== 'ciudadesConOperacion' && c.clave !== 'informesPublicados' && <em>+</em>}
+        {comunidad.length > 0 && (
+          <div class="proof grupo-cifras" style="border-radius:var(--r-xl);padding:38px 34px">
+            <span class="eyebrow eyebrow-claro">{t(p.comunidad?.titulo, idioma)}</span>
+            <div class="proof-grid cifras-2">
+              {comunidad.map((c: any) => (
+                <div class="proof-item">
+                  <div class="n">
+                    {c.pendiente
+                      ? <span class="pendiente" title="Cifra pendiente de validación">—</span>
+                      : <>{c.clave === 'rangoDeEdad' ? String(c.valor) : formatearNumero(c.valor, idioma)}{!SIN_MAS.includes(c.clave) && <em>+</em>}</>}
+                  </div>
+                  <div class="t">{c.etiqueta}</div>
                 </div>
-                <div class="t">{c.etiqueta}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {t(cifras.notaMetodologica, idioma) && (
+          <p class="small muted" style="margin-top:14px;max-width:80ch">{t(cifras.notaMetodologica, idioma)}</p>
+        )}
+
+        {alcance.length > 0 && (
+          <div class="proof grupo-cifras" style="border-radius:var(--r-xl);padding:38px 34px;margin-top:22px">
+            <span class="eyebrow eyebrow-claro">{t(p.alcance?.titulo, idioma)}</span>
+            <div class="proof-grid">
+              {alcance.map((c: any) => (
+                <div class="proof-item">
+                  <div class="n">
+                    {c.pendiente
+                      ? <span class="pendiente" title="Cifra pendiente de validación">—</span>
+                      : <>{c.clave === 'rangoDeEdad' ? String(c.valor) : formatearNumero(c.valor, idioma)}{!SIN_MAS.includes(c.clave) && <em>+</em>}</>}
+                  </div>
+                  <div class="t">{c.etiqueta}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {cifras.fechaDeCorte && (
-          <p class="small muted" style="margin-top:18px">
+          <p class="small muted" style="margin-top:14px">
             {idioma === 'en' ? 'Figures as of' : 'Cifras a'}{' '}
             {formatearFecha(cifras.fechaDeCorte, idioma, { month: 'long', year: 'numeric' })}
             {cifras.aprobadoPor ? ` · ${idioma === 'en' ? 'Approved by' : 'Aprobado por'} ${cifras.aprobadoPor}` : ''}
           </p>
         )}
-        {t(cifras.notaMetodologica, idioma) && (
-          <p class="small muted" style="margin-top:10px;max-width:80ch">{t(cifras.notaMetodologica, idioma)}</p>
+      </div>
+    </section>
+  )}
+
+  {t(p.medicion?.titulo, idioma) && (
+    <section class="pad-s">
+      <div class="wrap">
+        <h2 class="h2" style="margin-bottom:30px;max-width:22ch" set:html={tr(p.medicion.titulo, idioma)} />
+        <div class="grid g3 med-grid">
+          {(p.medicion?.criterios ?? []).map((c: any) => (
+            <div class="card">
+              <div class="icon-chip" style={fondoTenue(c.color)} aria-hidden={c.iconoImagen ? undefined : 'true'}>
+                {c.iconoImagen ? <img src={rutaDeImagen(c.iconoImagen)} alt="" /> : c.icono}
+              </div>
+              <h4>{t(c.titulo, idioma)}</h4>
+              <p>{t(c.descripcion, idioma)}</p>
+            </div>
+          ))}
+        </div>
+        {t(p.medicion?.frase, idioma) && (
+          <p class="frase-cierre">{t(p.medicion.frase, idioma)}</p>
         )}
       </div>
     </section>
   )}
 
-  <section class="pad">
+  <section class="pad-s">
     <div class="wrap">
       <h2 class="h2" style="margin-bottom:8px" set:html={tr(p.informes?.titulo, idioma)} />
       <p class="lead" style="margin-bottom:32px" set:html={tr(p.informes?.entrada, idioma)} />
@@ -108,17 +175,85 @@ const franja = (p.cifrasQueSeMuestran ?? [])
     </div>
   </section>
 
-  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
-    <div class="wrap grid g3">
-      {(p.gobernanza ?? []).map((b: any) => (
-        <div class="card">
-          <div class="icon-chip" style={fondoTenue(b.color)} aria-hidden={b.iconoImagen ? undefined : 'true'}>
-            {b.iconoImagen ? <img src={rutaDeImagen(b.iconoImagen)} alt="" /> : b.icono}
-          </div>
-          <h4>{t(b.titulo, idioma)}</h4>
-          <p>{t(b.cuerpo, idioma)}</p>
+  {t(p.gobernanza?.titulo, idioma) && (
+    <section class="pad-s">
+      <div class="wrap grid g2" style="gap:clamp(32px,5vw,64px);align-items:start">
+        <div>
+          <h2 class="h2" set:html={tr(p.gobernanza.titulo, idioma)} />
+          {t(p.gobernanza?.frase, idioma) && (
+            <p class="lead" style="margin-top:14px">{t(p.gobernanza.frase, idioma)}</p>
+          )}
         </div>
-      ))}
-    </div>
-  </section>
+        <div>
+          <p set:html={tr(p.gobernanza?.cuerpo, idioma)} />
+          {t(p.gobernanza?.boton?.texto, idioma) && p.gobernanza.boton.destino && (
+            <div style="margin-top:26px">
+              <a href={p.gobernanza.boton.destino} class="btn btn-ghost">{t(p.gobernanza.boton.texto, idioma)}</a>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {t(p.cierre?.titulo, idioma) && (
+    <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+      <div class="wrap">
+        <div class="cta-final" style="background:var(--teal)">
+          <span class="confetti" style="width:110px;height:110px;background:#fff;left:8%;top:16%;opacity:.12"></span>
+          <span class="confetti" style="width:60px;height:60px;background:var(--mango);right:12%;bottom:18%;opacity:.6"></span>
+          <div style="position:relative">
+            <h2 class="h1" style="color:#fff" set:html={tr(p.cierre.titulo, idioma)} />
+            <p style="color:rgba(255,255,255,.8)" set:html={tr(p.cierre?.cuerpo, idioma)} />
+            {t(p.cierre?.frase, idioma) && (
+              <p style="color:#fff;font-family:var(--display);font-size:clamp(1.15rem,2vw,1.5rem);margin-top:18px">
+                {t(p.cierre.frase, idioma)}
+              </p>
+            )}
+            {t(p.cierre?.boton?.texto, idioma) && (
+              <div style="margin-top:30px">
+                <a href={p.cierre.boton.destino} class="btn btn-white">{t(p.cierre.boton.texto, idioma)}</a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+<style>
+  /* Cada grupo de cifras lleva su propio rótulo: sin él, certificados y activos
+     se leían como si fueran el mismo tipo de dato. */
+  .eyebrow-claro {
+    color: rgba(255, 247, 240, 0.62);
+    display: block;
+    margin-bottom: 22px;
+  }
+  /* El grupo de comunidad son dos cifras, pero conserva la rejilla de cuatro:
+     así quedan alineadas en columna con las cuatro del alcance y las dos
+     bandas se leen como un mismo sistema, no como dos bloques sueltos. */
+  .cifras-2 { grid-template-columns: repeat(4, 1fr); }
+  /* Una cifra que todavía no valida Dirección. El guión dice que la medimos y
+     que aún no está confirmada; ocultarla diría que no la medimos. */
+  .pendiente { color: rgba(255, 247, 240, 0.45); }
+
+  .frase-cierre {
+    margin: 40px auto 0; max-width: 34ch; text-align: center;
+    font-family: var(--display); font-size: clamp(1.3rem, 2.4vw, 1.85rem);
+    line-height: 1.25; letter-spacing: -0.02em; color: var(--tinta-60);
+  }
+
+  @media (max-width: 860px) {
+    /* Los criterios bajan a una columna: el .g3 compartido ya lo hace, pero se
+       deja explícito por si cambia. */
+    .med-grid { grid-template-columns: 1fr; }
+    .cifras-2 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 1000px) {
+    .cifras-2 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .cifras-2 { grid-template-columns: 1fr; }
+  }
+</style>
 </Base>
