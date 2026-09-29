@@ -20,11 +20,66 @@ entrada:
 
 
     **El amor nos mueve. La integridad nos guía.**
-cifrasQueSeMuestran:
-  - voluntariosActivos
-  - ciudadesConOperacion
-  - informesPublicados
-  - rangoDeEdad
+comunidad:
+  titulo:
+    es: Nuestra comunidad
+  cifras:
+    - voluntariosCertificados
+    - voluntariosActivos
+alcance:
+  titulo:
+    es: Nuestro alcance
+  cifras:
+    - visitasHospitalarias
+    - visitasVirtuales
+    - horasDeVisita
+    - personasBeneficiadas
+medicion:
+  titulo:
+    es: ¿Cómo medimos nuestro trabajo?
+  criterios:
+    - icono: 🎓
+      color: vino
+      titulo:
+        es: Formación
+      descripcion:
+        es: >-
+          Registramos el número de personas que concluyen satisfactoriamente
+          nuestro programa de certificación.
+    - icono: 🤝
+      color: coral
+      titulo:
+        es: Voluntariado
+      descripcion:
+        es: >-
+          Damos seguimiento a la participación de nuestra comunidad en las
+          actividades de acompañamiento.
+    - icono: 🏥
+      color: azul
+      titulo:
+        es: Visitas
+      descripcion:
+        es: >-
+          Documentamos las actividades realizadas, su modalidad, sede y
+          duración.
+    - icono: 🌎
+      color: teal
+      titulo:
+        es: Alcance
+      descripcion:
+        es: >-
+          Registramos el número de personas acompañadas conforme a los criterios
+          establecidos para cada programa.
+    - icono: 📊
+      color: mango
+      titulo:
+        es: Recursos
+      descripcion:
+        es: >-
+          Compartimos información sobre los recursos que hacen posible nuestra
+          operación y su aplicación.
+  frase:
+    es: Medir nos ayuda a aprender, mejorar y llegar más lejos.
 informes:
   titulo:
     es: Informes anuales
@@ -38,44 +93,32 @@ informes:
       encontrarás información sobre actividades, alcance, voluntariado y
       recursos.
 gobernanza:
-  - icono: 📋
-    color: mango
-    titulo:
-      es: Informes anuales
-    cuerpo:
-      es: >-
-        La transparencia es una forma de cuidar la confianza.
+  titulo:
+    es: Gobernanza y responsabilidad
+  frase:
+    es: La integridad se demuestra con acciones.
+  cuerpo:
+    es: >-
+      Nuestra operación se guía por valores, lineamientos institucionales y
+      responsabilidades definidas.
 
 
-        Compartimos nuestros informes institucionales para que voluntarios,
-        donantes, aliados y comunidad conozcan nuestro trabajo.
-
-
-        En ellos encontrarás información sobre actividades, alcance,
-        voluntariado y recursos.
-  - icono: ⚖️
-    color: teal
-    titulo:
-      es: Gobernanza y responsabilidad
-    cuerpo:
-      es: >-
-        La integridad se demuestra con acciones.
-
-
-        Nuestra operación se guía por valores, lineamientos institucionales y
-        responsabilidades definidas.
-
-
-        Promovemos la rendición de cuentas, el uso responsable de los recursos y
-        el respeto a las personas que forman parte de nuestra comunidad.
-  - icono: 📊
-    color: azul
-    titulo:
-      es: Gracias por hacer posible cada encuentro
-    cuerpo:
-      es: >-
-        Cada hora de voluntariado, cada donativo y cada alianza forman parte de
-        una historia colectiva.
-
-
-        Tu participación también cuenta
+      Promovemos la rendición de cuentas, el uso responsable de los recursos y
+      el respeto a las personas que forman parte de nuestra comunidad.
+  boton:
+    texto:
+      es: ''
+    destino: ''
+cierre:
+  titulo:
+    es: Gracias por hacer posible cada encuentro.
+  cuerpo:
+    es: >-
+      Cada hora de voluntariado, cada donativo y cada alianza forman parte de
+      una historia colectiva.
+  frase:
+    es: Tu participación también cuenta.
+  boton:
+    texto:
+      es: Quiero sumarme
+    destino: /certificate
