@@ -8,6 +8,8 @@ personasBeneficiadas: 299537
 ciudadesConOperacion: 4
 informesPublicados: 11
 rangoDeEdad: 0 – 114
+pendientesDeValidar:
+  - voluntariosCertificados
 notaMetodologica:
   es: >-
     Voluntario certificado: persona que completó los seis módulos de formación
