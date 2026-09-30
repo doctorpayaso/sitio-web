@@ -1,5 +1,9 @@
 ---
 // Contacto — enlazada desde el pie de página.
+//
+// La página ofrece primero cuatro rutas con acción directa y deja los datos de
+// contacto al final. Si el correo va arriba, la mayoría escribe un mensaje
+// genérico en vez de tomar el camino que le corresponde.
 import Base from '../layouts/Base.astro';
 import { t, tr, idiomaDe } from '../lib/idioma';
 import { paginas, configuracion, sedes } from '../lib/contenido';
@@ -7,50 +11,133 @@ import { paginas, configuracion, sedes } from '../lib/contenido';
 const p = paginas.contacto;
 const idioma = idiomaDe(Astro);
 const c = configuracion.contacto ?? {};
+const listaSedes = sedes();
+
+/** Un destino que sale del sitio se abre en pestaña nueva. */
+const esExterno = (destino?: string) => /^https?:/i.test(destino ?? '');
 ---
 
 <Base seo={p.seo} ruta="emocional">
   <section class="pad-s" style="padding-top:clamp(40px,5vw,72px)">
     <div class="wrap-narrow">
-      <h1 class="h1" style="margin-bottom:18px" set:html={tr(p.titulo, idioma)} />
+      <h1 class="h1" style="margin-bottom:18px;max-width:16ch" set:html={tr(p.titulo, idioma)} />
       <p class="lead" set:html={tr(p.entrada, idioma)} />
+      {t(p.frase, idioma) && <p class="frase-hero">{t(p.frase, idioma)}</p>}
+    </div>
+  </section>
 
-      <div style="margin-top:38px;display:flex;flex-direction:column;gap:14px">
-        {c.correo && <a href={`mailto:${c.correo}`} class="report"><span class="ic" aria-hidden="true">✉</span> {c.correo}</a>}
-        {c.telefono && <a href={`tel:${String(c.telefono).replace(/\s/g, '')}`} class="report"><span class="ic" aria-hidden="true">☎</span> {c.telefono}</a>}
+  {(p.bloques ?? []).length > 0 && (
+    <section class="pad-s">
+      <div class="wrap-narrow">
+        <div class="grid g2 rutas">
+          {p.bloques.map((b: any) => (
+            <div class="card ruta">
+              <h4>{t(b.titulo, idioma)}</h4>
+              <p>{t(b.descripcion, idioma)}</p>
+              {t(b.boton?.texto, idioma) && b.boton.destino && (
+                <a
+                  href={b.boton.destino}
+                  class="btn btn-ghost btn-sm ruta-btn"
+                  target={esExterno(b.boton.destino) ? '_blank' : undefined}
+                  rel={esExterno(b.boton.destino) ? 'noopener noreferrer' : undefined}
+                >
+                  {t(b.boton.texto, idioma)}
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {listaSedes.length > 0 && (
+    <section class="pad-s">
+      <div class="wrap-narrow">
+        <h2 class="h2" style="margin-bottom:12px" set:html={tr(p.sedes?.titulo, idioma)} />
+        {t(p.sedes?.entrada, idioma) && <p class="lead">{t(p.sedes.entrada, idioma)}</p>}
+        <p class="lista-sedes">
+          {listaSedes.map((s: any, i: number) => (
+            <Fragment>
+              {i > 0 && <span class="sep" aria-hidden="true"> · </span>}
+              {s.nombre}
+            </Fragment>
+          ))}
+        </p>
+        {t(p.sedes?.frase, idioma) && <p class="muted" style="max-width:52ch">{t(p.sedes.frase, idioma)}</p>}
+      </div>
+    </section>
+  )}
+
+  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+    <div class="wrap-narrow">
+      <h2 class="h2" style="margin-bottom:24px" set:html={tr(p.escribenos?.titulo, idioma)} />
+      <div style="display:flex;flex-direction:column;gap:14px">
+        {c.correo && (
+          <a href={`mailto:${c.correo}`} class="report">
+            <span class="ic" aria-hidden="true">✉</span> {c.correo}
+          </a>
+        )}
         {c.whatsapp && (
           <a href={`https://wa.me/${String(c.whatsapp).replace(/[^0-9]/g, '')}`} class="report" target="_blank" rel="noopener noreferrer">
             <span class="ic" aria-hidden="true">💬</span> WhatsApp
           </a>
         )}
+        {c.telefono && (
+          <a href={`tel:${String(c.telefono).replace(/\s/g, '')}`} class="report">
+            <span class="ic" aria-hidden="true">☎</span> {c.telefono}
+          </a>
+        )}
       </div>
-
-      {(p.bloques ?? []).length > 0 && (
-        <div class="grid g2" style="margin-top:44px">
-          {p.bloques.map((b: any) => (
-            <div class="card">
-              <h4>{t(b.titulo, idioma)}</h4>
-              <p>{t(b.descripcion, idioma)}</p>
-              {b.correo && <a href={`mailto:${b.correo}`} class="link-arrow" style="color:var(--teal);margin-top:12px">{b.correo}</a>}
-            </div>
-          ))}
-        </div>
+      {t(p.escribenos?.cierre, idioma) && (
+        <p class="cierre-contacto">{t(p.escribenos.cierre, idioma)}</p>
       )}
     </div>
   </section>
 
-  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
-    <div class="wrap">
-      <h2 class="h2" style="margin-bottom:26px">{idioma === 'en' ? 'Where we operate' : 'Dónde operamos'}</h2>
-      <div class="grid g4">
-        {sedes().map((s: any) => (
-          <div class="card">
-            <h4>{s.nombre}</h4>
-            <p class="small muted">{s.estado}</p>
-            {t(s.descripcion, idioma) && <p>{t(s.descripcion, idioma)}</p>}
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+<style>
+  .frase-hero {
+    margin-top: 26px;
+    font-family: var(--display);
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--tinta-60);
+    max-width: 26ch;
+  }
+
+  /* Las cuatro rutas igualan altura por la rejilla, pero el botón seguía al
+     texto y quedaba a distinta altura en cada tarjeta. Empujado al fondo, las
+     cuatro acciones se alinean y la columna se lee de un vistazo. */
+  .ruta { display: flex; flex-direction: column; }
+  .ruta p { margin-bottom: 20px; }
+  .ruta-btn { margin-top: auto; align-self: flex-start; }
+
+  .lista-sedes {
+    margin: 20px 0 22px;
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  .lista-sedes .sep { color: var(--coral); }
+
+  .cierre-contacto {
+    margin-top: 30px;
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--tinta-60);
+  }
+
+  /* Dos rutas por fila hasta el corte de teléfono: a un ancho intermedio
+     todavía caben, y partirlas antes deja tarjetas innecesariamente angostas. */
+  @media (max-width: 860px) {
+    .rutas { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .rutas { grid-template-columns: 1fr; }
+  }
+</style>
 </Base>
