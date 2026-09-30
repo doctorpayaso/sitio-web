@@ -34,12 +34,20 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       <span class="eyebrow" style="color:var(--coral-d)"><span class="dot"></span> {t(p.antetitulo, idioma)}</span>
       <h1 class="h1" style="margin:16px auto 18px;max-width:16ch" set:html={tr(p.titulo, idioma)} />
       <p class="lead" style="margin:0 auto" set:html={tr(p.entrada, idioma)} />
+      {t(p.botonHero?.texto, idioma) && (
+        <div style="margin-top:30px">
+          <a href={p.botonHero.destino} class="btn btn-coral">{t(p.botonHero.texto, idioma)}</a>
+        </div>
+      )}
     </div>
   </section>
 
-  <section class="pad-s">
+  <section class="pad-s" id="montos">
     <div class="wrap" style="max-width:940px">
-      <div class="grid g3">
+      {t(p.tituloMontos, idioma) && (
+        <h2 class="h2" style="text-align:center;margin-bottom:34px" set:html={tr(p.tituloMontos, idioma)} />
+      )}
+      <div class="grid g3 montos-grid">
         {(p.montos ?? []).map((m: any) => (
           <Fragment>
             {m.enlace ? (
@@ -55,7 +63,7 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
                 </div>
                 <p class="does">{t(m.equivalencia, idioma)}</p>
                 <span class="link-arrow" style="color:var(--coral-d);margin-top:14px;display:inline-flex">
-                  {idioma === 'en' ? 'Donate this amount' : 'Donar este monto'}
+                  {idioma === 'en' ? 'Donate' : 'Donar'} ${formatearNumero(m.monto, idioma)}
                 </span>
               </a>
             ) : (
@@ -79,9 +87,13 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       <div class="form" style="margin-top:34px">
         <div class="grid g2" style="gap:26px;align-items:center">
           <div>
-            <h3 class="h3" style="margin-bottom:10px">{idioma === 'en' ? 'Payment methods' : 'Formas de pago'}</h3>
+            <h3 class="h3" style="margin-bottom:6px">{t(p.montoLibre?.titulo, idioma)}</h3>
+            {t(p.montoLibre?.subtitulo, idioma) && (
+              <p class="muted" style="margin-bottom:14px">{t(p.montoLibre.subtitulo, idioma)}</p>
+            )}
             {metodos.length > 0 ? (
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <span class="small muted">{idioma === 'en' ? 'Payment methods:' : 'Formas de pago:'}</span>
                 {metodos.map((m: string) => (
                   <span class:list={['tag', m === 'paypal' ? 'tag-mango' : 'tag-teal']}>{METODOS[m] ?? m}</span>
                 ))}
@@ -120,8 +132,12 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
     </div>
   </section>
 
-  <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
-    <div class="wrap grid g3">
+  <section class="pad-s">
+    <div class="wrap">
+      {t(p.tituloGarantias, idioma) && (
+        <h2 class="h2" style="text-align:center;max-width:24ch;margin:0 auto 34px" set:html={tr(p.tituloGarantias, idioma)} />
+      )}
+      <div class="grid g3 garantias-grid">
       {(p.garantias ?? []).map((g: any) => (
         <div class="card">
           <div class="icon-chip" style={fondoTenue(g.color)} aria-hidden={g.iconoImagen ? undefined : 'true'}>
@@ -131,6 +147,71 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
           <p>{t(g.descripcion, idioma)}</p>
         </div>
       ))}
+      </div>
     </div>
   </section>
+
+  {t(p.cierre?.titulo, idioma) && (
+    <section class="pad-s" style="padding-bottom:clamp(64px,9vw,110px)">
+      <div class="wrap">
+        <div class="cta-final">
+          <span class="confetti" style="width:110px;height:110px;background:var(--coral);left:8%;top:16%;opacity:.28"></span>
+          <span class="confetti" style="width:60px;height:60px;background:var(--mango);right:12%;bottom:18%;opacity:.55"></span>
+          <div style="position:relative">
+            <h2 class="h1" style="color:#fff" set:html={tr(p.cierre.titulo, idioma)} />
+            <div class="triada">
+              {(p.cierre?.lineas ?? []).map((l: any) => <p>{t(l, idioma)}</p>)}
+            </div>
+            {t(p.cierre?.frase, idioma) && (
+              <p class="triada-cierre">{t(p.cierre.frase, idioma)}</p>
+            )}
+            {t(p.cierre?.boton?.texto, idioma) && (
+              <div style="margin-top:32px">
+                <a href={p.cierre.boton.destino} class="btn btn-coral" rel="noopener">
+                  {t(p.cierre.boton.texto, idioma)}
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+<style>
+  /* Tres tarjetas en una rejilla de tres no deben partirse en 2+1: a esos
+     anchos todavía caben las tres, y la huérfana se lee como error. Bajan a
+     una sola columna directamente, en el corte de teléfono. */
+  @media (max-width: 1000px) {
+    .montos-grid, .garantias-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .montos-grid, .garantias-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Las tarjetas igualan altura por la rejilla, pero el enlace seguía al texto
+     y quedaba a distinta altura en cada una. Empujado al fondo, las tres
+     acciones quedan en la misma línea y la columna se lee de un vistazo. */
+  .montos-grid .amount { display: flex; flex-direction: column; }
+  .montos-grid .amount .does { margin-bottom: 14px; }
+  .montos-grid .amount .link-arrow { margin-top: auto !important; }
+
+  /* Las tres líneas son una tríada retórica: se leen como una escalera, no
+     como un párrafo. Por eso van separadas y con el mismo peso entre sí. */
+  .triada { margin-top: 6px; }
+  .triada p {
+    color: rgba(255, 247, 240, 0.72);
+    margin: 0 auto;
+    padding: 5px 0;
+    max-width: 44ch;
+  }
+  .triada-cierre {
+    color: #fff !important;
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.3;
+    margin: 20px auto 0 !important;
+    max-width: 30ch;
+  }
+</style>
 </Base>
