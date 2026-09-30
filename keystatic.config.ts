@@ -1048,6 +1048,8 @@ export default config({
           description: `Aprobado por Dirección: «Tu donativo no compra narices. Compra tiempo.» ${NOTA_SALTOS}`,
         }),
         entrada: parrafo('Párrafo de entrada'),
+        botonHero: boton('Botón del hero'),
+        tituloMontos: texto('Titular de los montos'),
         montos: fields.array(
           fields.object({
             monto: fields.integer({ label: 'Monto en pesos' }),
@@ -1103,11 +1105,33 @@ export default config({
             }),
           },
         ),
+        montoLibre: fields.object(
+          {
+            titulo: texto('Titular'),
+            subtitulo: texto('Subtítulo'),
+          },
+          {
+            label: 'Bloque de monto libre',
+            description: 'El botón y la nota se editan en «Pasarela de donativos».',
+          },
+        ),
+        tituloGarantias: texto('Titular de los bloques de confianza', { variasLineas: true }),
         garantias: fields.array(tarjetaIcono('Bloque de confianza'), {
           label: 'Bloques de confianza',
           itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
         }),
-        textoDelConsentimiento: parrafo('Texto de la casilla de consentimiento', { obligatorio: true }),
+        cierre: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            lineas: fields.array(texto('Línea'), {
+              label: 'Líneas',
+              itemLabel: (props) => props.fields.es?.value || 'Línea',
+            }),
+            frase: texto('Frase de cierre', { variasLineas: true }),
+            boton: boton('Botón'),
+          },
+          { label: 'Cierre de la página' },
+        ),
       },
     }),
 
