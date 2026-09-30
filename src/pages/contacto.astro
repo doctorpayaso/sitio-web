@@ -6,12 +6,27 @@
 // genérico en vez de tomar el camino que le corresponde.
 import Base from '../layouts/Base.astro';
 import { t, tr, idiomaDe } from '../lib/idioma';
-import { paginas, configuracion, sedes } from '../lib/contenido';
+import { paginas, configuracion, sedes, rutaDeImagen } from '../lib/contenido';
 
 const p = paginas.contacto;
 const idioma = idiomaDe(Astro);
 const c = configuracion.contacto ?? {};
 const listaSedes = sedes();
+
+/** Fondo tenue del color elegido, con el icono en el tono fuerte. */
+const TENUE: Record<string, string> = {
+  coral: 'background:rgba(244,98,98,.14);color:var(--coral-d)',
+  azul: 'background:rgba(66,128,191,.14);color:var(--azul)',
+  teal: 'background:rgba(43,114,104,.14);color:var(--teal)',
+  menta: 'background:rgba(73,182,166,.16);color:var(--teal)',
+  mango: 'background:rgba(255,162,49,.2);color:#a05c00',
+  vino: 'background:rgba(155,53,79,.14);color:var(--vino)',
+};
+const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
+const FUERTE: Record<string, string> = {
+  coral: 'var(--coral-d)', azul: 'var(--azul)', teal: 'var(--teal)',
+  menta: 'var(--teal)', mango: '#a05c00', vino: 'var(--vino)',
+};
 
 /** Un destino que sale del sitio se abre en pestaña nueva. */
 const esExterno = (destino?: string) => /^https?:/i.test(destino ?? '');
@@ -20,7 +35,12 @@ const esExterno = (destino?: string) => /^https?:/i.test(destino ?? '');
 <Base seo={p.seo} ruta="emocional">
   <section class="pad-s" style="padding-top:clamp(40px,5vw,72px)">
     <div class="wrap-narrow">
-      <h1 class="h1" style="margin-bottom:18px;max-width:16ch" set:html={tr(p.titulo, idioma)} />
+      {t(p.antetitulo, idioma) && (
+        <span class="eyebrow" style="color:var(--coral-d)">
+          <span class="dot"></span> {t(p.antetitulo, idioma)}
+        </span>
+      )}
+      <h1 class="h1" style="margin:16px 0 18px;max-width:16ch" set:html={tr(p.titulo, idioma)} />
       <p class="lead" set:html={tr(p.entrada, idioma)} />
       {t(p.frase, idioma) && <p class="frase-hero">{t(p.frase, idioma)}</p>}
     </div>
@@ -32,12 +52,16 @@ const esExterno = (destino?: string) => /^https?:/i.test(destino ?? '');
         <div class="grid g2 rutas">
           {p.bloques.map((b: any) => (
             <div class="card ruta">
+              <div class="icon-chip" style={fondoTenue(b.color)} aria-hidden={b.iconoImagen ? undefined : 'true'}>
+                {b.iconoImagen ? <img src={rutaDeImagen(b.iconoImagen)} alt="" /> : b.icono}
+              </div>
               <h4>{t(b.titulo, idioma)}</h4>
               <p>{t(b.descripcion, idioma)}</p>
               {t(b.boton?.texto, idioma) && b.boton.destino && (
                 <a
                   href={b.boton.destino}
-                  class="btn btn-ghost btn-sm ruta-btn"
+                  class="link-arrow ruta-btn"
+                  style={`color:${FUERTE[b.color ?? 'coral'] ?? FUERTE.coral}`}
                   target={esExterno(b.boton.destino) ? '_blank' : undefined}
                   rel={esExterno(b.boton.destino) ? 'noopener noreferrer' : undefined}
                 >
