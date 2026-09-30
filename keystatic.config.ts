@@ -1144,11 +1144,20 @@ export default config({
       format: { data: 'yaml' },
       schema: {
         seo: seo(),
+        antetitulo: texto('Antetítulo'),
         titulo: texto('Titular'),
         entrada: parrafo('Párrafo de entrada'),
         frase: texto('Frase bajo la entrada', { variasLineas: true }),
         bloques: fields.array(
           fields.object({
+            iconoImagen: fields.image({
+              label: 'Icono propio',
+              directory: 'src/assets/iconos',
+              publicPath: '/src/assets/iconos/',
+              description: 'SVG o PNG con fondo transparente. Sustituye al emoji.',
+            }),
+            icono: fields.text({ label: 'Emoji (alternativa)', description: 'Ej. 🎈' }),
+            color: fields.select({ label: 'Color', options: OPCIONES_COLOR, defaultValue: 'coral' }),
             titulo: texto('Título'),
             descripcion: parrafo('Descripción'),
             boton: boton('Botón'),
