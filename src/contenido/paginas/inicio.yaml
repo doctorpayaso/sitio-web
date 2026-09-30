@@ -161,7 +161,7 @@ visitasVirtuales:
   boton:
     texto:
       es: Agendar visita
-    destino: /contacto
+    destino: https://doctorpayaso.typeform.com/to/owdM1G
 transparencia:
   antetitulo:
     es: Transparencia
