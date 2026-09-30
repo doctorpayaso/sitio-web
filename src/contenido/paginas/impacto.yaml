@@ -107,8 +107,8 @@ gobernanza:
       el respeto a las personas que forman parte de nuestra comunidad.
   boton:
     texto:
-      es: ''
-    destino: ''
+      es: Conoce nuestra misión
+    destino: /mision
 cierre:
   titulo:
     es: Gracias por hacer posible cada encuentro.
