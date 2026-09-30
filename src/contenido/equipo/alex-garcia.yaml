@@ -1,0 +1,25 @@
+nombre: Alex García
+nombreDeClown: Dr. Chiflón
+rol:
+  es: Cofundador
+biografia:
+  es: >-
+    Especialista en cosquillas abdominales y en hacer caras chistosas. Coach de
+    negocios internacional (CBC), coach ontológico por AIAC y entrenador en
+    felicidad certificado por la academia de Tal Ben-Shahar. Mejor Papá Clown
+    del mundo desde 1997.
+sede: null
+fotografia:
+  archivo: null
+  textoAlternativo:
+    es: Dr. Chiflón caracterizado
+  muestraPersonasIdentificables: true
+  folioConsentimiento: ''
+fotografiaSinCaracterizar:
+  archivo: null
+  textoAlternativo:
+    es: Alex García sin caracterizar
+  muestraPersonasIdentificables: true
+  folioConsentimiento: ''
+publicar: true
+orden: 1
