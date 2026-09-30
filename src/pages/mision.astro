@@ -1,0 +1,517 @@
+---
+// Nuestra misión — la declaración institucional.
+// Mismo patrón que el resto del sitio: ningún texto visible se escribe aquí.
+// Los textos vienen del documento del Comité (2026) y se editan en el panel.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe } from '../lib/idioma';
+import { paginas, equipoPorId, imagenPublicable, rutaDeImagen } from '../lib/contenido';
+
+const p = paginas.mision;
+const idioma = idiomaDe(Astro);
+
+/** Fondo tenue del color elegido, con el icono en el tono fuerte. */
+const TENUE: Record<string, string> = {
+  coral: 'background:rgba(244,98,98,.14);color:var(--coral-d)',
+  azul: 'background:rgba(66,128,191,.14);color:var(--azul)',
+  teal: 'background:rgba(43,114,104,.14);color:var(--teal)',
+  menta: 'background:rgba(73,182,166,.16);color:var(--teal)',
+  mango: 'background:rgba(255,162,49,.2);color:#a05c00',
+  vino: 'background:rgba(155,53,79,.14);color:var(--vino)',
+};
+const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
+
+// Las fichas salen de la colección «Equipo». Si alguien quita la casilla de
+// publicar en una ficha, deja de aparecer aquí sin tocar esta página.
+const directores = (p.directores?.personas ?? [])
+  .map((id: string) => equipoPorId(id))
+  .filter(Boolean) as any[];
+
+/** Solo gira si existen las DOS fotografías. Con una sola, la tarjeta es fija. */
+const gira = (d: any) =>
+  imagenPublicable(d.fotografia) && imagenPublicable(d.fotografiaSinCaracterizar);
+
+// El diagrama está dibujado con tres aros. Un cuarto no cabría sin que las
+// etiquetas se encimen, así que se recortan aquí y no en el CSS.
+const anillos = (p.metroCuadrado?.anillos ?? []).slice(0, 3);
+const descripcionDelDiagrama = [
+  `${idioma === 'en' ? 'Concentric squares diagram' : 'Diagrama de cuadrados concéntricos'}:`,
+  t(p.metroCuadrado?.centro, idioma),
+  ...anillos.map((a: any) => t(a, idioma)),
+].filter(Boolean).join(' · ');
+
+const mosaico = [
+  { imagen: p.somosMedicina?.imagenIzquierda, clase: 'mos-a', duo: 'duo-teal' },
+  { imagen: p.somosMedicina?.imagenCentro, clase: 'mos-b', duo: 'duo-coral' },
+  { imagen: p.somosMedicina?.imagenDerecha, clase: 'mos-c', duo: 'duo-azul' },
+];
+---
+
+<Base seo={p.seo} ruta="emocional">
+  <!-- ============ 1. PORTADA ============ -->
+  <section class="pad-s" style="padding-top:clamp(40px,5vw,72px);overflow:hidden">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow" style="color:var(--coral-d)">
+          <span class="dot"></span> {t(p.antetitulo, idioma)}
+        </span>
+        <h1 class="h1" style="margin:16px 0 20px;max-width:16ch">
+          <Fragment set:html={tr(p.titulo, idioma)} /><span
+            class="dot dot-lg" style="margin-left:.12em;vertical-align:.04em"></span>
+        </h1>
+        <p class="lead" style="font-size:1.2rem" set:html={tr(p.entrada, idioma)} />
+      </div>
+
+      <div class="hero-photo-wrap">
+        <div class="photo photo-hero duo-coral dots-bg">
+          {imagenPublicable(p.imagen) && (
+            <img class="slot-img" src={rutaDeImagen(p.imagen.archivo)}
+                 alt={t(p.imagen.textoAlternativo, idioma)} />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. EL CREDO ============ -->
+  {(p.credo?.frases ?? []).length > 0 && (
+    <section class="pad-s">
+      <div class="wrap">
+        <ul class="credo">
+          {(p.credo.frases ?? []).map((f: any) => (
+            <li class="frase-display">{t(f, idioma)}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- ============ 3. LA MISIÓN ============ -->
+  {t(p.franjaDeLaMision?.frase, idioma) && (
+    <section class="franja-mision">
+      <div class="franja-foto">
+        {imagenPublicable(p.franjaDeLaMision?.imagenDeFondo) && (
+          <img class="slot-img" src={rutaDeImagen(p.franjaDeLaMision.imagenDeFondo.archivo)}
+               alt={t(p.franjaDeLaMision.imagenDeFondo.textoAlternativo, idioma)} loading="lazy" />
+        )}
+      </div>
+      <div class="wrap franja-in">
+        {t(p.franjaDeLaMision?.antetitulo, idioma) && (
+          <span class="eyebrow" style="color:var(--mango)">
+            <span class="dot" style="background:var(--mango)"></span>
+            {t(p.franjaDeLaMision.antetitulo, idioma)}
+          </span>
+        )}
+        <h2 class="h1" style="color:#fff">
+          <Fragment set:html={tr(p.franjaDeLaMision.frase, idioma)} /><span
+            class="dot dot-lg" style="margin-left:.1em;vertical-align:.06em"></span>
+        </h2>
+      </div>
+    </section>
+  )}
+
+  <!-- ============ 4. NUESTROS VALORES ============ -->
+  <section class="pad">
+    <div class="wrap valores-grid">
+      <div class="valores-foto">
+        <div class="photo duo-mango dots-bg" style="aspect-ratio:2/3;border-radius:var(--r-xl)">
+          {imagenPublicable(p.valores?.imagen) && (
+            <img class="slot-img" src={rutaDeImagen(p.valores.imagen.archivo)}
+                 alt={t(p.valores.imagen.textoAlternativo, idioma)} loading="lazy" />
+          )}
+        </div>
+      </div>
+
+      <div>
+        <h2 class="h2" style="max-width:14ch" set:html={tr(p.valores?.titulo, idioma)} />
+        <ul class="valores">
+          {(p.valores?.lista ?? []).map((v: any) => (
+            <li class="valor">
+              <span class="valor-chip" style={fondoTenue(v.color)}
+                    aria-hidden={v.iconoImagen ? undefined : 'true'}>
+                {v.iconoImagen ? <img src={rutaDeImagen(v.iconoImagen)} alt="" /> : v.icono}
+              </span>
+              <div>
+                <h3>{t(v.titulo, idioma)}</h3>
+                <p>{t(v.descripcion, idioma)}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. NUESTROS DIRECTORES ============ -->
+  {directores.length > 0 && (
+    <section class="pad-s">
+      <div class="wrap">
+        <h2 class="h2">{t(p.directores?.titulo, idioma)}</h2>
+
+        <div class="directores">
+          {directores.map((d: any, i: number) => (
+            <article class="director">
+              {gira(d) ? (
+                <button class="retrato" type="button" aria-pressed="false"
+                        aria-label={`${idioma === 'en' ? 'See' : 'Ver a'} ${d.nombreDeClown || d.nombre} ${idioma === 'en' ? 'without makeup' : 'sin caracterizar'}`}>
+                  <span class="retrato-giro">
+                    <span class={`retrato-cara photo dots-bg ${i % 2 ? 'duo-azul' : 'duo-coral'}`}>
+                      <img class="slot-img" src={rutaDeImagen(d.fotografia.archivo)}
+                           alt={t(d.fotografia.textoAlternativo, idioma)} loading="lazy" />
+                    </span>
+                    <span class={`retrato-cara retrato-dorso photo dots-bg ${i % 2 ? 'duo-mango' : 'duo-teal'}`}>
+                      <img class="slot-img" src={rutaDeImagen(d.fotografiaSinCaracterizar.archivo)}
+                           alt={t(d.fotografiaSinCaracterizar.textoAlternativo, idioma)} loading="lazy" />
+                    </span>
+                  </span>
+                  <span class="retrato-pista" aria-hidden="true">
+                    {idioma === 'en' ? 'Hover' : 'Pasa el cursor'}
+                  </span>
+                </button>
+              ) : (
+                <div class={`retrato-fijo photo dots-bg ${i % 2 ? 'duo-azul' : 'duo-coral'}`}>
+                  {imagenPublicable(d.fotografia) && (
+                    <img class="slot-img" src={rutaDeImagen(d.fotografia.archivo)}
+                         alt={t(d.fotografia.textoAlternativo, idioma)} loading="lazy" />
+                  )}
+                </div>
+              )}
+              <h3 class="h3">{d.nombreDeClown || d.nombre}</h3>
+              <p class="eyebrow muted director-meta">
+                {[d.nombre, t(d.rol, idioma)].filter(Boolean).join(' · ')}
+              </p>
+              {t(d.biografia, idioma) && <p class="director-bio">{t(d.biografia, idioma)}</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ============ 6. NUESTRO METRO CUADRADO ============ -->
+  <section class="pad-s">
+    <div class="wrap">
+      <div class="m2-panel">
+        <div>
+          {t(p.metroCuadrado?.antetitulo, idioma) && (
+            <span class="eyebrow" style="color:var(--teal)">
+              <span class="dot" style="background:var(--teal)"></span>
+              {t(p.metroCuadrado.antetitulo, idioma)}
+            </span>
+          )}
+          <h2 class="h2" style="margin:16px 0 18px;max-width:13ch"
+              set:html={tr(p.metroCuadrado?.titulo, idioma)} />
+          <p class="lead" style="max-width:44ch" set:html={tr(p.metroCuadrado?.entrada, idioma)} />
+          {t(p.metroCuadrado?.cuerpo, idioma) && (
+            <p class="muted" style="margin-top:20px;max-width:46ch"
+               set:html={tr(p.metroCuadrado.cuerpo, idioma)} />
+          )}
+          {t(p.metroCuadrado?.frase, idioma) && (
+            <p class="m2-cierre">{t(p.metroCuadrado.frase, idioma)}</p>
+          )}
+        </div>
+
+        <div class="m2-diagrama" role="img" aria-label={descripcionDelDiagrama}>
+          <div class="m2-anillo m2-a1">
+            {anillos[0] && <span class="m2-lbl">{t(anillos[0], idioma)}</span>}
+            <div class="m2-anillo m2-a2">
+              {anillos[1] && <span class="m2-lbl">{t(anillos[1], idioma)}</span>}
+              <div class="m2-anillo m2-a3">
+                {anillos[2] && <span class="m2-lbl">{t(anillos[2], idioma)}</span>}
+                <div class="m2-yo">{t(p.metroCuadrado?.centro, idioma)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. SOMOS MEDICINA ============ -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="medicina-cab">
+        <h2 class="h2">
+          {t(p.somosMedicina?.titulo, idioma)}<span
+            class="dot dot-lg" style="margin-left:.1em;vertical-align:.08em"></span>
+        </h2>
+        <ul class="letania">
+          {(p.somosMedicina?.lineas ?? []).map((l: any) => (
+            <li class="frase-display">{t(l, idioma)}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mosaico">
+        {mosaico.map((m) => (
+          <div class={`photo dots-bg ${m.duo} ${m.clase}`}>
+            {imagenPublicable(m.imagen) && (
+              <img class="slot-img" src={rutaDeImagen(m.imagen.archivo)}
+                   alt={t(m.imagen.textoAlternativo, idioma)} loading="lazy" />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {t(p.somosMedicina?.cierre, idioma) && (
+        <p class="medicina-cierre">{t(p.somosMedicina.cierre, idioma)}</p>
+      )}
+    </div>
+  </section>
+
+  <!-- ============ 8. CIERRE ============ -->
+  <section class="pad-s" style="padding-bottom:clamp(64px,8vw,110px)">
+    <div class="wrap">
+      <div class="cta-final cta-mision">
+        <span class="confetti" style="width:120px;height:120px;background:var(--mango);left:7%;top:12%"></span>
+        <span class="confetti" style="width:64px;height:64px;background:#fff;opacity:.22;right:11%;top:20%"></span>
+        <span class="confetti" style="width:44px;height:44px;background:var(--menta);right:24%;bottom:15%"></span>
+        <span class="confetti" style="width:88px;height:88px;background:#fff;opacity:.12;left:17%;bottom:9%"></span>
+        <div style="position:relative">
+          <h2 class="h1" style="color:#fff" set:html={tr(p.cierre?.titulo, idioma)} />
+          <p set:html={tr(p.cierre?.cuerpo, idioma)} />
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px">
+            {p.cierre?.botonPrincipal?.destino && (
+              <a href={p.cierre.botonPrincipal.destino} class="btn btn-white">
+                {t(p.cierre.botonPrincipal.texto, idioma)}
+              </a>
+            )}
+            {p.cierre?.botonSecundario?.destino && (
+              <a href={p.cierre.botonSecundario.destino} class="btn btn-ghost-light">
+                {t(p.cierre.botonSecundario.texto, idioma)}
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- El <script> va al final, antes de cerrar la plantilla. Entre dos
+       secciones se queda ahí en el HTML compilado y rompe la regla de
+       tokens.css que junta los espacios de secciones contiguas: `section.pad-s
+       + section.pad` solo ve hermanos inmediatos. Ya nos pasó en Clown Care. -->
+  <script>
+    document.querySelectorAll('.retrato').forEach((retrato) => {
+      retrato.addEventListener('click', () => {
+        const abierto = retrato.getAttribute('aria-pressed') === 'true';
+        retrato.setAttribute('aria-pressed', String(!abierto));
+      });
+    });
+  </script>
+<style>
+  /* =========================================================================
+     Estilos propios de Nuestra misión.
+
+     REGLA DE TIPOGRAFÍA: esta hoja no inventa ni un tamaño ni un color. Cada
+     valor está copiado de una pieza que ya existe en el sitio, y al lado se
+     anota de cuál. Si algún día cambia la escala, se cambia allá y aquí sigue
+     cuadrando.
+     ========================================================================= */
+
+
+  /* --- FRASE EN TIPOGRAFÍA DISPLAY ----------------------------------------
+     Un solo tratamiento para las tres listas de frases de la página: el credo
+     de la portada y la letanía de «Somos Medicina». Los valores son los de
+     .lista-sedes y .triada-cierre (contacto y dona).
+     Las variaciones SOFT/WONK y el interletrado se repiten aquí porque el
+     sistema se los da a h1–h4 por selector de etiqueta, y estos son <li>. --- */
+  .frase-display {
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.3; letter-spacing: -.02em;
+    font-variation-settings: 'SOFT' 40, 'WONK' 1;
+    font-optical-sizing: auto;
+  }
+
+  /* --- 2. CREDO ------------------------------------------------------------ */
+  .credo { list-style: none; display: grid; gap: clamp(14px, 1.6vw, 20px); max-width: 560px; }
+  .credo li { display: flex; gap: 16px; align-items: flex-start; }
+  .credo li::before {
+    content: ''; width: 11px; height: 11px; border-radius: 50%; flex: none; margin-top: .52em;
+  }
+  /* Los cuatro colores del sistema, en el mismo orden en que los usan los
+     módulos de Certifícate. */
+  .credo li:nth-child(1)::before { background: var(--coral); }
+  .credo li:nth-child(2)::before { background: var(--mango); }
+  .credo li:nth-child(3)::before { background: var(--menta); }
+  .credo li:nth-child(4)::before { background: var(--azul); }
+  @media (min-width: 861px) { .credo { max-width: 640px; } }
+
+  /* --- 3. FRANJA DE LA MISIÓN ---------------------------------------------
+     El titular usa <h2 class="h1">, igual que los cierres oscuros de Clown
+     Care, Dona e Impacto. Aquí no hay tamaño propio. ---------------------- */
+  .franja-mision {
+    position: relative; overflow: hidden; background: var(--tinta); color: var(--crema);
+    padding: clamp(56px, 8vw, 110px) 0; margin-top: clamp(24px, 3.5vw, 52px);
+    text-align: center;
+  }
+  .franja-foto { position: absolute; inset: 0; background: linear-gradient(145deg,#2b7268,#132e2a 60%,#9b354f); opacity: .5; }
+  .franja-foto::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,.9) 1.5px, transparent 1.6px);
+    background-size: 16px 16px; opacity: .1;
+  }
+  .franja-in { position: relative; z-index: 2; }
+  .franja-in h2 { max-width: 14ch; margin: 20px auto 0; }
+
+  /* --- 4. VALORES ----------------------------------------------------------
+     Mismos números que .mod (los módulos de Certifícate): chip de 48 px como
+     .icon-chip, título de 1.2 rem, texto de .95 rem en tinta-60. ----------- */
+  .valores-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .valores-foto { position: sticky; top: 102px; }
+  .valores { list-style: none; margin-top: clamp(28px, 3vw, 40px); display: grid; }
+  .valor {
+    display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start;
+    padding: 22px 0; border-top: 1px solid var(--tinta-12);
+  }
+  .valor:last-child { border-bottom: 1px solid var(--tinta-12); }
+  .valor-chip {
+    width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 1.35rem; flex: none;
+  }
+  .valor h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .valor p { color: var(--tinta-60); font-size: .95rem; max-width: 56ch; }
+
+  /* --- 5. DIRECCIÓN --------------------------------------------------------
+     Nombre con .h3, cargo con .eyebrow, biografía con los valores de .mod p. */
+  .directores {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(24px, 3.4vw, 44px);
+    margin-top: clamp(30px, 3.4vw, 44px);
+    /* Acotado: a todo el ancho, dos retratos pesan más que la portada. */
+    max-width: 880px;
+  }
+  .director-meta { margin-top: 7px; }
+  .director-bio { margin-top: 14px; color: var(--tinta-60); font-size: .95rem; max-width: 56ch; }
+
+  /* Retrato que gira: al frente, caracterizado; al dorso, la persona. En esta
+     organización eso no es adorno — la página entera trata de quién hay detrás
+     de la nariz. Si falta la segunda foto, la tarjeta no gira y se ve igual. */
+  /* Cuando falta la segunda fotografía no hay giro: una sola cara, sin la
+     clase .retrato (que apaga el fondo para el 3D y dejaría el hueco en
+     blanco en vez del bloque de color). */
+  .retrato-fijo {
+    display: block; width: 100%; aspect-ratio: 1; margin-bottom: 20px;
+    border-radius: var(--r-l);
+  }
+  .retrato {
+    display: block; width: 100%; aspect-ratio: 1; margin-bottom: 20px;
+    padding: 0; border: 0; background: none; position: relative;
+    perspective: 1200px; border-radius: var(--r-l);
+  }
+  .retrato-giro {
+    display: block; position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .62s cubic-bezier(.2, .8, .3, 1);
+  }
+  .retrato:hover .retrato-giro,
+  .retrato:focus-visible .retrato-giro,
+  .retrato[aria-pressed='true'] .retrato-giro { transform: rotateY(180deg); }
+  /* Selector de dos niveles a propósito: la cara lleva también la clase .photo,
+     que en tokens.css trae position:relative. Con un solo nivel las dos reglas
+     empatan en peso y gana la última que cargue el navegador. */
+  .retrato-giro > .retrato-cara {
+    position: absolute; inset: 0; border-radius: var(--r-l);
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  }
+  .retrato-giro > .retrato-dorso { transform: rotateY(180deg); }
+  /* Mismos números que .tag. */
+  .retrato-pista {
+    position: absolute; z-index: 4; left: 50%; bottom: 14px; transform: translateX(-50%);
+    background: rgba(255, 255, 255, .94); color: var(--coral-d); border-radius: 999px;
+    padding: 5px 11px; font-size: .68rem; font-weight: 800; letter-spacing: .1em;
+    text-transform: uppercase; box-shadow: var(--shadow); white-space: nowrap;
+    transition: opacity .2s; pointer-events: none;
+  }
+  .retrato:hover .retrato-pista, .retrato[aria-pressed='true'] .retrato-pista { opacity: 0; }
+  /* Sin cursor (teléfono y tableta) el giro es por toque. */
+  @media (hover: none) {
+    .retrato:hover .retrato-giro { transform: none; }
+    .retrato:hover .retrato-pista { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .retrato-giro { transition: none; } }
+
+  /* --- 6. METRO CUADRADO --------------------------------------------------- */
+  .m2-panel {
+    background: var(--crema-2); border-radius: var(--r-xl);
+    padding: clamp(32px, 4.6vw, 68px);
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  /* Mismo tratamiento que la frase del método en Clown Care. */
+  .m2-cierre {
+    margin-top: 30px; padding-left: 20px; border-left: 3px solid var(--coral);
+    font-family: var(--display); font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    line-height: 1.28; letter-spacing: -.02em; color: var(--tinta-60); max-width: 24ch;
+    font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  }
+  .m2-diagrama { width: 100%; max-width: 420px; justify-self: center; aspect-ratio: 1; }
+  .m2-anillo {
+    width: 100%; height: 100%; border: 2px solid; border-radius: 30px;
+    padding: clamp(24px, 4.2vw, 40px); position: relative;
+    display: grid; place-items: center;
+  }
+  .m2-a1 { border-color: rgba(66,128,191,.42); }
+  .m2-a2 { border-color: rgba(73,182,166,.55); border-radius: 24px; }
+  .m2-a3 { border-color: rgba(255,162,49,.7); border-radius: 18px; }
+  /* Mismos números que .eyebrow. */
+  .m2-lbl {
+    position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
+    background: var(--crema-2); padding: 0 10px; white-space: nowrap;
+    font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--tinta-60);
+  }
+  /* El centro es la nariz: círculo coral, como .mod-n pero más grande. */
+  .m2-yo {
+    width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--coral); color: #fff;
+    display: grid; place-items: center; font-family: var(--display); font-weight: 700;
+    font-size: 1.15rem; letter-spacing: -.02em;
+    box-shadow: 0 14px 30px -12px rgba(244,98,98,.9);
+  }
+
+  /* --- 7. SOMOS MEDICINA --------------------------------------------------- */
+  .medicina-cab { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .letania { list-style: none; display: grid; gap: 14px; }
+  .letania li { display: flex; gap: 14px; align-items: flex-start; }
+  .letania li::before {
+    content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--coral);
+    flex: none; margin-top: .55em;
+  }
+  .mosaico { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: clamp(40px, 5vw, 68px); }
+  .mosaico .photo { border-radius: var(--r-l); }
+  .mos-a { aspect-ratio: 3/4; }
+  .mosaico .mos-b { aspect-ratio: 4/5; transform: translateY(clamp(18px, 3vw, 40px)); border-radius: 200px 200px var(--r-l) var(--r-l); }
+  .mos-c { aspect-ratio: 3/4; }
+  /* Copia exacta de .frase-cierre en Certifícate e Impacto. */
+  .medicina-cierre {
+    margin: clamp(56px, 6vw, 84px) auto 0; max-width: 34ch; text-align: center;
+    font-family: var(--display); font-size: clamp(1.3rem, 2.4vw, 1.85rem);
+    line-height: 1.25; letter-spacing: -.02em; color: var(--tinta-60);
+    font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  }
+
+  /* --- 8. CIERRE -----------------------------------------------------------
+     La página termina en coral y no en tinta: es la página emocional del sitio
+     y el botón pide una decisión, no una consulta. ------------------------- */
+  .cta-mision { background: linear-gradient(160deg,#f46262 0%,#d04654 58%,#9b354f 100%); }
+  .cta-mision h2 { max-width: 20ch; }
+
+  /* --- RESPONSIVE ---------------------------------------------------------- */
+  @media (max-width: 1000px) {
+    .valores-grid { grid-template-columns: .9fr 1.1fr; gap: 32px; }
+    .valores-foto { position: static; }
+    .m2-panel { grid-template-columns: 1fr; }
+    .m2-diagrama { max-width: 360px; }
+    .medicina-cab { grid-template-columns: 1fr; gap: 24px; }
+  }
+  @media (max-width: 860px) {
+    .valores-grid { grid-template-columns: 1fr; }
+    .valores-foto { max-width: 420px; }
+    .directores { grid-template-columns: 1fr; max-width: 420px; }
+    .mosaico { grid-template-columns: 1fr; gap: 16px; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .mosaico .mos-b { transform: none; }
+  }
+  @media (max-width: 560px) {
+    .m2-anillo { padding: 26px 14px 14px; border-radius: 22px; }
+  }
+</style>
+</Base>
