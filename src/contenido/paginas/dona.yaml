@@ -20,9 +20,15 @@ entrada:
 
 
     **Gracias por ayudarnos a Sanar con Amor y Alegría.**
+botonHero:
+  texto:
+    es: Quiero donar
+  destino: '#montos'
+tituloMontos:
+  es: Elige cómo quieres participar
 montos:
   - monto: 300
-    periodicidad: mensual
+    periodicidad: unico
     equivalencia:
       es: >-
         Un donativo que acompaña.
@@ -30,9 +36,11 @@ montos:
 
         Tu aportación contribuye a los traslados y a las actividades de nuestros
         voluntarios.
+    enlace: >-
+      https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN&amount=300
     destacado: false
   - monto: 1500
-    periodicidad: mensual
+    periodicidad: unico
     equivalencia:
       es: >-
         Un donativo que fortalece.
@@ -40,9 +48,11 @@ montos:
 
         Tu aportación contribuye a sostener la coordinación, los materiales y
         las actividades de acompañamiento.
+    enlace: >-
+      https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN&amount=1500
     destacado: true
   - monto: 5000
-    periodicidad: mensual
+    periodicidad: unico
     equivalencia:
       es: >-
         Un donativo que abre oportunidades.
@@ -50,6 +60,8 @@ montos:
 
         Tu aportación contribuye a la formación de nuevas personas voluntarias y
         al crecimiento de nuestra comunidad.
+    enlace: >-
+      https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN&amount=5000
     destacado: false
 metodosDePago:
   - paypal
@@ -62,9 +74,14 @@ pasarela:
     textoBoton:
       es: Quiero elegir mi donativo
     nota:
-      es: |-
-        El monto que tú elijas. Cada aportación suma.
-        Puedes hacerlo con tu cuenta de PayPal o con tarjeta de débito/crédito.
+      es: Puedes hacerlo con tu cuenta de PayPal o con tarjeta de débito/crédito.
+montoLibre:
+  titulo:
+    es: El monto que tú elijas
+  subtitulo:
+    es: Cada aportación suma.
+tituloGarantias:
+  es: Tu confianza también es parte de nuestra misión.
 garantias:
   - icono: 👀
     color: coral
@@ -90,7 +107,17 @@ garantias:
       es: >-
         Si eliges una aportación periódica, podrás consultar y administrar tu
         donativo desde la plataforma de pago correspondiente.
-textoDelConsentimiento:
-  es: >-
-    Acepto el tratamiento de mis datos personales para procesar el donativo y
-    emitir el comprobante fiscal, conforme a la LFPDPPP.
+cierre:
+  titulo:
+    es: Gracias por estar presente.
+  lineas:
+    - es: Hay personas que comparten su tiempo.
+    - es: Hay personas que comparten sus conocimientos.
+    - es: Hay personas que comparten sus recursos.
+  frase:
+    es: Todas hacen posible que nuestra misión llegue más lejos.
+  boton:
+    texto:
+      es: Hacer mi donativo
+    destino: >-
+      https://www.paypal.com/donate?business=mexico%40doctorpayaso.com&item_name=www.doctorpayaso.com&item_number=DPA1206297AA6&currency_code=MXN
