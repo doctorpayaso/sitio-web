@@ -1,0 +1,25 @@
+nombre: Pay Campos
+nombreDeClown: Dra. Corazones
+rol:
+  es: Dirección
+biografia:
+  es: >-
+    Zurda por nacimiento y coleccionista de corazones por oficio. Voluntaria
+    desde 2015. Licenciada en Ciencias de la Comunicación y maestra en Educación
+    por el ITESM, Master Coach certificada por Quidam Global. Más de treinta años
+    acompañando procesos de transformación personal.
+sede: null
+fotografia:
+  archivo: null
+  textoAlternativo:
+    es: Dra. Corazones caracterizada
+  muestraPersonasIdentificables: true
+  folioConsentimiento: ''
+fotografiaSinCaracterizar:
+  archivo: null
+  textoAlternativo:
+    es: Pay Campos sin caracterizar
+  muestraPersonasIdentificables: true
+  folioConsentimiento: ''
+publicar: true
+orden: 2
