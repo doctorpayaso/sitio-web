@@ -6,6 +6,8 @@ seo:
       Escríbenos para certificarte, aliar tu institución, agendar una visita
       virtual o resolver cualquier duda.
   imagenAlCompartir: null
+antetitulo:
+  es: Contacto
 titulo:
   es: Hablemos de persona a persona.
 entrada:
@@ -18,7 +20,9 @@ entrada:
 frase:
   es: Cada encuentro comienza con un primer paso.
 bloques:
-  - titulo:
+  - icono: 🎈
+    color: coral
+    titulo:
       es: Quiero ser Doctor Payaso
     descripcion:
       es: >-
@@ -28,7 +32,9 @@ bloques:
       texto:
         es: Quiero certificarme
       destino: /certificate
-  - titulo:
+  - icono: 🤝
+    color: azul
+    titulo:
       es: Quiero construir una alianza
     descripcion:
       es: >-
@@ -37,7 +43,9 @@ bloques:
       texto:
         es: Quiero una alianza
       destino: /alianzas
-  - titulo:
+  - icono: 💻
+    color: menta
+    titulo:
       es: Quiero solicitar una visita virtual
     descripcion:
       es: >-
@@ -47,7 +55,9 @@ bloques:
       texto:
         es: Solicitar visita
       destino: https://doctorpayaso.typeform.com/to/owdM1G
-  - titulo:
+  - icono: 📰
+    color: mango
+    titulo:
       es: Prensa y medios
     descripcion:
       es: >-
