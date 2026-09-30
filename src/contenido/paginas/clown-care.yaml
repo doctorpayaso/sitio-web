@@ -187,7 +187,7 @@ visitasVirtuales:
   boton:
     texto:
       es: Solicita una visita
-    destino: /contacto
+    destino: https://doctorpayaso.typeform.com/to/owdM1G
 llamadoHospitales:
   titulo:
     es: Llevemos Doctor Payaso a tu institución
