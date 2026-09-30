@@ -18,6 +18,7 @@ import type { TextoLocalizado } from './idioma';
 import cifras from '../contenido/cifras.yaml';
 import configuracion from '../contenido/configuracion.yaml';
 import inicio from '../contenido/paginas/inicio.yaml';
+import mision from '../contenido/paginas/mision.yaml';
 import clownCare from '../contenido/paginas/clown-care.yaml';
 import certificate from '../contenido/paginas/certificate.yaml';
 import alianzas from '../contenido/paginas/alianzas.yaml';
@@ -27,6 +28,7 @@ import contacto from '../contenido/paginas/contacto.yaml';
 
 export const paginas = {
   inicio,
+  mision,
   clownCare,
   certificate,
   alianzas,
@@ -168,6 +170,14 @@ export const preguntas = (pagina: string) =>
 
 /** Equipo publicable. */
 export const equipo = () => todoElEquipo.filter((p) => p.publicar).sort(porOrden);
+
+/**
+ * Persona del equipo por su identificador de archivo.
+ * Devuelve null si la ficha existe pero está sin publicar: una página que la
+ * referencia no debe poder saltarse esa casilla.
+ */
+export const equipoPorId = (id: string | null | undefined) =>
+  id ? (equipo().find((p) => p.id === id) ?? null) : null;
 
 // -----------------------------------------------------------------------------
 //  Imágenes
