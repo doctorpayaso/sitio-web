@@ -1146,15 +1146,39 @@ export default config({
         seo: seo(),
         titulo: texto('Titular'),
         entrada: parrafo('Párrafo de entrada'),
+        frase: texto('Frase bajo la entrada', { variasLineas: true }),
         bloques: fields.array(
           fields.object({
             titulo: texto('Título'),
             descripcion: parrafo('Descripción'),
-            correo: fields.text({ label: 'Correo' }),
+            boton: boton('Botón'),
           }),
           {
-            label: 'Bloques de contacto',
-            itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Bloque',
+            label: 'Rutas de contacto',
+            description:
+              'Cada ruta lleva a donde se resuelve: una página del sitio, un formulario o un correo. Un destino que empiece con http se abre en pestaña nueva.',
+            itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Ruta',
+          },
+        ),
+        sedes: fields.object(
+          {
+            titulo: texto('Titular'),
+            entrada: texto('Entrada', { variasLineas: true }),
+            frase: texto('Frase de cierre', { variasLineas: true }),
+          },
+          {
+            label: 'Dónde estamos',
+            description: 'Las sedes se editan en «Sedes»; aquí solo el texto que las rodea.',
+          },
+        ),
+        escribenos: fields.object(
+          {
+            titulo: texto('Titular'),
+            cierre: texto('Frase de cierre', { variasLineas: true }),
+          },
+          {
+            label: 'Escríbenos',
+            description: 'Los datos de contacto se editan en «Configuración general».',
           },
         ),
       },
