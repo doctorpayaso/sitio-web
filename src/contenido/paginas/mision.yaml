@@ -1,0 +1,166 @@
+seo:
+  titulo:
+    es: Nuestra misión — sanar con amor y alegría
+  descripcion:
+    es: >-
+      Somos una comunidad de personas que comparte su tiempo y su corazón para
+      acompañar a quienes atraviesan momentos de vulnerabilidad. Estos son
+      nuestros valores y la idea que nos ordena.
+  imagenAlCompartir: null
+antetitulo:
+  es: Nuestra misión
+titulo:
+  es: Creemos en el poder de un encuentro humano
+entrada:
+  es: >-
+    Somos Doctor Payaso A.C., una comunidad de personas que comparte su tiempo,
+    sus talentos y su corazón para acompañar a quienes atraviesan momentos de
+    vulnerabilidad.
+imagen:
+  archivo: null
+  textoAlternativo:
+    es: Un doctor payaso durante una visita hospitalaria
+  muestraPersonasIdentificables: true
+  folioConsentimiento: ''
+credo:
+  frases:
+    - es: Creemos en el amor que se expresa a través de las acciones.
+    - es: En la alegría que nace de un encuentro auténtico.
+    - es: En la dignidad de cada persona.
+    - es: Y en nuestra capacidad de transformar el mundo desde el lugar que ocupamos.
+franjaDeLaMision:
+  antetitulo:
+    es: Nuestra misión es
+  frase:
+    es: |-
+      Sanar con Amor
+      y Alegría
+  imagenDeFondo:
+    archivo: null
+    textoAlternativo:
+      es: Grupo de doctores payaso
+    muestraPersonasIdentificables: true
+    folioConsentimiento: ''
+valores:
+  titulo:
+    es: Nuestros valores
+  imagen:
+    archivo: null
+    textoAlternativo:
+      es: Dos doctores payaso compartiendo un momento
+    muestraPersonasIdentificables: true
+    folioConsentimiento: ''
+  lista:
+    - iconoImagen: null
+      icono: 💗
+      color: coral
+      titulo:
+        es: Amor
+      descripcion:
+        es: Elegimos acompañar desde la presencia, la escucha y el cuidado.
+    - iconoImagen: null
+      icono: 🎈
+      color: mango
+      titulo:
+        es: Alegría
+      descripcion:
+        es: >-
+          Compartimos el juego, la creatividad y la capacidad de disfrutar el
+          momento presente.
+    - iconoImagen: null
+      icono: 🧭
+      color: azul
+      titulo:
+        es: Integridad
+      descripcion:
+        es: Actuamos con honestidad, responsabilidad y congruencia.
+    - iconoImagen: null
+      icono: 🌱
+      color: menta
+      titulo:
+        es: Humildad
+      descripcion:
+        es: Reconocemos que cada persona tiene algo que enseñarnos.
+    - iconoImagen: null
+      icono: 🕊️
+      color: vino
+      titulo:
+        es: Respeto
+      descripcion:
+        es: >-
+          Honramos la dignidad, la individualidad y las decisiones de cada
+          persona.
+directores:
+  titulo:
+    es: Nuestros directores
+  personas:
+    - alex-garcia
+    - pay-campos
+metroCuadrado:
+  antetitulo:
+    es: Una idea que nos ordena
+  titulo:
+    es: Nuestro metro cuadrado
+  entrada:
+    es: >-
+      Creemos que cada persona tiene la capacidad de transformar el espacio que
+      habita. Una mirada, una conversación, una decisión o un gesto de cuidado
+      pueden cambiar la experiencia de alguien más.
+  cuerpo:
+    es: >-
+      Cada Doctor Payaso comienza por sí mismo y lleva esa intención a su
+      familia, su comunidad y los espacios que visita.
+  frase:
+    es: El mundo que queremos empieza en nuestro metro cuadrado.
+  anillos:
+    - es: Los espacios que visito
+    - es: Mi comunidad
+    - es: Mi familia
+  centro:
+    es: Yo
+somosMedicina:
+  titulo:
+    es: Somos Medicina
+  lineas:
+    - es: Nuestra medicina es la presencia.
+    - es: Es escuchar con atención.
+    - es: Es reconocer al otro.
+    - es: Es abrir un espacio para el juego y la alegría.
+    - es: Es acompañar con respeto.
+  imagenIzquierda:
+    archivo: null
+    textoAlternativo:
+      es: Visita hospitalaria
+    muestraPersonasIdentificables: true
+    folioConsentimiento: ''
+  imagenCentro:
+    archivo: null
+    textoAlternativo:
+      es: Detalle de un encuentro
+    muestraPersonasIdentificables: true
+    folioConsentimiento: ''
+  imagenDerecha:
+    archivo: null
+    textoAlternativo:
+      es: Formación de voluntarios
+    muestraPersonasIdentificables: true
+    folioConsentimiento: ''
+  cierre:
+    es: >-
+      Cada persona que forma parte de Doctor Payaso tiene una manera única de
+      compartir este regalo.
+cierre:
+  titulo:
+    es: Juntos llevamos el corazón en la punta de la nariz.
+  cuerpo:
+    es: >-
+      Formarte como Doctor Payaso toma seis módulos y una decisión. La decisión
+      es la parte difícil.
+  botonPrincipal:
+    texto:
+      es: Quiero ser parte
+    destino: /certificate
+  botonSecundario:
+    texto:
+      es: Conoce Clown Care
+    destino: /clown-care
