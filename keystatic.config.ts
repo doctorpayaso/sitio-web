@@ -325,8 +325,9 @@ export default config({
     brand: { name: 'Doctor Payaso A.C.' },
     navigation: {
       'Se actualiza seguido': ['cifras', 'generaciones'],
-      'Las seis páginas': [
+      'Las páginas del sitio': [
         'inicio',
+        'mision',
         'clownCare',
         'certificate',
         'alianzas',
@@ -641,6 +642,118 @@ export default config({
             botonSecundario: boton('Botón secundario'),
           },
           { label: 'Cierre en negro' },
+        ),
+      },
+    }),
+
+
+    // -------------------------------------------------------------------------
+    //  PÁGINA: NUESTRA MISIÓN
+    //  Los textos vienen del documento del Comité (2026). No son material de
+    //  mercadotecnia: son la declaración institucional. Cambiarlos no es una
+    //  edición de estilo — se consulta antes.
+    // -------------------------------------------------------------------------
+    mision: singleton({
+      label: 'Nuestra misión',
+      path: 'src/contenido/paginas/mision',
+      format: { data: 'yaml' },
+      schema: {
+        seo: seo(),
+        antetitulo: texto('Antetítulo'),
+        titulo: texto('Titular', { variasLineas: true, description: NOTA_SALTOS }),
+        entrada: parrafo('Párrafo de entrada'),
+        imagen: imagen('Fotografía de portada (vertical 4:5)', 'paginas/mision'),
+        credo: fields.object(
+          {
+            frases: fields.array(texto('Frase'), {
+              label: 'Frases',
+              description:
+                'Las cuatro líneas de «Creemos en…». Cada una lleva un punto de color distinto, en el orden en que estén aquí.',
+              itemLabel: (props) => props.fields.es?.value || 'Frase',
+            }),
+          },
+          { label: 'El credo' },
+        ),
+        franjaDeLaMision: fields.object(
+          {
+            antetitulo: texto('Antetítulo'),
+            frase: texto('La misión', {
+              variasLineas: true,
+              description:
+                'Se muestra enorme, sola, sobre fondo oscuro. Es el centro de la página.',
+            }),
+            imagenDeFondo: imagen('Fotografía de fondo (panorámica 21:9)', 'paginas/mision-franja', {
+              description:
+                'Opcional. Se oscurece para que el texto se lea encima. Sin ella queda el degradado.',
+            }),
+          },
+          { label: 'Franja de la misión' },
+        ),
+        valores: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            imagen: imagen('Fotografía (vertical 2:3)', 'paginas/mision-valores'),
+            lista: fields.array(tarjetaIcono('Valor'), {
+              label: 'Valores',
+              itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Valor',
+            }),
+          },
+          { label: 'Nuestros valores' },
+        ),
+        directores: fields.object(
+          {
+            titulo: texto('Titular'),
+            personas: fields.array(
+              fields.relationship({ label: 'Persona', collection: 'equipo' }),
+              {
+                label: 'Personas',
+                description:
+                  'Se toman de «Equipo». Aparecen en el orden en que estén aquí. La fotografía, el cargo y la biografía se editan en la ficha de cada persona, no aquí.',
+                itemLabel: (props) => props.value || 'Persona',
+              },
+            ),
+          },
+          { label: 'Nuestros directores' },
+        ),
+        metroCuadrado: fields.object(
+          {
+            antetitulo: texto('Antetítulo'),
+            titulo: texto('Titular', { variasLineas: true }),
+            entrada: parrafo('Entrada'),
+            cuerpo: parrafo('Segundo párrafo'),
+            frase: texto('Frase de cierre', { variasLineas: true }),
+            anillos: fields.array(texto('Etiqueta'), {
+              label: 'Etiquetas del diagrama',
+              description:
+                'De fuera hacia dentro. El diagrama está pensado para TRES etiquetas; con más, las letras se enciman.',
+              itemLabel: (props) => props.fields.es?.value || 'Etiqueta',
+            }),
+            centro: texto('Palabra del centro', { maximo: 12 }),
+          },
+          { label: 'Nuestro metro cuadrado' },
+        ),
+        somosMedicina: fields.object(
+          {
+            titulo: texto('Titular'),
+            lineas: fields.array(texto('Línea'), {
+              label: 'Líneas',
+              itemLabel: (props) => props.fields.es?.value || 'Línea',
+            }),
+            imagenIzquierda: imagen('Fotografía izquierda (vertical 3:4)', 'paginas/mision-mosaico-1'),
+            imagenCentro: imagen('Fotografía central (vertical 4:5)', 'paginas/mision-mosaico-2'),
+            imagenDerecha: imagen('Fotografía derecha (vertical 3:4)', 'paginas/mision-mosaico-3'),
+            cierre: texto('Frase de cierre', { variasLineas: true }),
+          },
+          { label: 'Somos Medicina' },
+        ),
+        cierre: fields.object(
+          {
+            titulo: texto('Titular', { variasLineas: true }),
+            cuerpo: parrafo('Cuerpo'),
+            botonPrincipal: boton('Botón principal'),
+            botonSecundario: boton('Botón secundario'),
+          },
+          { label: 'Cierre' },
         ),
       },
     }),
@@ -1445,8 +1558,16 @@ export default config({
         nombre: fields.slug({ name: { label: 'Nombre' } }),
         nombreDeClown: fields.text({ label: 'Nombre de clown' }),
         rol: texto('Rol'),
+        biografia: parrafo('Biografía', {
+          description:
+            'Tres o cuatro renglones. Se muestra en Nuestra misión bajo la fotografía.',
+        }),
         sede: fields.relationship({ label: 'Sede', collection: 'sedes' }),
-        fotografia: imagen('Fotografía', 'equipo'),
+        fotografia: imagen('Fotografía caracterizado', 'equipo'),
+        fotografiaSinCaracterizar: imagen('Fotografía sin caracterizar', 'equipo', {
+          description:
+            'Opcional. Si la cargas, la fotografía gira al pasar el cursor —o al tocarla en el teléfono— y aparece la persona. Tiene que estar tomada con el MISMO encuadre y la MISMA distancia que la anterior; si no, el giro se ve mal hecho. Sin esta foto la tarjeta simplemente no gira.',
+        }),
         publicar: fields.checkbox({ label: 'Mostrar en el sitio', defaultValue: false }),
         orden: fields.integer({ label: 'Orden' }),
       },
