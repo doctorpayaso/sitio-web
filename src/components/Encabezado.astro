@@ -11,11 +11,19 @@ const idioma = idiomaDe(Astro);
 const aqui = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const enlaces = [
+  // El botón «Quiero ser voluntario» salió de aquí: apuntaba a /certificate,
+  // el mismo destino que la entrada «Certifícate», con otro nombre, y el CSS
+  // lo escondía en teléfono. Ocupaba justo el espacio que faltaba para que
+  // cupieran las entradas que pidió el Comité.
   { es: 'Inicio', en: 'Home', url: '/' },
-  { es: 'Qué es Clown Care', en: 'What is Clown Care', url: '/clown-care' },
+  // Descomentar en cuanto exista la página; hoy sería un enlace a un 404.
+  // { es: 'Nuestra misión', en: 'Our mission', url: '/mision' },
+  { es: 'Clown care', en: 'Clown care', url: '/clown-care' },
   { es: 'Certifícate', en: 'Get certified', url: '/certificate' },
   { es: 'Alianzas', en: 'Partnerships', url: '/alianzas' },
   { es: 'Impacto', en: 'Impact', url: '/impacto' },
+  { es: 'Dona', en: 'Donate', url: '/dona' },
+  { es: 'Contacto', en: 'Contact', url: '/contacto' },
 ];
 
 const activo = (url: string) => (url === '/' ? aqui === '/' : aqui.startsWith(url));
@@ -35,9 +43,6 @@ const rotulo = (e: Record<string, string>) => e[idioma] ?? e.es;
     </nav>
 
     <div class="nav-cta">
-      <a href="/certificate" class="btn btn-ghost btn-sm">
-        {idioma === 'en' ? 'Volunteer' : 'Quiero ser voluntario'}
-      </a>
       <a href="/dona" class="btn btn-coral btn-sm">{idioma === 'en' ? 'Donate' : 'Donar'}</a>
     </div>
 
