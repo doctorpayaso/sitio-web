@@ -355,9 +355,13 @@ footer { background: var(--tinta); color: rgba(255, 247, 240, 0.72); padding: 72
 .foot-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 26px; font-size: 0.82rem; flex-wrap: wrap; }
 footer .logo { background: #fff; padding: 14px 18px; border-radius: 16px; display: inline-flex; align-self: flex-start; }
 footer .logo-img { height: 56px; }
-.social { display: flex; gap: 10px; }
-.social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: grid; place-items: center; font-size: 0.8rem; }
-.social a:hover { background: var(--mango); color: var(--tinta); }
+.social { display: flex; gap: 10px; flex-wrap: wrap; }
+.social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: grid; place-items: center; padding: 0; color: var(--crema); }
+.social a:hover, .social a:focus-visible { background: var(--mango); color: var(--tinta); }
+.social svg { width: 17px; height: 17px; fill: currentColor; display: block; }
+footer .foot-desc { max-width: 34ch; margin: 0 0 22px; }
+.foot-bottom a { text-decoration: underline; text-underline-offset: 3px; transition: 0.16s; }
+.foot-bottom a:hover { color: var(--mango); }
 
 /* ============ DUOTONOS RESTANTES ============ */
 .duo-teal { background: linear-gradient(145deg, #49b6a6, #2b7268); }
