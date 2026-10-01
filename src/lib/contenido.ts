@@ -25,6 +25,7 @@ import alianzas from '../contenido/paginas/alianzas.yaml';
 import impacto from '../contenido/paginas/impacto.yaml';
 import dona from '../contenido/paginas/dona.yaml';
 import contacto from '../contenido/paginas/contacto.yaml';
+import avisoPrivacidad from '../contenido/paginas/aviso-de-privacidad.yaml';
 
 export const paginas = {
   inicio,
@@ -35,6 +36,7 @@ export const paginas = {
   impacto,
   dona,
   contacto,
+  avisoPrivacidad,
 } as const;
 
 export { cifras, configuracion };
