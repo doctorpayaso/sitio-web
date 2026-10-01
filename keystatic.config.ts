@@ -500,6 +500,13 @@ export default config({
             'Ruta interna (/aviso-de-privacidad) o dirección completa. Aparece en la franja inferior del pie y junto a cada formulario.',
         }),
 
+        selloCemefi: fields.checkbox({
+          label: 'Mostrar el sello de Acreditación en Institucionalidad y Transparencia (Cemefi)',
+          defaultValue: true,
+          description:
+            'Aparece en el pie de página y en Impacto, sección «Gobernanza y responsabilidad». Desmarcar retira el sello de ambos lugares.',
+        }),
+
         pieDePagina: fields.object(
           {
             columnas: fields.array(
