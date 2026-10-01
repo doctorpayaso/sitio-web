@@ -2,12 +2,18 @@
 // Impacto y transparencia — la página que sostiene la credibilidad del sitio.
 import Base from '../layouts/Base.astro';
 import { t, tr, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
-import { paginas, cifras, informes, informesEnIngles, rutaDeDocumento, rutaDeImagen } from '../lib/contenido';
+import { paginas, cifras, configuracion, informes, informesEnIngles, rutaDeDocumento, rutaDeImagen } from '../lib/contenido';
+import selloAitColorUrl from '../assets/sellos/ait-color.svg?url';
 
 const p = paginas.impacto;
 const idioma = idiomaDe(Astro);
 const listaInformes = informes();
 const conIngles = informesEnIngles();
+
+// Sello de la Acreditación en Institucionalidad y Transparencia (Cemefi), a
+// color, bajo la frase de Gobernanza: el sello es la prueba de lo que dice la
+// frase. Mismo interruptor del panel que el sello del pie.
+const mostrarSello = configuracion.selloCemefi !== false;
 
 /** Fondo tenue del color elegido, con el icono en el tono fuerte. */
 const TENUE: Record<string, string> = {
@@ -184,6 +190,16 @@ const hayCifras = comunidad.length > 0 || alcance.length > 0;
           <h2 class="h2" set:html={tr(p.gobernanza.titulo, idioma)} />
           {t(p.gobernanza?.frase, idioma) && (
             <p class="lead" style="margin-top:14px">{t(p.gobernanza.frase, idioma)}</p>
+          )}
+          {mostrarSello && (
+            <div style="display:inline-block;margin-top:28px;padding-top:24px;border-top:1px solid var(--tinta-12)">
+              <img
+                src={selloAitColorUrl}
+                alt="Acreditación en Institucionalidad y Transparencia — Cemefi"
+                width="184" height="64" loading="lazy"
+                style="height:clamp(56px,5vw,64px);width:auto;display:block"
+              />
+            </div>
           )}
         </div>
         <div>
