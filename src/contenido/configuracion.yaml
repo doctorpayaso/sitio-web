@@ -20,6 +20,7 @@ redes:
 donataria:
   discriminant: false
 avisoDePrivacidad: /aviso-de-privacidad
+selloCemefi: true
 pieDePagina:
   columnas:
     - titulo:
