@@ -9,11 +9,18 @@
 import { t, idiomaDe } from '../lib/idioma';
 import { configuracion } from '../lib/contenido';
 import logoUrl from '../assets/logo.svg?url';
+import selloAitUrl from '../assets/sellos/ait-blanco.svg?url';
 
 const idioma = idiomaDe(Astro);
 const anio = new Date().getFullYear();
 const c = configuracion.contacto ?? {};
 const pie = configuracion.pieDePagina ?? {};
+
+// Sello de la Acreditación en Institucionalidad y Transparencia (Cemefi).
+// Versión blanca oficial: la única que armoniza sobre el fondo tinta. Sin enlace,
+// por decisión de Dirección. Se apaga desde el panel con «selloCemefi».
+const mostrarSello = configuracion.selloCemefi !== false;
+const ALT_SELLO = 'Acreditación en Institucionalidad y Transparencia — Cemefi';
 
 /**
  * Íconos de redes, en línea: sin librerías ni peticiones a terceros.
@@ -77,6 +84,11 @@ const enlacesValidos = (lista: any[] = []) =>
             ))}
           </div>
         )}
+        {mostrarSello && (
+          <div class="sello-ait sello-ait--movil">
+            <img src={selloAitUrl} alt={ALT_SELLO} width="172" height="60" loading="lazy" />
+          </div>
+        )}
       </div>
 
       {columnas.map((col: any) => (
@@ -88,7 +100,7 @@ const enlacesValidos = (lista: any[] = []) =>
         </div>
       ))}
 
-      <div>
+      <div class="foot-contacto">
         <h5>{t(pie.tituloContacto, idioma) || (idioma === 'en' ? 'Contact' : 'Contacto')}</h5>
         {c.correo && <a href={`mailto:${c.correo}`}>{c.correo}</a>}
         {c.telefono && <a href={`tel:${String(c.telefono).replace(/\s/g, '')}`}>{c.telefono}</a>}
@@ -100,6 +112,11 @@ const enlacesValidos = (lista: any[] = []) =>
         {enlacesValidos(pie.enlacesDeContacto).map((e: any) => (
           <a href={e.destino} {...atributosDeEnlace(e.destino)}>{t(e.texto, idioma)}</a>
         ))}
+        {mostrarSello && (
+          <div class="sello-ait sello-ait--escritorio">
+            <img src={selloAitUrl} alt={ALT_SELLO} width="172" height="60" loading="lazy" />
+          </div>
+        )}
       </div>
     </div>
 
