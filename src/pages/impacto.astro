@@ -147,7 +147,9 @@ const hayCifras = comunidad.length > 0 || alcance.length > 0;
     </section>
   )}
 
-  <section class="pad-s">
+  {/* Ancla del enlace «Informes anuales» del pie. scroll-margin: que el
+      encabezado fijo no tape el título al llegar. */}
+  <section class="pad-s" id="informes" style="scroll-margin-top:88px">
     <div class="wrap">
       <h2 class="h2" style="margin-bottom:8px" set:html={tr(p.informes?.titulo, idioma)} />
       <p class="lead" style="margin-bottom:32px" set:html={tr(p.informes?.entrada, idioma)} />
