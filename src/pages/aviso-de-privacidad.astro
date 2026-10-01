@@ -1,0 +1,47 @@
+---
+// Aviso de privacidad — enlazado desde la franja inferior del pie y desde cada
+// formulario del sitio.
+//
+// Es texto legal: se muestra tal cual lo aprueba Dirección, sin antetítulo,
+// frase destacada ni cierre editorial. La página no agrega una sola palabra que
+// no esté en el panel; solo da formato de lectura.
+import Base from '../layouts/Base.astro';
+import { t, tr, idiomaDe, formatearFecha } from '../lib/idioma';
+import { paginas } from '../lib/contenido';
+
+const p = paginas.avisoPrivacidad;
+const idioma = idiomaDe(Astro);
+const secciones = (p.secciones ?? []).filter((s: any) => t(s.texto, idioma));
+---
+
+<Base seo={p.seo} ruta="institucional">
+  <section class="pad-s aviso" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="wrap-narrow">
+      <h1 class="h1" style="margin:16px 0 20px;max-width:16ch">{t(p.titulo, idioma)}</h1>
+      {p.ultimaActualizacion && (
+        <p class="eyebrow aviso-fecha">
+          {idioma === 'en' ? 'Last updated' : 'Última actualización'}:{' '}
+          {formatearFecha(p.ultimaActualizacion, idioma)}
+        </p>
+      )}
+
+      <div class="aviso-cuerpo">
+        {secciones.map((s: any) => (
+          <>
+            {t(s.titulo, idioma) && <h2 class="h3">{t(s.titulo, idioma)}</h2>}
+            <p set:html={tr(s.texto, idioma)} />
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .aviso-fecha { color: var(--tinta-60); margin-bottom: 8px; }
+  .aviso-cuerpo { margin-top: 28px; max-width: 68ch; }
+  .aviso-cuerpo p { color: var(--tinta-80); line-height: 1.7; margin: 0 0 1.15em; }
+  .aviso-cuerpo h2 { margin: 1.6em 0 0.5em; }
+  /* Textos legales con direcciones de correo y frases largas sin espacios. */
+  .aviso-cuerpo p { overflow-wrap: anywhere; }
+</style>
