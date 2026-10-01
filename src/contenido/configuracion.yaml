@@ -3,15 +3,9 @@ eslogan:
 descriptorLogotipo: Doctor Payaso A.C.
 descripcionBreve:
   es: >-
-    Doctor Payaso A.C.
-
-
     Somos una comunidad de personas formadas para acompañar a quienes atraviesan
     momentos de vulnerabilidad a través del juego, la escucha y la conexión
     humana.
-
-
-    Llevamos el corazón en la punta de la nariz.
 contacto:
   correo: mexico@doctorpayaso.com
   telefono: +52 55 3899 9466
@@ -20,8 +14,44 @@ contacto:
 redes:
   facebook: https://www.facebook.com/doctorpayasoac/
   instagram: https://www.instagram.com/doctorpayaso.ac
-  youtube: www.youtube.com/@DoctorPayaso
+  youtube: https://www.youtube.com/@DoctorPayaso
   linkedin: https://www.linkedin.com/company/doctor-payaso-a.c./
-  tiktok: https://www.linkedin.com/company/doctor-payaso-a.c./
+  tiktok: https://www.tiktok.com/@doctorpayaso
 donataria:
   discriminant: false
+avisoDePrivacidad: /aviso-de-privacidad
+pieDePagina:
+  columnas:
+    - titulo:
+        es: Participa
+      enlaces:
+        - texto:
+            es: Certifícate
+          destino: /certificate
+        - texto:
+            es: Haz un donativo
+          destino: /dona
+        - texto:
+            es: Construye una alianza
+          destino: /alianzas
+        - texto:
+            es: Solicita una visita virtual
+          destino: https://doctorpayaso.typeform.com/to/owdM1G
+    - titulo:
+        es: Conoce
+      enlaces:
+        - texto:
+            es: Nuestra misión
+          destino: /mision
+        - texto:
+            es: Qué es Clown Care
+          destino: /clown-care
+        - texto:
+            es: Impacto y transparencia
+          destino: /impacto
+        - texto:
+            es: Informes anuales
+          destino: /impacto#informes
+  tituloContacto:
+    es: Contacto
+  enlacesDeContacto: []
