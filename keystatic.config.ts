@@ -192,6 +192,21 @@ const boton = (label: string) =>
     { label },
   );
 
+/**
+ * Enlace del pie de página. Misma forma que `boton` —texto + destino— para que
+ * el sitio tenga una sola regla: si el destino empieza con http, se abre en
+ * pestaña nueva.
+ */
+const enlaceDelPie = () =>
+  fields.object({
+    texto: texto('Texto del enlace', { obligatorio: true, maximo: 32 }),
+    destino: fields.text({
+      label: 'Destino',
+      description: 'Ruta interna (/mision) o dirección completa (https://…).',
+      validation: { length: { min: 1 } },
+    }),
+  });
+
 /** Tarjeta con icono de color, usada en varias páginas. */
 const tarjetaIcono = (label: string) =>
   fields.object(
@@ -333,6 +348,7 @@ export default config({
         'alianzas',
         'impacto',
         'dona',
+        'avisoPrivacidad',
       ],
       'Contenido reutilizable': [
         'sedes',
@@ -421,7 +437,7 @@ export default config({
       schema: {
         eslogan: texto('Eslogan', {
           description:
-            'Decisión institucional: «Sanando con amor y alegría». No se cambia sin acuerdo de Dirección.',
+            'Decisión institucional: «Sanar con Amor y Alegría». No se cambia sin acuerdo de Dirección.',
         }),
         descriptorLogotipo: fields.text({
           label: 'Descriptor del logotipo',
@@ -429,7 +445,8 @@ export default config({
           description: 'Pendiente de Dirección: decidir si convive con el eslogan.',
         }),
         descripcionBreve: parrafo('Descripción breve', {
-          description: 'Aparece en el pie de página, bajo el eslogan. Dos líneas como máximo.',
+          description:
+            'Aparece en el pie de página, bajo el eslogan. Un solo párrafo breve. No repetir «Doctor Payaso A.C.»: el logotipo ya está justo arriba.',
         }),
 
         contacto: fields.object(
@@ -475,11 +492,84 @@ export default config({
           },
         ),
 
-        avisoDePrivacidad: fields.url({
+        // Texto y no URL: `fields.url` valida con `new URL()` y rechaza rutas
+        // internas como /aviso-de-privacidad. Mismo criterio que los botones.
+        avisoDePrivacidad: fields.text({
           label: 'Enlace al aviso de privacidad',
           description:
-            'Debe ser accesible desde toda página con formulario, no solo desde el pie.',
+            'Ruta interna (/aviso-de-privacidad) o dirección completa. Aparece en la franja inferior del pie y junto a cada formulario.',
         }),
+
+        pieDePagina: fields.object(
+          {
+            columnas: fields.array(
+              fields.object({
+                titulo: texto('Título de la columna', { obligatorio: true, maximo: 24 }),
+                enlaces: fields.array(enlaceDelPie(), {
+                  label: 'Enlaces',
+                  description: 'Arrastra para cambiar el orden.',
+                  itemLabel: (props) => props.fields.texto.fields.es?.value || 'Enlace',
+                  validation: { length: { max: 6 } },
+                }),
+              }),
+              {
+                label: 'Columnas de enlaces',
+                description:
+                  'Máximo dos. Junto con el logotipo y la columna de contacto forman cuatro: así la rejilla queda pareja en computadora (4) y en tableta (2 + 2).',
+                itemLabel: (props) => props.fields.titulo.fields.es?.value || 'Columna',
+                validation: { length: { min: 1, max: 2 } },
+              },
+            ),
+            tituloContacto: texto('Título de la columna de contacto', { maximo: 24 }),
+            enlacesDeContacto: fields.array(enlaceDelPie(), {
+              label: 'Enlaces adicionales de contacto',
+              description:
+                'Aparecen debajo del correo, el teléfono y WhatsApp, que salen de «Datos de contacto».',
+              itemLabel: (props) => props.fields.texto.fields.es?.value || 'Enlace',
+              validation: { length: { max: 3 } },
+            }),
+          },
+          { label: 'Pie de página' },
+        ),
+      },
+    }),
+
+    // -------------------------------------------------------------------------
+    //  PÁGINA: AVISO DE PRIVACIDAD
+    // -------------------------------------------------------------------------
+    //  Texto legal. Se edita aquí para que una actualización del aviso no
+    //  requiera programar, pero NO es contenido editorial: cada cambio debe
+    //  corresponder a una versión aprobada por la Dirección.
+    avisoPrivacidad: singleton({
+      label: 'Aviso de privacidad',
+      path: 'src/contenido/paginas/aviso-de-privacidad',
+      format: { data: 'yaml' },
+      schema: {
+        seo: seo(),
+        titulo: texto('Título', { obligatorio: true }),
+        ultimaActualizacion: fields.date({
+          label: 'Fecha de última actualización',
+          description:
+            'Se muestra bajo el título. Cambiarla cada vez que se publique una versión nueva. Si se deja vacía, no se muestra.',
+        }),
+        secciones: fields.array(
+          fields.object({
+            titulo: texto('Título de la sección', {
+              description: 'Opcional. Solo si el texto aprobado trae encabezados.',
+            }),
+            texto: parrafo('Texto', {
+              description: 'Para negritas, escribe **así**. Cada salto de línea se respeta.',
+            }),
+          }),
+          {
+            label: 'Párrafos y secciones',
+            description: 'Copiar el texto aprobado tal cual. No es una edición de estilo.',
+            itemLabel: (props) =>
+              props.fields.titulo.fields.es?.value ||
+              (props.fields.texto.fields.es?.value ?? '').slice(0, 60) ||
+              'Párrafo',
+          },
+        ),
       },
     }),
 
