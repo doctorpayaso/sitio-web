@@ -17,9 +17,12 @@ hero:
     es: receta
   entrada:
     es: >-
-      Somos Doctor Payaso. Formamos voluntarios certificados que acompañan a
-      pacientes hospitalizados —de 0 a 114 años— con las herramientas del arte
-      clown, la psicología y la risoterapia. No entretenemos: intervenimos.
+      Somos **Doctor Payaso**, una comunidad de personas formadas para acompañar
+      a quienes atraviesan momentos de vulnerabilidad a través del juego, la
+      escucha y la conexión humana.
+
+
+      Llevamos el corazón en la punta de la nariz.
   botonPrincipal:
     texto:
       es: Quiero certificarme →
