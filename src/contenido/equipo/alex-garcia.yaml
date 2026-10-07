@@ -8,18 +8,16 @@ biografia:
     negocios internacional (CBC), coach ontológico por AIAC y entrenador en
     felicidad certificado por la academia de Tal Ben-Shahar. Mejor Papá Clown
     del mundo desde 1997.
-sede: null
 fotografia:
-  archivo: null
+  archivo: /src/assets/equipo/alex-garcia/fotografia/archivo.jpg
   textoAlternativo:
     es: Dr. Chiflón caracterizado
-  muestraPersonasIdentificables: true
-  folioConsentimiento: ''
+  muestraPersonasIdentificables: false
 fotografiaSinCaracterizar:
-  archivo: null
+  archivo: /src/assets/equipo/alex-garcia/fotografiaSinCaracterizar/archivo.jpg
   textoAlternativo:
     es: Alex García sin caracterizar
   muestraPersonasIdentificables: true
-  folioConsentimiento: ''
+  folioConsentimiento: CONS-2026-0162
 publicar: true
 orden: 1
