@@ -122,6 +122,8 @@ somosMedicina:
     - es: Es abrir un espacio para el juego y la alegría.
     - es: Es acompañar con respeto.
   imagenIzquierda:
+    archivo: >-
+      /src/assets/paginas/mision-mosaico-1/somosMedicina/imagenIzquierda/archivo.jpg
     textoAlternativo:
       es: Visita hospitalaria
     muestraPersonasIdentificables: true
