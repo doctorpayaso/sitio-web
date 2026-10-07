@@ -19,7 +19,8 @@ imagen:
   archivo: /src/assets/paginas/mision/imagen/archivo.JPG
   textoAlternativo:
     es: Un doctor payaso durante una visita hospitalaria
-  muestraPersonasIdentificables: false
+  muestraPersonasIdentificables: true
+  folioConsentimiento: CONS-2026-0150
 credo:
   frases:
     - es: Creemos en el amor que se expresa a través de las acciones.
