@@ -44,9 +44,11 @@ valores:
   titulo:
     es: Nuestros valores
   imagen:
+    archivo: /src/assets/paginas/mision-valores/valores/imagen/archivo.jpg
     textoAlternativo:
       es: Dos doctores payaso compartiendo un momento
     muestraPersonasIdentificables: true
+    folioConsentimiento: CONS-2026-0156
   lista:
     - icono: 💗
       color: coral
