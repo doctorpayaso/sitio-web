@@ -130,9 +130,11 @@ somosMedicina:
       es: Detalle de un encuentro
     muestraPersonasIdentificables: true
   imagenDerecha:
+    archivo: >-
+      /src/assets/paginas/mision-mosaico-3/somosMedicina/imagenDerecha/archivo.jpg
     textoAlternativo:
       es: Formación de voluntarios
-    muestraPersonasIdentificables: true
+    muestraPersonasIdentificables: false
   cierre:
     es: >-
       Cada persona que forma parte de Doctor Payaso tiene una manera única de
