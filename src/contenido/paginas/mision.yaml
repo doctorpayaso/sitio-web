@@ -6,7 +6,6 @@ seo:
       Somos una comunidad de personas que comparte su tiempo y su corazón para
       acompañar a quienes atraviesan momentos de vulnerabilidad. Estos son
       nuestros valores y la idea que nos ordena.
-  imagenAlCompartir: null
 antetitulo:
   es: Nuestra misión
 titulo:
@@ -17,17 +16,18 @@ entrada:
     sus talentos y su corazón para acompañar a quienes atraviesan momentos de
     vulnerabilidad.
 imagen:
-  archivo: null
+  archivo: /src/assets/paginas/mision/imagen/archivo.JPG
   textoAlternativo:
     es: Un doctor payaso durante una visita hospitalaria
-  muestraPersonasIdentificables: true
-  folioConsentimiento: ''
+  muestraPersonasIdentificables: false
 credo:
   frases:
     - es: Creemos en el amor que se expresa a través de las acciones.
     - es: En la alegría que nace de un encuentro auténtico.
     - es: En la dignidad de cada persona.
-    - es: Y en nuestra capacidad de transformar el mundo desde el lugar que ocupamos.
+    - es: >-
+        Y en nuestra capacidad de transformar el mundo desde el lugar que
+        ocupamos.
 franjaDeLaMision:
   antetitulo:
     es: Nuestra misión es
@@ -36,30 +36,24 @@ franjaDeLaMision:
       Sanar con Amor
       y Alegría
   imagenDeFondo:
-    archivo: null
     textoAlternativo:
       es: Grupo de doctores payaso
     muestraPersonasIdentificables: true
-    folioConsentimiento: ''
 valores:
   titulo:
     es: Nuestros valores
   imagen:
-    archivo: null
     textoAlternativo:
       es: Dos doctores payaso compartiendo un momento
     muestraPersonasIdentificables: true
-    folioConsentimiento: ''
   lista:
-    - iconoImagen: null
-      icono: 💗
+    - icono: 💗
       color: coral
       titulo:
         es: Amor
       descripcion:
         es: Elegimos acompañar desde la presencia, la escucha y el cuidado.
-    - iconoImagen: null
-      icono: 🎈
+    - icono: 🎈
       color: mango
       titulo:
         es: Alegría
@@ -67,22 +61,19 @@ valores:
         es: >-
           Compartimos el juego, la creatividad y la capacidad de disfrutar el
           momento presente.
-    - iconoImagen: null
-      icono: 🧭
+    - icono: 🧭
       color: azul
       titulo:
         es: Integridad
       descripcion:
         es: Actuamos con honestidad, responsabilidad y congruencia.
-    - iconoImagen: null
-      icono: 🌱
+    - icono: 🌱
       color: menta
       titulo:
         es: Humildad
       descripcion:
         es: Reconocemos que cada persona tiene algo que enseñarnos.
-    - iconoImagen: null
-      icono: 🕊️
+    - icono: 🕊️
       color: vino
       titulo:
         es: Respeto
@@ -128,23 +119,17 @@ somosMedicina:
     - es: Es abrir un espacio para el juego y la alegría.
     - es: Es acompañar con respeto.
   imagenIzquierda:
-    archivo: null
     textoAlternativo:
       es: Visita hospitalaria
     muestraPersonasIdentificables: true
-    folioConsentimiento: ''
   imagenCentro:
-    archivo: null
     textoAlternativo:
       es: Detalle de un encuentro
     muestraPersonasIdentificables: true
-    folioConsentimiento: ''
   imagenDerecha:
-    archivo: null
     textoAlternativo:
       es: Formación de voluntarios
     muestraPersonasIdentificables: true
-    folioConsentimiento: ''
   cierre:
     es: >-
       Cada persona que forma parte de Doctor Payaso tiene una manera única de
