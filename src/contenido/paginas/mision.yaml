@@ -126,7 +126,7 @@ somosMedicina:
       /src/assets/paginas/mision-mosaico-1/somosMedicina/imagenIzquierda/archivo.jpg
     textoAlternativo:
       es: Visita hospitalaria
-    muestraPersonasIdentificables: true
+    muestraPersonasIdentificables: false
   imagenCentro:
     archivo: >-
       /src/assets/paginas/mision-mosaico-2/somosMedicina/imagenCentro/archivo.jpg
