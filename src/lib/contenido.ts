@@ -196,9 +196,14 @@ export const equipoPorId = (id: string | null | undefined) =>
  * Es la misma solución que aplicamos al logotipo: no depender de que el
  * hospedaje copie archivos sueltos, sino hacer que la imagen forme parte de la
  * compilación.
+ *
+ * Las extensiones van en minúsculas Y en mayúsculas porque el patrón distingue
+ * entre ellas, y las cámaras y los teléfonos guardan `.JPG`. El panel conserva
+ * la extensión del archivo que se sube, así que una foto `IMG_1234.JPG` quedaba
+ * fuera de este índice y la página la trataba como si no existiera.
  */
 const IMAGENES = import.meta.glob<string>(
-  '/src/assets/**/*.{jpg,jpeg,png,webp,avif,gif,svg}',
+  '/src/assets/**/*.{jpg,jpeg,png,webp,avif,gif,svg,JPG,JPEG,PNG,WEBP,AVIF,GIF,SVG}',
   { eager: true, query: '?url', import: 'default' },
 );
 
@@ -210,8 +215,9 @@ const IMAGENES = import.meta.glob<string>(
  * suelto en `public/` depende de que el hospedaje lo copie tal cual, y ahí ya
  * tuvimos un archivo que nunca llegó a producción.
  */
+// Mismo cuidado con las mayúsculas: un escáner guarda `.PDF`.
 const DOCUMENTOS = import.meta.glob<string>(
-  '/src/assets/**/*.{pdf,doc,docx,xlsx,csv,zip}',
+  '/src/assets/**/*.{pdf,doc,docx,xlsx,csv,zip,PDF,DOC,DOCX,XLSX,CSV,ZIP}',
   { eager: true, query: '?url', import: 'default' },
 );
 
