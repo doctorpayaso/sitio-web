@@ -1,10 +1,9 @@
 identificador: Monterrey enero 2027
 sede: monterrey
-fechaDeInicio: '2027-01-09'
-fechaDeCierreDeInscripciones: null
+fechaDeInicio: 2027-01-09
 modalidad: presencial
 estado: abiertas
 cupoLimitado: true
-notas:
-  es: ''
+notas: {}
+folleto: /src/assets/folletos/monterrey-enero-2027/folleto.pdf
 publicar: true
