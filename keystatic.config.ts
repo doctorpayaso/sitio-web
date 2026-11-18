@@ -1485,6 +1485,13 @@ export default config({
         notas: texto('Nota adicional', {
           description: 'Ej. «Práctica coordinada en tu ciudad». Opcional.',
         }),
+        folleto: fields.file({
+          label: 'Folleto de la generación (PDF)',
+          directory: 'src/assets/folletos',
+          publicPath: '/src/assets/folletos/',
+          description:
+            'Opcional. Aparece como «Descargar folleto» en la tarjeta de esta sede. Se retira solo, junto con la tarjeta, cuando empieza la generación.',
+        }),
         publicar: fields.checkbox({
           label: 'Mostrar en el sitio',
           defaultValue: true,
