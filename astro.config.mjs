@@ -17,6 +17,32 @@ import markdoc from '@astrojs/markdoc';
 import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
 import yaml from '@rollup/plugin-yaml';
+import { readdirSync, statSync } from 'node:fs';
+
+// -----------------------------------------------------------------------------
+//  Peso de los folletos de certificación
+// -----------------------------------------------------------------------------
+//  La tarjeta de cada sede muestra «PDF 1.9 MB» junto al enlace: quien entra
+//  desde el teléfono con datos merece saber cuánto va a descargar. Se mide aquí,
+//  en Node, porque las páginas se generan dentro de workerd, que no tiene acceso
+//  al disco. Si la carpeta no existe, la tarjeta simplemente no muestra el peso.
+// -----------------------------------------------------------------------------
+const PESOS_DE_FOLLETOS = (() => {
+  try {
+    const carpeta = 'src/assets/folletos';
+    // El panel guarda cada folleto en su propia subcarpeta
+    // (src/assets/folletos/monterrey-enero-2027/folleto.pdf), por eso se recorre
+    // la carpeta completa.
+    return Object.fromEntries(
+      readdirSync(carpeta, { recursive: true })
+        .map((f) => String(f).replaceAll('\\', '/'))
+        .filter((f) => statSync(`${carpeta}/${f}`).isFile())
+        .map((f) => [`/${carpeta}/${f}`, statSync(`${carpeta}/${f}`).size]),
+    );
+  } catch {
+    return {};
+  }
+})();
 
 // -----------------------------------------------------------------------------
 //  Idiomas
@@ -104,6 +130,7 @@ export default defineConfig({
 
   vite: {
     plugins: [yaml()], // permite importar los .yaml que escribe Keystatic
+    define: { __PESOS_DE_FOLLETOS__: JSON.stringify(PESOS_DE_FOLLETOS) },
     build: {
       // Por defecto los archivos pequeños se incrustan dentro del HTML en vez de
       // servirse como archivo. Es una optimización razonable, pero hace que el
