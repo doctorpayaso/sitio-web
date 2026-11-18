@@ -668,6 +668,10 @@ export default config({
               description:
                 'REGLA: se transcribe de la fuente original. Nunca se redacta ni se parafrasea una cita atribuida a una persona real.',
             }),
+            fraseDestacada: texto('Frase resaltada (opcional)', {
+              description:
+                'Copia aquí, exacto, un fragmento de la cita. Se pinta en dorado y cursiva. Si no coincide letra por letra, la cita se muestra sin resaltado.',
+            }),
             autor: texto('Autor y procedencia', { variasLineas: true, description: NOTA_SALTOS }),
           },
           { label: 'Cita editorial' },

@@ -313,10 +313,21 @@ header.nav {
 .video-marco { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 4; }
 
 /* ============ CITA EDITORIAL ============ */
-.quote { position: relative; padding: clamp(36px, 5vw, 64px); border-radius: var(--r-xl); background: var(--crema-2); overflow: hidden; }
-.quote blockquote { font-family: var(--display); font-size: clamp(1.35rem, 2.9vw, 2.2rem); line-height: 1.28; letter-spacing: -0.02em; max-width: 24ch; position: relative; }
-.quote cite { display: block; margin-top: 24px; font-style: normal; font-size: 0.9rem; font-weight: 600; color: var(--tinta-60); line-height: 1.5; }
-.quote-mark { position: absolute; top: -30px; right: 24px; font-family: var(--display); font-size: 14rem; line-height: 1; color: var(--coral); opacity: 0.14; }
+/* Banda con degradado de marca (vino → rojo → coral). El tono claro queda en la
+   esquina superior derecha, donde no hay texto: así la cita y la firma siempre
+   caen sobre la parte oscura y conservan el contraste. */
+.quote { position: relative; isolation: isolate; overflow: hidden; margin: 0; text-align: center; color: #fff; border-radius: var(--r-xl); padding: clamp(36px, 5vw, 68px) clamp(22px, 6vw, 96px); background: linear-gradient(45deg, var(--vino) 0%, var(--coral-d) 65%, var(--coral) 100%); }
+.quote blockquote { font-family: var(--display); font-size: clamp(1.5rem, 2.9vw, 2.3rem); line-height: 1.26; letter-spacing: -0.02em; max-width: 31ch; margin: 0 auto; color: #fff; text-wrap: balance; }
+.quote-hl { font-style: italic; color: #ffd08a; }
+.quote cite { display: block; margin-top: 22px; font-style: normal; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; line-height: 1.5; color: #fff; }
+.quote-mark { display: block; font-family: var(--display); font-size: clamp(4rem, 7vw, 6.5rem); line-height: 1; height: 0.44em; color: var(--mango); }
+.quote-orb { position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; }
+.quote-orb--grande { width: clamp(120px, 16vw, 220px); height: clamp(120px, 16vw, 220px); background: var(--crema); opacity: 0.07; left: -4%; bottom: -22%; }
+.quote-orb--chica { width: clamp(36px, 4.5vw, 60px); height: clamp(36px, 4.5vw, 60px); background: var(--mango); opacity: 0.55; right: 7%; top: 14%; }
+@media (max-width: 640px) { .quote-orb--chica { width: 30px; height: 30px; right: 18px; top: 18px; } }
+.cita-animada .cita-palabra { opacity: 0.3; transition: opacity 0.35s ease; }
+.cita-animada .cita-palabra.on { opacity: 1; }
+@media print { .cita-animada .cita-palabra { opacity: 1; } }
 
 /* ============ FRANJA MÉTODO ============ */
 .method-row { display: grid; grid-template-columns: 76px 1fr; gap: 24px; padding: 30px 0; border-top: 1px solid var(--tinta-12); align-items: start; }
