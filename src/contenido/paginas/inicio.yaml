@@ -8,13 +8,13 @@ seo:
   imagenAlCompartir: /src/assets/og/seo/imagenAlCompartir.png
 hero:
   antetitulo:
-    es: Clown care certificado · CDMX · Monterrey · Veracruz · Toluca
+    es: Certificación Clown Care · CDMX · Monterrey · Veracruz · Toluca
   titulo:
     es: |-
-      Hay medicina
-      que no se receta.
+      Sanando con
+      amor y alegría.
   palabraDestacada:
-    es: receta
+    es: alegría
   entrada:
     es: >-
       Somos **Doctor Payaso**, una comunidad de personas formadas para acompañar
@@ -148,12 +148,11 @@ metodo:
 citaEditorial:
   texto:
     es: >-
-      La atención a los niños enfermos va más allá de la medicina y la
-      tecnología. Veo a los payasos como sanadores.
+      Décadas de alegría, cuidado y valentía han dado forma a algo que el mundo
+      hoy necesita con urgencia. El clowning en el ámbito de la salud está
+      preparado para asumir, por fin, su papel más significativo.
   autor:
-    es: |-
-      Dr. John M. Driscoll Jr.
-      Children's Hospital, Nueva York
+    es: Dra. Morgana Masetti
 visitasVirtuales:
   titulo:
     es: Visitas virtuales, gratis, a cualquier parte del mundo
@@ -237,7 +236,7 @@ cierre:
       Ningún tratamiento incluye la compañía. Nosotros sí. Súmate como
       voluntario, alía tu institución o dona.
   firma:
-    es: Sanar con Amor y Alegría
+    es: Sanando con Amor y Alegría
   botonPrincipal:
     texto:
       es: Quiero certificarme
