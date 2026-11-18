@@ -43,11 +43,8 @@ hero:
     archivo: /src/assets/paginas/inicio/hero/imagen/archivo.jpg
     textoAlternativo:
       es: >-
-        Fotografía de una doctora payasa con bata blanca, lentes amarillos y
-        nariz roja, usando un gorro tejido naranja decorado con figuras
-        coloridas. Se inclina sonriente hacia un niño hospitalizado que está
-        acostado en una cama y sostiene un juguete rojo. Ambos se miran, en un
-        ambiente hospitalario infantil.
+        Un payaso de hospital sonriente entretiene con un títere de dedo a un
+        niño alegremente acostado en una cama médica.
     muestraPersonasIdentificables: true
     folioConsentimiento: CONS-2026-0001
 franjaDeCifras:
