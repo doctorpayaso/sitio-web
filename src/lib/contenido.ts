@@ -9,6 +9,8 @@
 //  y la olvidara. Concentrada aquí, se aplica sola.
 // =============================================================================
 
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { aTextoDeFecha } from './idioma';
 import type { TextoLocalizado } from './idioma';
 
@@ -201,10 +203,60 @@ export const equipoPorId = (id: string | null | undefined) =>
  * entre ellas, y las cámaras y los teléfonos guardan `.JPG`. El panel conserva
  * la extensión del archivo que se sube, así que una foto `IMG_1234.JPG` quedaba
  * fuera de este índice y la página la trataba como si no existiera.
+ *
+ * Hay dos índices porque hay dos tipos de imagen:
+ *
+ * - FOTOGRAFÍAS (jpg, png, webp, avif). Se optimizan solas al compilar: lado
+ *   mayor de 1600 px como máximo, formato WebP, calidad 80. Así nadie tiene que
+ *   reducir una foto antes de subirla al panel: se sube tal como sale del
+ *   teléfono o de la cámara, y al sitio llega una versión ligera. El original
+ *   se queda en el repositorio, intacto, por si un día hace falta otra medida.
+ *
+ *   Efecto lateral deseable: la versión optimizada no conserva los metadatos
+ *   del archivo (modelo de cámara, fecha, y sobre todo la ubicación GPS que
+ *   guardan los teléfonos). Una foto tomada en un hospital no debe publicar
+ *   las coordenadas del hospital.
+ *
+ * - VECTORES Y ANIMACIONES (svg, gif). Pasan tal cual: un SVG ya es ligero y
+ *   rasterizarlo lo empeora; un GIF animado perdería la animación.
  */
-const IMAGENES = import.meta.glob<string>(
-  '/src/assets/**/*.{jpg,jpeg,png,webp,avif,gif,svg,JPG,JPEG,PNG,WEBP,AVIF,GIF,SVG}',
-  { eager: true, query: '?url', import: 'default' },
+const LADO_MAYOR_MAXIMO = 2000;
+const CALIDAD = 80;
+
+const FOTOGRAFIAS = import.meta.glob<ImageMetadata>(
+  '/src/assets/**/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP,AVIF}',
+  { eager: true, import: 'default' },
+);
+
+const VECTORES = import.meta.glob<string>('/src/assets/**/*.{gif,svg,GIF,SVG}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+/** Ancho final de una foto: el original si ya cabe, o el que respeta el tope. */
+function anchoOptimizado(meta: ImageMetadata): number {
+  const escala = Math.min(1, LADO_MAYOR_MAXIMO / Math.max(meta.width, meta.height));
+  return Math.round(meta.width * escala);
+}
+
+/**
+ * Se calcula una sola vez, al cargar este archivo durante la compilación.
+ * Por eso `rutaDeImagen()` puede seguir siendo una función normal (no
+ * asíncrona) y ninguna página tuvo que cambiar para recibir fotos optimizadas.
+ */
+const OPTIMIZADAS: Record<string, string> = Object.fromEntries(
+  await Promise.all(
+    Object.entries(FOTOGRAFIAS).map(async ([ruta, meta]) => {
+      const imagen = await getImage({
+        src: meta,
+        width: anchoOptimizado(meta),
+        format: 'webp',
+        quality: CALIDAD,
+      });
+      return [ruta, imagen.src] as const;
+    }),
+  ),
 );
 
 /**
@@ -238,7 +290,35 @@ export function rutaDeImagen(ruta: string | null | undefined): string | null {
   if (!ruta) return null;
   if (ruta.startsWith('http') || ruta.startsWith('/_astro/')) return ruta;
   const limpia = ruta.startsWith('/') ? ruta : `/${ruta}`;
-  return IMAGENES[limpia] ?? null;
+  return OPTIMIZADAS[limpia] ?? VECTORES[limpia] ?? null;
+}
+
+/**
+ * Imagen para la vista previa al compartir un enlace (WhatsApp, Facebook,
+ * LinkedIn). Va aparte porque esos servicios tienen reglas propias: algunos
+ * todavía no leen WebP, y todos piden una dirección completa con dominio.
+ * Se entrega en JPG de 1200 px de ancho, la medida que recomiendan.
+ *
+ * Una imagen con transparencia se asienta sobre blanco: el JPG no admite
+ * transparencia y, sin fondo, lo transparente se volvería negro.
+ */
+export async function imagenParaCompartir(
+  ruta: string | null | undefined,
+  sitio: URL | undefined,
+): Promise<string | undefined> {
+  if (!ruta) return undefined;
+  if (ruta.startsWith('http')) return ruta;
+  const limpia = ruta.startsWith('/') ? ruta : `/${ruta}`;
+  const meta = FOTOGRAFIAS[limpia];
+  if (!meta) return undefined;
+  const imagen = await getImage({
+    src: meta,
+    width: Math.min(meta.width, 1200),
+    format: 'jpg',
+    quality: CALIDAD,
+    background: '#ffffff',
+  });
+  return new URL(imagen.src, sitio).toString();
 }
 
 /**
