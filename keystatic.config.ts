@@ -1093,6 +1093,14 @@ export default config({
           },
           { label: 'Primera pantalla' },
         ),
+        aliados: fields.object(
+          { titulo: texto('Texto sobre los logotipos') },
+          {
+            label: 'Aliados',
+            description:
+              'Franja de logotipos bajo la primera pantalla. Los logotipos se administran en la sección «Aliados» y son los mismos que en Inicio. Sin texto aquí, la franja se muestra sin título.',
+          },
+        ),
         modelosDeColaboracion: fields.object(
           {
             titulo: texto('Titular', { variasLineas: true }),
