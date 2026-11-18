@@ -45,6 +45,9 @@ hero:
       es: Mujer dando la mano de frente en señal de alianza.
     muestraPersonasIdentificables: true
     folioConsentimiento: CONS-2026-0009
+aliados:
+  titulo:
+    es: Hospitales, empresas y universidades que confían en nosotros
 modelosDeColaboracion:
   titulo:
     es: Tres caminos para colaborar
