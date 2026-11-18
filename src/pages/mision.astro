@@ -403,8 +403,9 @@ const mosaico = [
     transform-style: preserve-3d;
     transition: transform .62s cubic-bezier(.2, .8, .3, 1);
   }
-  .retrato:hover .retrato-giro,
-  .retrato:focus-visible .retrato-giro,
+  /* El giro lo manda aria-pressed (clic o toque). El hover solo se suma en
+     equipos con cursor de verdad: en teléfono el navegador deja «pegado» el
+     hover en la última foto tocada, y eso hacía girar la foto equivocada. */
   .retrato[aria-pressed='true'] .retrato-giro { transform: rotateY(180deg); }
   /* Selector de dos niveles a propósito: la cara lleva también la clase .photo,
      que en tokens.css trae position:relative. Con un solo nivel las dos reglas
@@ -422,11 +423,14 @@ const mosaico = [
     text-transform: uppercase; box-shadow: var(--shadow); white-space: nowrap;
     transition: opacity .2s; pointer-events: none;
   }
-  .retrato:hover .retrato-pista, .retrato[aria-pressed='true'] .retrato-pista { opacity: 0; }
-  /* Sin cursor (teléfono y tableta) el giro es por toque. */
-  @media (hover: none) {
-    .retrato:hover .retrato-giro { transform: none; }
-    .retrato:hover .retrato-pista { opacity: 1; }
+  .retrato[aria-pressed='true'] .retrato-pista { opacity: 0; }
+  /* La pista solo existe donde hay cursor. En teléfono y tableta no se
+     muestra: el giro es por toque. */
+  .retrato-pista { display: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .retrato:hover .retrato-giro { transform: rotateY(180deg); }
+    .retrato-pista { display: block; }
+    .retrato:hover .retrato-pista { opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) { .retrato-giro { transition: none; } }
 
@@ -510,8 +514,13 @@ const mosaico = [
     .mosaico { grid-template-columns: 1fr; gap: 16px; max-width: 420px; margin-left: auto; margin-right: auto; }
     .mosaico .mos-b { transform: none; }
   }
+  /* En teléfono cada anillo resta lo mismo a lo alto que a lo ancho
+     (20 + 14 ≈ 16 + 16), así los tres siguen casi cuadrados y el círculo
+     cabe completo. Antes restaba 40 px a lo alto y 28 a lo ancho, y el
+     segundo anillo se salía por abajo. */
   @media (max-width: 560px) {
-    .m2-anillo { padding: 26px 14px 14px; border-radius: 22px; }
+    .m2-anillo { padding: 20px 16px 14px; border-radius: 22px; height: auto; }
+    .m2-diagrama { aspect-ratio: auto; }
   }
 </style>
 </Base>
