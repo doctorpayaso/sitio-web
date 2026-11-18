@@ -2,4 +2,6 @@ nombre: Pfizer
 logotipo: /src/assets/aliados/pfizer/logotipo.png
 tipo: empresa
 autorizacionDeUsoDelLogotipo: true
+vigenciaDeLaAutorizacion: 2030-12-23
 publicar: true
+orden: 0
