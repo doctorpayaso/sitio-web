@@ -1,0 +1,44 @@
+---
+// Franja de logotipos de aliados. Se usa en Inicio y en Alianzas.
+//
+// Es un componente y no una copia en cada página para que haya un solo lugar
+// que mantener: un aliado nuevo, un cambio de tamaño o de estilo aparece en
+// las dos páginas a la vez. Los logotipos salen de la colección «Aliados» del
+// panel, que ya filtra los que no tienen autorización escrita vigente.
+import { aliados, rutaDeImagen } from '../lib/contenido';
+
+interface Props {
+  /** Texto sobre los logotipos. Cada página lo edita en su propio bloque del panel. */
+  titulo?: string;
+  /** Estilo adicional de la sección (p. ej. para ajustar el espacio superior). */
+  estilo?: string;
+}
+
+const { titulo, estilo } = Astro.props;
+const lista = aliados();
+---
+
+{lista.length > 0 && (
+  <section class="pad-s" style={estilo}>
+    <div class="wrap">
+      {titulo && (
+        <p class="eyebrow muted" style="display:block;text-align:center;margin-bottom:26px">
+          {titulo}
+        </p>
+      )}
+      <div class="logos">
+        {lista.map((a: any) => {
+          // El panel guarda la ruta de disco (/src/assets/aliados/…); el
+          // navegador necesita la dirección compilada (/_astro/…). Si el
+          // archivo no existe, se muestra el nombre en vez de una imagen rota.
+          const logo = rutaDeImagen(a.logotipo);
+          return (
+            <div class="logo-box">
+              {logo ? <img src={logo} alt={a.nombre} loading="lazy" /> : a.nombre}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
