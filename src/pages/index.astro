@@ -397,11 +397,17 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
           {t(p.aliados?.titulo, idioma)}
         </p>
         <div class="logos">
-          {listaAliados.map((a: any) => (
-            <div class="logo-box">
-              {a.logotipo ? <img src={a.logotipo} alt={a.nombre} loading="lazy" /> : a.nombre}
-            </div>
-          ))}
+          {listaAliados.map((a: any) => {
+            // El panel guarda la ruta de disco (/src/assets/aliados/…); el
+            // navegador necesita la dirección compilada (/_astro/…). Si el
+            // archivo no existe, se muestra el nombre en vez de una imagen rota.
+            const logo = rutaDeImagen(a.logotipo);
+            return (
+              <div class="logo-box">
+                {logo ? <img src={logo} alt={a.nombre} loading="lazy" /> : a.nombre}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
