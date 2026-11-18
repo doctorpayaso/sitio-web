@@ -10,7 +10,7 @@ import '../styles/tokens.css';
 import Encabezado from '../components/Encabezado.astro';
 import PieDePagina from '../components/PieDePagina.astro';
 import { t, idiomaDe, CODIGO_COMPLETO } from '../lib/idioma';
-import { configuracion, cifras } from '../lib/contenido';
+import { configuracion, cifras, imagenParaCompartir } from '../lib/contenido';
 import type { TextoLocalizado } from '../lib/idioma';
 
 interface Props {
@@ -29,9 +29,10 @@ const idioma = idiomaDe(Astro);
 const titulo = t(seo.titulo, idioma) || 'Doctor Payaso A.C.';
 const descripcion = t(seo.descripcion, idioma);
 const urlCanonica = new URL(Astro.url.pathname, Astro.site);
-const imagenSocial = seo.imagenAlCompartir
-  ? new URL(seo.imagenAlCompartir, Astro.site).toString()
-  : undefined;
+// El panel guarda la ruta de disco (/src/assets/og/…), que en producción no
+// existe. Antes se armaba la dirección directamente con esa ruta y la vista
+// previa al compartir el enlace salía sin imagen.
+const imagenSocial = await imagenParaCompartir(seo.imagenAlCompartir, Astro.site);
 
 // -----------------------------------------------------------------------------
 //  Datos estructurados
