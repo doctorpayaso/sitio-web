@@ -337,7 +337,10 @@ header.nav {
 .method-row p { color: var(--tinta-60); max-width: 56ch; font-size: 0.98rem; }
 
 /* ============ ALIADOS ============ */
-.logos { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+/* Filas centradas en vez de rejilla: con cualquier número de aliados la última
+   fila queda al centro y no se ven logotipos sueltos a la izquierda. */
+.logos { --columnas: 6; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.logos > .logo-box { flex: 0 0 calc((100% - (var(--columnas) - 1) * 14px) / var(--columnas)); }
 .logo-box {
   aspect-ratio: 16/9; border-radius: var(--r-m); background: var(--papel); border: 1px solid var(--tinta-12);
   display: grid; place-items: center; font-size: 0.7rem; font-weight: 700; color: var(--tinta-30);
@@ -502,7 +505,7 @@ footer .foot-desc { max-width: 34ch; margin: 0 0 18px; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 1000px) {
-  .logos { grid-template-columns: repeat(4, 1fr); }
+  .logos { --columnas: 5; } /* 9 aliados: 5 + 4, no 4 + 4 + 1 */
   .g4 { grid-template-columns: repeat(2, 1fr); }
   .g3 { grid-template-columns: repeat(2, 1fr); }
   .foot-grid { grid-template-columns: 1fr 1fr; }
@@ -531,7 +534,7 @@ footer .foot-desc { max-width: 34ch; margin: 0 0 18px; }
 }
 @media (max-width: 560px) {
   body { font-size: 16px; }
-  .logos { grid-template-columns: repeat(3, 1fr); }
+  .logos { --columnas: 3; }
   .foot-grid { grid-template-columns: 1fr; }
   .method-row { grid-template-columns: 1fr; gap: 6px; }
   .btn { width: 100%; }
