@@ -5,8 +5,9 @@ import Base from '../layouts/Base.astro';
 import { t, tr, idiomaDe, formatearFecha } from '../lib/idioma';
 import {
   paginas, configuracion, modulos, generaciones, sedePorId,
-  preguntas, imagenPublicable, rutaDeImagen,
+  preguntas, imagenPublicable, rutaDeImagen, rutaDeDocumento,
 } from '../lib/contenido';
+declare const __PESOS_DE_FOLLETOS__: Record<string, number>;
 
 const p = paginas.certificate;
 const idioma = idiomaDe(Astro);
@@ -17,6 +18,14 @@ const listaGeneraciones = generaciones();
 // franja, bajo el calendario. Sigue en la lista para el menú del formulario.
 const generacionesConFecha = listaGeneraciones.filter((g: any) => g.estado !== 'continua');
 const faq = preguntas('certificate');
+
+/** Peso del folleto para mostrarlo junto al enlace («PDF · 1.9 MB»). Quien
+ *  entra desde el teléfono con datos merece saber cuánto va a descargar. */
+function pesoDelFolleto(ruta: string | null | undefined): string | null {
+  if (!ruta) return null;
+  const bytes = __PESOS_DE_FOLLETOS__[ruta.startsWith('/') ? ruta : `/${ruta}`];
+  return bytes ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : null;
+}
 const heroVisible = imagenPublicable(p.hero?.imagen);
 
 /** Fondo tenue del color elegido, con el icono en el tono fuerte. */
@@ -194,6 +203,11 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
           {generacionesConFecha.map((g: any, i: number) => {
             const sede = sedePorId(g.sede);
             const e = ESTADO[g.estado] ?? ESTADO.lista_espera;
+            const folleto = rutaDeDocumento(g.folleto);
+            const peso = folleto ? pesoDelFolleto(g.folleto) : null;
+            // El panel nombra todos los archivos «folleto.pdf». Sin esto, quien baje
+            // los tres tendría tres «folleto.pdf» (o la huella de compilación).
+            const nombreDeDescarga = `doctor-payaso-certificacion-${g.id}.pdf`;
             return (
               <article class:list={['sede', g.estado === 'abiertas' && 'sede-destacada']}>
                 <div
@@ -226,6 +240,12 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
                       ? (idioma === 'en' ? 'Apply' : 'Inscribirme')
                       : (idioma === 'en' ? 'Notify me' : 'Avísenme')}
                   </a>
+                  {folleto && (
+                    <a href={folleto} class="folleto" download={nombreDeDescarga}>
+                      <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M12 4v11 M7 10l5 5 5-5 M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="folleto-txt">{idioma === 'en' ? 'Download brochure' : 'Descargar folleto'}</span>{peso && <span class="folleto-peso">(PDF, {peso})</span>}
+                    </a>
+                  )}
                 </div>
               </article>
             );
@@ -386,6 +406,19 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
 
   /* La generación con inscripciones abiertas se distingue del resto: el color
      de la etiqueta solo no alcanzaba. */
+  /* Folleto de la generación: enlace secundario, nunca compite con «Inscribirme». */
+  .folleto {
+    display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center;
+    column-gap: 7px; row-gap: 2px; align-self: center; margin-top: -2px;
+    font-size: 0.85rem; font-weight: 600; color: var(--tinta);
+    text-decoration: none; line-height: 1.3;
+  }
+  .folleto svg { flex: none; color: var(--coral-d); }
+  .folleto-txt, .folleto-peso { white-space: nowrap; }
+  .folleto-txt { text-decoration: underline; text-decoration-color: var(--tinta-30); text-underline-offset: 3px; }
+  .folleto:hover .folleto-txt { text-decoration-color: currentColor; }
+  .folleto-peso { font-weight: 400; color: var(--tinta-60); }
+
   .sede-destacada {
     border-color: var(--coral);
     box-shadow: 0 0 0 1px var(--coral), 0 14px 34px rgba(244, 98, 98, 0.16);
