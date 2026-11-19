@@ -1,6 +1,7 @@
 ---
 // Alianzas — la página de conversión de la ruta institucional.
 import Base from '../layouts/Base.astro';
+import FranjaDeAliados from '../components/FranjaDeAliados.astro';
 import { t, tr, idiomaDe } from '../lib/idioma';
 import { paginas, configuracion, imagenPublicable, rutaDeImagen } from '../lib/contenido';
 
@@ -67,6 +68,11 @@ const fondoTenue = (color?: string) => TENUE[color ?? 'coral'] ?? TENUE.coral;
       </div>
     </div>
   </section>
+
+  <!-- Quien llega aquí evalúa si colaborar: primero ve quién ya confía en la
+       institución, después cómo se colabora. -->
+  <!-- El encabezado ya deja aire abajo; sin este ajuste quedaban ~150 px vacíos. -->
+  <FranjaDeAliados titulo={t(p.aliados?.titulo, idioma)} estilo="padding-top:clamp(8px,2vw,24px)" />
 
   <section class="pad-s">
     <div class="wrap">

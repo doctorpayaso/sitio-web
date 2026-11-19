@@ -17,11 +17,11 @@
 // =============================================================================
 
 import Base from '../layouts/Base.astro';
+import FranjaDeAliados from '../components/FranjaDeAliados.astro';
 import { t, tr, enriquecer, idiomaDe, formatearFecha, formatearNumero } from '../lib/idioma';
 import {
   paginas,
   cifras,
-  aliados,
   proximaGeneracion,
   sedePorId,
   testimonioPorId,
@@ -40,7 +40,6 @@ const MODALIDAD: Record<string, { es: string; en: string }> = {
   mixta: { es: 'mixta', en: 'hybrid' },
 };
 const testimonio = testimonioPorId(p.testimonio?.persona);
-const listaAliados = aliados();
 
 // --- Franja de prueba --------------------------------------------------------
 // Las cifras las elige la Administradora desde el panel; aquí solo se resuelven
@@ -415,28 +414,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
   <!-- ===================================================================== -->
   <!--  ALIADOS                                                               -->
   <!-- ===================================================================== -->
-  {listaAliados.length > 0 && (
-    <section class="pad-s">
-      <div class="wrap">
-        <p class="eyebrow muted" style="display:block;text-align:center;margin-bottom:26px">
-          {t(p.aliados?.titulo, idioma)}
-        </p>
-        <div class="logos">
-          {listaAliados.map((a: any) => {
-            // El panel guarda la ruta de disco (/src/assets/aliados/…); el
-            // navegador necesita la dirección compilada (/_astro/…). Si el
-            // archivo no existe, se muestra el nombre en vez de una imagen rota.
-            const logo = rutaDeImagen(a.logotipo);
-            return (
-              <div class="logo-box">
-                {logo ? <img src={logo} alt={a.nombre} loading="lazy" /> : a.nombre}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  )}
+  <FranjaDeAliados titulo={t(p.aliados?.titulo, idioma)} />
 
   <!-- ===================================================================== -->
   <!--  CIERRE                                                                -->
