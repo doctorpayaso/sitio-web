@@ -86,10 +86,9 @@ valores:
           persona.
 directores:
   titulo:
-    es: Nuestros directores
+    es: Nuestro Fundador
   personas:
     - alex-garcia
-    - pay-campos
 metroCuadrado:
   antetitulo:
     es: Una idea que nos ordena
