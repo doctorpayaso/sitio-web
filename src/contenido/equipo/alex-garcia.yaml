@@ -1,6 +1,7 @@
 nombre: Alex García
 nombreDeClown: Dr. Chiflón
-rol: {}
+rol:
+  es: Dirección - Doctor Payaso A.C.
 biografia:
   es: >-
     Especialista en cosquillas abdominales y en hacer caras chistosas. Coach de
