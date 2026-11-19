@@ -361,7 +361,7 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
         )}
       </div>
 
-      <div class="grid g4">
+      <div class="grid g4 transp-grid">
         {(p.transparencia?.tarjetas ?? []).map((tarjeta: any) => (
           <div class="card">
             <div class="num" style={tarjeta.color ? `color:var(--${tarjeta.color})` : undefined}>
@@ -491,3 +491,16 @@ const testimonioVisible = imagenPublicable(p.testimonio?.imagen);
   }
 </script>
 
+<style>
+  /* Transparencia en teléfono. «ES/EN» en letra grande no se puede partir y mide
+     ~120 px; con el relleno normal de la tarjeta, la columna deja ~100 px. La
+     rejilla crecía para que cupiera y empujaba la página de lado (hasta 31 px a
+     360 px de ancho). Aquí se compacta la tarjeta y minmax(0, 1fr) impide que una
+     columna vuelva a crecer por su contenido. */
+  @media (max-width: 560px) {
+    .transp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .transp-grid .card { padding: 20px 16px; }
+    .transp-grid .card .num { font-size: 1.85rem; }
+    .transp-grid .card h4 { font-size: 1.05rem; }
+  }
+</style>
