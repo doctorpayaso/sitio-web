@@ -1,13 +1,14 @@
 nombre: Pay Campos
 nombreDeClown: Dra. Corazones
 rol:
-  es: Dirección
+  es: Dirección - Felicidad que Sirve S.C.
 biografia:
   es: >-
     Zurda por nacimiento y coleccionista de corazones por oficio. Voluntaria
     desde 2015. Licenciada en Ciencias de la Comunicación y maestra en Educación
     por el ITESM, Master Coach certificada por Quidam Global. Más de treinta
     años acompañando procesos de transformación personal.
+sede: ciudad-de-mexico
 fotografia:
   archivo: /src/assets/equipo/pay-campos/fotografia/archivo.jpg
   textoAlternativo:
@@ -18,5 +19,5 @@ fotografiaSinCaracterizar:
   textoAlternativo:
     es: Pay Campos sin caracterizar
   muestraPersonasIdentificables: false
-publicar: false
+publicar: true
 orden: 2
