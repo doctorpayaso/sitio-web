@@ -18,5 +18,5 @@ fotografiaSinCaracterizar:
   textoAlternativo:
     es: Pay Campos sin caracterizar
   muestraPersonasIdentificables: false
-publicar: true
+publicar: false
 orden: 2
